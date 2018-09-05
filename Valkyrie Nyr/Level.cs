@@ -2,11 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 
 namespace Valkyrie_Nyr
 {
@@ -14,82 +15,131 @@ namespace Valkyrie_Nyr
     {
         public List<GameObject> gameObjects;
 
-        private int height;
-        private int width;
+        public int height;
+        public int width;
 
-        public Player player;
-        public Vector2 position;
+        public Vector2 positionBGSprite;
 
-        Texture2D levelSprite;
+        private static Level currentLevel;
 
-        public Level(int _width, int _height, string _path, Texture2D _sprite)
+        Texture2D levelBGSprite;
+
+        //get current Level from everywhere
+        public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
+
+        //loads the level
+        public void loadLevel(Point startPosition, Point levelBorders, string pathToJSON, string spriteName)
         {
-            //TODO: read file from path and store it to gameObjects and collider Array
+            width = levelBorders.X;
+            height = levelBorders.Y;
+            gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText(pathToJSON));
+            levelBGSprite = Game1.Ressources.Load<Texture2D>(spriteName);
+            positionBGSprite = startPosition.ToVector2();
 
-            this.height = _height;
-            this.width = _width;
-
-            gameObjects = new List<GameObject>();
-
-            gameObjects.Add(new GameObject("ground", true, false, 0, 30, 100, new Vector2(0, 200 )));
-            gameObjects.Add(new GameObject("ground", true, false, 0, 30, 100, new Vector2(50, 100)));
-            gameObjects.Add(new GameObject("ground", true, false, 0, 30, 3000, new Vector2(0, this.height - 30)));
-            gameObjects.Add(new GameObject("collectable", false, true, 1, 10, 10, new Vector2(30, 50)));
-
-            
-
-            levelSprite = _sprite;
-
-            position = new Vector2(0, 0);
+            gameObjects.Add(Player.Nyr);
         }
 
-        private void move(GameTime gameTime, int direction)
+        //put here things like setup from enemies
+        public void startLevel()
         {
-            float value = direction * player.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Player.Nyr.position = Vector2.Zero;
+        }
 
-            GameObject[] collidedObjects = player.Collision(gameObjects.ToArray(), player.position + new Vector2(value, 0));
+        //get input and update the elements inside the level
+        public void update(GameTime gameTime)
+        {
+            if (States.CurrentPlayerState == Playerstates.JUMP)
+            {
+                Player.Nyr.jump(gameTime);
+            }
+
+            //get Input from Keyboard
+            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            {
+                Vector2 moveValue = Vector2.Zero;
+
+                switch (element)
+                {
+                    case Keys.A:
+                        moveValue = new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        break;
+                    case Keys.D:
+                        moveValue = new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        break;
+                    case Keys.Space:
+                        if (Player.Nyr.onGround)
+                        {
+                            States.CurrentPlayerState = Playerstates.JUMP;
+                            Player.Nyr.jump(gameTime);
+                        }
+                        break;
+                }
+                //if moving, then check if you can move there
+                if (moveValue != Vector2.Zero)
+                {
+                    if (checkCollision(moveValue))
+                    {
+                        Camera.Main.move(moveValue);
+                    }
+                }
+            }
+            useGrav(gameTime);
+
+            if (Player.Nyr.position.Y > height)
+            {
+                States.CurrentGameState = GameStates.EXIT;
+            }
+        }
+
+        //theorethical move and seeing what happens
+        bool checkCollision(Vector2 moveValue)
+        {
+            GameObject[] collidedObjects = Player.Nyr.Collision(gameObjects.ToArray(), Player.Nyr.position + moveValue);
 
             foreach (GameObject element in collidedObjects)
             {
                 if (element.isTrigger)
                 {
-                    if (player.collect(element))
+                    //activate trigger
+                    switch (element.name)
                     {
-                       this.gameObjects.Remove(element);
+                        case "collectable":
+                            Player.Nyr.collect(element);
+                            gameObjects.Remove(element);
+                            break;
                     }
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
             }
+            return true;
+        }
 
-            this.position.X -= value;
-
+        //move all Objects in this Level
+        public void moveGameObjects(Vector2 moveValue)
+        {
+            positionBGSprite -= moveValue;
             foreach (GameObject gameObject in gameObjects)
             {
-                if(gameObject.type == "Nyr")
+                if(gameObject.name == "Nyr")
                 {
                     continue;
                 }
 
-                gameObject.position.X -= value;
+                gameObject.position -= moveValue;
             }
         }
 
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
-        private void useGrav(GameTime gameTime, ref GameStates gameState)
+        private void useGrav(GameTime gameTime)
         {
-
-            if(player.newState == Playerstates.WALK)
-            {
-                player.newState = Playerstates.IDLE;
-            }
             for (int i = 0; i < gameObjects.Count;)
             {
                 foreach (GameObject element in gameObjects)
                 {
-                    if (!element.isStationary)
+                    if (!element.isStationary && !element.onGround)
                     {
                         element.Fall(gameTime, gameObjects.ToArray());
                     }
@@ -98,11 +148,12 @@ namespace Valkyrie_Nyr
                 //fällt aus der Welt und wird aus gelöscht
                 if (gameObjects[i].position.Y > height)
                 {
-                    if (gameObjects[i].type == "player")
+                    //und wenn es der Player ist, wird das Spiel beendet
+                    if (gameObjects[i].name == "player")
                     {
-                        player.newState = Playerstates.DEAD;
+                        States.CurrentPlayerState = Playerstates.DEAD;
 
-                        gameState = GameStates.EXIT;
+                        States.CurrentGameState = GameStates.EXIT;
                     }
                     else
                     {
@@ -116,91 +167,13 @@ namespace Valkyrie_Nyr
             }
         }
 
-        public void update(GameTime gameTime, ref GameStates gameState)
-        {
-            //get Input from Keyboard
-            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-            {
-                switch (element)
-                {
-                    //TODO: set windowSize variable
-                    case Keys.A:
-                        if ((int)player.position.X > 0)
-                        {
-                            if ((int)player.position.X <= 1920 / 2 && (int)this.position.X < 0)
-                            {
-                                this.move(gameTime, -1);
-                            }
-                            else if (this.position.X >= 0 || this.position.X <= -(this.width - 1920))
-                            {
-                                player.updatePos(-1, gameTime, ref gameObjects);
-                            }
-                        }
-                            break;
-                    case Keys.D:
-                        if ((int)player.position.X < 1920 - player.width)
-                        {
-                            if ((int)player.position.X >= 1920 / 2 && (int)this.position.X > -(this.width - 1920))
-                            {
-                                this.move(gameTime, 1);
-                            }
-                            else if (this.position.X >= 0 || this.position.X <= -(this.width - 1920))
-                            {
-                                player.updatePos(1, gameTime, ref gameObjects);
-                            }
-                        }
-                        break;
-                    case Keys.Space:
-                        if (player.newState == Playerstates.IDLE)
-                        {
-                            player.newState = Playerstates.IDLE_JUMP;
-                            player.jump(gameTime, gameObjects.ToArray());
-                        }
-                        break;
-                }
-            }
-
-            if (player.newState == Playerstates.IDLE_JUMP || player.newState == Playerstates.WALK_JUMP)
-            {
-                player.jump(gameTime, gameObjects.ToArray());
-            }
-            else
-            {
-                this.useGrav(gameTime, ref gameState);
-            }
-
-            if (player.position.Y > this.height)
-            {
-                gameState = GameStates.EXIT;
-            }
-        }
-
-        public void update(GameTime gameTime, ref GameStates gameState, GamePadCapabilities capabilities)
-        {
-            //get Input from GamePad
-            GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-            if (state.ThumbSticks.Left.X != 0)
-            {
-                player.updatePos(state.ThumbSticks.Left.X, gameTime, ref gameObjects);
-            }
-
-            this.useGrav(gameTime, ref gameState);
-
-            if (player.position.Y > 300)
-            {
-                gameState = GameStates.EXIT;
-            }
-        }
-
+        //the typical render method
         public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(this.levelSprite, new Rectangle((int) this.position.X, (int) this.position.Y, this.width, this.height), Color.White);
+            spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
-            if (player != null)
-            {
-                player.render(spriteBatch, gameTime);
-            }
+            //Draw all GameObjects such as Enemys
+            Player.Nyr.render(spriteBatch, gameTime);
         }
     }
 }

@@ -1,58 +1,59 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Valkyrie_Nyr
 {
 
-    enum GameStates { MAINMENU, PLAYING, EXIT}
 
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D test;
+
+        //white 1x1 texture
         Texture2D pxl;
 
-        GamePadCapabilities capabilities;
+        public static ContentManager Ressources;
 
-        GameStates state;
-        
-        Level level;
-        
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this);
-            this.graphics.PreferredBackBufferHeight = 900;
-            this.graphics.PreferredBackBufferWidth = 1920;
-            //this.graphics.IsFullScreen = true;
+            graphics = new GraphicsDeviceManager(this);
+
+            //set windowsize
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferWidth = 1920;
+            //graphics.IsFullScreen = true;
+
             Content.RootDirectory = "Content";
-            this.IsMouseVisible = true;
-            this.state = GameStates.PLAYING;
+
+            //Now you can load content from everywhere
+            Ressources = Content;
+
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            this.test = Content.Load<Texture2D>("test");
-            this.pxl = Content.Load<Texture2D>("index");
-            Texture2D levelSprite = Content.Load<Texture2D>("overworld");
 
-            this.level = new Level(2700, 900, "", levelSprite);
+            pxl = Game1.Ressources.Load<Texture2D>("index");
 
-            this.level.player = new Player("Nyr", false, false, 10, 30, 20, new Vector2(10, 10), this.spriteBatch, this.test);
-            this.level.gameObjects.Add(this.level.player);
+            //create Nyr
+            Player.Nyr.init();
 
+            //load Level
+            Level.Current.loadLevel(Point.Zero, new Point(2890, 900), "test.json", "overworld");
 
+            //set the borders of the Level to the Camera
+            Camera.Main.levelBounds = new Rectangle(0, 0, Level.Current.width, Level.Current.height);
+            
+            States.CurrentGameState = GameStates.PLAYING;
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            this.spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            this.capabilities = GamePad.GetCapabilities(PlayerIndex.One);
         }
         
         protected override void Update(GameTime gameTime)
@@ -61,30 +62,22 @@ namespace Valkyrie_Nyr
             //TODO:delete
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                state = GameStates.EXIT;
+                States.CurrentGameState = GameStates.EXIT;
             }
 
-            switch (this.state)
+            switch (States.CurrentGameState)
             {
                 case GameStates.MAINMENU:
                     //TODO: Fill with Content
                     break;
 
                 case GameStates.PLAYING:
-                    //Use one Update-Menthod for keyboard and one for controller
-                    if (this.capabilities.IsConnected)
-                    {
-                        this.level.update(gameTime, ref this.state, this.capabilities);
-                    }
-                    else
-                    {
-                        this.level.update(gameTime, ref this.state);
-                    }
+                    Level.Current.update(gameTime);
                     break;
 
                 //Exits the Game
                 case GameStates.EXIT:
-                    this.Exit();
+                    Exit();
                     break;
             }
 
@@ -93,20 +86,20 @@ namespace Valkyrie_Nyr
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            this.spriteBatch.Begin();
+            spriteBatch.Begin();
 
-            this.level.render(spriteBatch, gameTime);
+            Level.Current.render(spriteBatch, gameTime);
 
             //draw Colliders for Debugging
             //TODO: Delete
-            foreach (GameObject collider in level.gameObjects)
+            foreach (GameObject collider in Level.Current.gameObjects)
             {
-                this.spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), Color.LightGreen * 0.5f);
+                spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), Color.LightGreen * 0.5f);
             }
 
-            this.spriteBatch.End();
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

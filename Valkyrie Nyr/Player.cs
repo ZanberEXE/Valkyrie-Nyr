@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace Valkyrie_Nyr
 {
-    enum Playerstates { IDLE, WALK, IDLE_JUMP, WALK_JUMP, FIGHT, HIT, DEAD };
 
     class Player : GameObject
     {
-        //only change State, if Animation is played completely
-        public Playerstates newState;
-        private Playerstates state;
+
+        private static Player nyr;
 
         private int[] animLength;
         
@@ -24,16 +22,24 @@ namespace Valkyrie_Nyr
         private float jumpValue;
         private float jumpHeight;
 
-        public Player(string name, bool isStationary, bool isTrigger, int mass, int height, int width, Vector2 position, SpriteBatch spriteBatch, Texture2D _spriteSheet) : base(name, isStationary, isTrigger, mass, height, width, position)
+        public Player(string name, bool isStationary, bool isTrigger, int mass, int height, int width, int gravitation, Vector2 position, int gravValue, string triggerType) : base(name, isStationary, isTrigger, mass, height, width, gravitation, position, gravValue, triggerType)
         {
-            spriteSheet = _spriteSheet;
             speed = 250;
             frame = 0;
-            state = Playerstates.IDLE;
+            States.CurrentPlayerState = Playerstates.IDLE;
             animLength = new int[] { 3, 2, 2, 3, 4, 3 };
             jumpValue = 0;
-            jumpHeight = 1;
+            jumpHeight = 15;
         }
+
+        public void init()
+        {
+            spriteSheet = Game1.Ressources.Load<Texture2D>("test");
+            States.CurrentPlayerState = Playerstates.IDLE;
+        }
+
+        //get Nyr from everywhere
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, false, 10, 30, 20, 1, new Vector2(10, 10), 3, ""); } return nyr; } }
 
         //this method is called, if the Player dies/falls out of the world
         public void gameOver()
@@ -41,30 +47,25 @@ namespace Valkyrie_Nyr
             Console.WriteLine("You died!");
         }
 
-        public bool collect(GameObject collectable)
+        //put here stuff that happens if you collect something
+        public void collect(GameObject collectable)
         {
-            //just to make sure, if the gameObject is indeed a collectable
-            if(collectable.type == "collectable")
-            {
-                return true;
-            }
-            return false;
+
         }
 
-        public void updatePos(float direction, GameTime gameTime, ref List<GameObject> gameObjects)
+        //moves the Player
+        public void move(Vector2 moveValue)
         {
-            Vector2 newPos = new Vector2(position.X + direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds, position.Y);
+            Vector2 newPos = position + moveValue;
 
-            GameObject[] collidedObjects = Collision(gameObjects.ToArray(), newPos);
+            GameObject[] collidedObjects = Collision(Level.Current.gameObjects.ToArray(), newPos);
 
             foreach (GameObject element in collidedObjects)
             {
                 if (element.isTrigger)
                 {
-                    if(this.collect(element))
-                    {
-                        gameObjects.Remove(element);
-                    }                    
+                    collect(element);
+                    Level.Current.gameObjects.Remove(element);
                 }
                 else
                 {
@@ -72,77 +73,48 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            this.position = newPos;
-
-            if(this.newState == Playerstates.IDLE_JUMP || this.newState == Playerstates.WALK_JUMP)
-            {
-                this.newState = Playerstates.WALK_JUMP;
-            }
-            else
-            {
-                this.newState = Playerstates.WALK;
-            }
+            position = newPos;
         }
 
+        //TODO: überarbeiten (nicht ganz funktionstauglich)
         public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
 
             frame += (float)gameTime.ElapsedGameTime.TotalSeconds * 2; //gibt die geschwindigkeit der Animation an
 
-            if ((int)frame > animLength[(int) state])
+            if ((int)frame > animLength[(int)States.CurrentPlayerState])
             {
                 frame = 0;
-                state = newState;
+                States.CurrentPlayerState = States.NextPlayerState;
             }
 
-            if (state == Playerstates.IDLE)
+            if (States.CurrentPlayerState == Playerstates.IDLE)
             {
                 spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int) frame, 0, 20, 30), Color.White);
             }
-            else if (state == Playerstates.WALK)
+            else if (States.CurrentPlayerState == Playerstates.WALK)
             {
                 spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int)frame, 20, 20, 30), Color.White);
             }
         }
 
-        public void jump(GameTime gameTime, GameObject[] gameObjects)
+        //move the PLayer up, until it hit something or the gravition gets too strong and pulls him down
+        public void jump(GameTime gameTime)
         {
-            if (jumpHeight < 150)
-            {
-                jumpValue += 0.125f;
-                jumpHeight += 300 * (float)gameTime.ElapsedGameTime.TotalSeconds / jumpValue;
-                float newPosY = -1 * 300 * (float)gameTime.ElapsedGameTime.TotalSeconds / jumpValue + this.position.Y;
-                GameObject[] collidedObjects = Collision(gameObjects, new Vector2(this.position.X, newPosY));
-                foreach (GameObject element in collidedObjects)
-                {
-                    if (!element.isTrigger)
-                    {
-                        return;
-                    }
-                }
-                this.position.Y = newPosY;
-            }
-            else
-            {
-                Vector2 newPosition = new Vector2(this.position.X, this.position.Y + this.mass * this.gravitation * this.gravValue * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                GameObject[] collidedObjects = Collision(gameObjects, newPosition); //all Objects, that you would Collide with if you'd fall
+            GameObject[] collidedObjects;
+            collidedObjects = this.Collision(Level.Current.gameObjects.ToArray(), this.position - new Vector2(0, jumpHeight));
 
-                foreach (GameObject element in collidedObjects)
+            foreach(GameObject element in collidedObjects)
+            {
+                if (!element.isTrigger)
                 {
-                    if (!element.isTrigger)
-                    {
-                        this.gravValue = 1;
-                        this.jumpValue = 0;
-                        this.state = Playerstates.IDLE;
-                        this.newState = Playerstates.IDLE;
-                        jumpHeight = 0;
-                        jumpValue = 0;
-                        return;
-                    }
+                    States.CurrentPlayerState = Playerstates.IDLE;
+                    return;
                 }
-                this.position = newPosition; ;
-                this.gravValue++;
             }
+            
+            onGround = false;
+            position.Y -= jumpHeight;
         }
     }
 }
