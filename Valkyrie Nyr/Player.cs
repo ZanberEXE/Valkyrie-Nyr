@@ -19,17 +19,15 @@ namespace Valkyrie_Nyr
 
         public float speed;
 
-        private float jumpValue;
         private float jumpHeight;
 
-        public Player(string name, bool isStationary, bool isTrigger, int mass, int height, int width, int gravitation, Vector2 position, int gravValue, string triggerType) : base(name, isStationary, isTrigger, mass, height, width, gravitation, position, gravValue, triggerType)
+        public Player(string name, bool isStationary, bool isTrigger, int mass, int height, int width, Vector2 position) : base(name, isStationary, isTrigger, mass, height, width, position)
         {
             speed = 250;
             frame = 0;
             States.CurrentPlayerState = Playerstates.IDLE;
             animLength = new int[] { 3, 2, 2, 3, 4, 3 };
-            jumpValue = 0;
-            jumpHeight = 15;
+            jumpHeight = 10;
         }
 
         public void init()
@@ -39,7 +37,7 @@ namespace Valkyrie_Nyr
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, false, 10, 30, 20, 1, new Vector2(10, 10), 3, ""); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, false, 10, 30, 20, new Vector2(10, 10)); } return nyr; } }
 
         //this method is called, if the Player dies/falls out of the world
         public void gameOver()

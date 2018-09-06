@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Valkyrie_Nyr
 {
@@ -17,27 +18,26 @@ namespace Valkyrie_Nyr
         public int height;
         public int width;
         public int gravitation;
-        public string triggerType;
 
         //Variables
         public Vector2 position;
         public float gravValue;
         public bool onGround;
+        public Texture2D sprite;
 
         //Constructor
-        public GameObject(string _name, bool _isStationary, bool _isTrigger, int _mass, int _height, int _width, int _gravitation, Vector2 _position, int _gravValue, string _triggerType)
+        public GameObject(string _name, bool _isStationary, bool _isTrigger, int _mass, int _height, int _width, Vector2 _position)
         {
+            onGround = false;
+            gravValue = 1;
+            gravitation = 1;
             name = _name;
             isStationary = _isStationary;
             isTrigger = _isTrigger;
             mass = _mass;
-            gravitation = _gravitation; //1
-            gravValue = _gravValue; //3;
             height = _height;
             width = _width;
             position = _position;
-            triggerType = _triggerType;
-            onGround = false;
         }
 
         //Check Collision of Objects and returns Array with all collided Objects or null, if none has collided
@@ -93,17 +93,35 @@ namespace Valkyrie_Nyr
                 
                 foreach (GameObject element in collidedObjects)
                 {
-                    if (!element.isTrigger)
+                    if (!element.isTrigger && (element.name == "ground" || element.name == "platform"))
                     {
                         gravValue = 1;
                         onGround = true;
+                        this.position.Y = element.position.Y - this.height - 0.1f;
                         return;
                     }
                 }
                 onGround = false;
                 position = newPosition;
-                gravValue += 0.1f;
+                gravValue += 2.5f;
             }
+        }
+
+        public void render (GameTime gametime, SpriteBatch spriteBatch)
+        {
+            if(sprite == null)
+            {
+                if (Game1.Ressources.RootDirectory.Contains(name))
+                {
+                    sprite = Game1.Ressources.Load<Texture2D>(name);
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            spriteBatch.Draw(sprite, new Rectangle(position.ToPoint(), new Point(width, height)), Color.White);
         }
     }
 }

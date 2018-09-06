@@ -18,7 +18,7 @@ namespace Valkyrie_Nyr
         private static Playerstates nextPlayerState;
 
         public static GameStates CurrentGameState { get { return currentGameState; } set { currentGameState = value; } }
-        public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; } }
+        public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; nextPlayerState = value; } }
         public static Playerstates NextPlayerState { get { return nextPlayerState; } set { nextPlayerState = value; } }
 
     }

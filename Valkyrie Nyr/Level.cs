@@ -14,6 +14,7 @@ namespace Valkyrie_Nyr
     class Level
     {
         public List<GameObject> gameObjects;
+        public List<Trigger> triggerObjects;
 
         public int height;
         public int width;
@@ -28,12 +29,17 @@ namespace Valkyrie_Nyr
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
         //loads the level
-        public void loadLevel(Point startPosition, Point levelBorders, string pathToJSON, string spriteName)
+        public void loadLevel(Point startPosition, Point levelBorders, string levelName)
         {
             width = levelBorders.X;
             height = levelBorders.Y;
-            gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText(pathToJSON));
-            levelBGSprite = Game1.Ressources.Load<Texture2D>(spriteName);
+            gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText(levelName + "_gameObjects.json"));
+            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText(levelName + "_triggerObjects.json"));
+            foreach(Trigger element in triggerObjects)
+            {
+                gameObjects.Add(element);
+            }
+            levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
             positionBGSprite = startPosition.ToVector2();
 
             gameObjects.Add(Player.Nyr);
@@ -50,7 +56,14 @@ namespace Valkyrie_Nyr
         {
             if (States.CurrentPlayerState == Playerstates.JUMP)
             {
-                Player.Nyr.jump(gameTime);
+                if(!Player.Nyr.onGround)
+                {
+                    Player.Nyr.jump(gameTime); 
+                }
+                else
+                {
+                    States.CurrentPlayerState = Playerstates.IDLE;
+                }
             }
 
             //get Input from Keyboard
@@ -67,7 +80,7 @@ namespace Valkyrie_Nyr
                         moveValue = new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         break;
                     case Keys.Space:
-                        if (Player.Nyr.onGround)
+                        if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP)
                         {
                             States.CurrentPlayerState = Playerstates.JUMP;
                             Player.Nyr.jump(gameTime);
@@ -84,11 +97,6 @@ namespace Valkyrie_Nyr
                 }
             }
             useGrav(gameTime);
-
-            if (Player.Nyr.position.Y > height)
-            {
-                States.CurrentGameState = GameStates.EXIT;
-            }
         }
 
         //theorethical move and seeing what happens
@@ -98,15 +106,15 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.isTrigger)
+                if (element.isTrigger && triggerObjects.Contains(element))
                 {
-                    //activate trigger
-                    switch (element.name)
+                    foreach(Trigger triggerElement in triggerObjects)
                     {
-                        case "collectable":
-                            Player.Nyr.collect(element);
-                            gameObjects.Remove(element);
+                        if(triggerElement == element)
+                        {
+                            activateTrigger(triggerElement);
                             break;
+                        }
                     }
                 }
                 else
@@ -115,6 +123,12 @@ namespace Valkyrie_Nyr
                 }
             }
             return true;
+        }
+
+        private void activateTrigger(Trigger element)
+        {
+            gameObjects.Remove(element);
+            triggerObjects.Remove(element);
         }
 
         //move all Objects in this Level
@@ -135,16 +149,16 @@ namespace Valkyrie_Nyr
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
         private void useGrav(GameTime gameTime)
         {
+            foreach (GameObject element in gameObjects)
+            {
+                if (!element.isStationary)
+                {
+                    element.Fall(gameTime, gameObjects.ToArray());
+                }
+            }
+
             for (int i = 0; i < gameObjects.Count;)
             {
-                foreach (GameObject element in gameObjects)
-                {
-                    if (!element.isStationary && !element.onGround)
-                    {
-                        element.Fall(gameTime, gameObjects.ToArray());
-                    }
-                }
-
                 //fällt aus der Welt und wird aus gelöscht
                 if (gameObjects[i].position.Y > height)
                 {

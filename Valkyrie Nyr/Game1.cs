@@ -44,7 +44,7 @@ namespace Valkyrie_Nyr
             Player.Nyr.init();
 
             //load Level
-            Level.Current.loadLevel(Point.Zero, new Point(2890, 900), "test.json", "overworld");
+            Level.Current.loadLevel(Point.Zero, new Point(2890, 900), "overworld");
 
             //set the borders of the Level to the Camera
             Camera.Main.levelBounds = new Rectangle(0, 0, Level.Current.width, Level.Current.height);
