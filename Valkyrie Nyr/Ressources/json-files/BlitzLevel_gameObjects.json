@@ -1,0 +1,128 @@
+[
+  {
+      "name": "ground",
+      "height": 250,
+      "width": 2400,
+      "position": "12500, 4750",
+  },
+  {
+      "name": "ground",
+      "height": 1950,
+      "width": 100,
+      "position": "14900, 3050",
+  },
+  {
+      "name": "ground",
+      "height": 1950,
+      "width": 100,
+      "position": "12400, 3050",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 1500,
+      "position": "10600, 3050",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 500,
+      "position": "10600, 2550",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 500,
+      "position": "9900, 2800",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 500,
+      "position": "9350, 3050",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 350,
+      "position": "8800, 3250",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 350,
+      "position": "8300, 3500",
+  },
+  {
+      "name": "ground",
+      "height": 100,
+      "width": 1000,
+      "position": "7300, 1900",
+  },
+  {
+      "name": "ground",
+      "height": 100,
+      "width": 2000,
+      "position": "2850, 4500",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 750,
+      "position": "2500, 4750",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 400,
+      "position": "1250, 3350",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 400,
+      "position": "1800, 3400",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 400,
+      "position": "1650, 3650",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 400,
+      "position": "1150, 3750",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 750,
+      "position": "1300, 4750",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 300,
+      "position": "1200, 2400",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 150,
+      "position": "1000, 2200",
+  },
+  {
+      "name": "ground",
+      "height": 3000,
+      "width": 1500,
+      "position": "0, 2000",
+  },
+  {
+      "name": "ground",
+      "height": 1000,
+      "width": 1500,
+      "position": "0, 0",
+  }
+]

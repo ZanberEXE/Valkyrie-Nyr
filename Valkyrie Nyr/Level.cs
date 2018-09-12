@@ -33,16 +33,26 @@ namespace Valkyrie_Nyr
         {
             width = levelBorders.X;
             height = levelBorders.Y;
-            gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText(levelName + "_gameObjects.json"));
-            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText(levelName + "_triggerObjects.json"));
-            foreach(Trigger element in triggerObjects)
+            
+            gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
+            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_triggerObjects.json"));
+            
+            foreach (Trigger element in triggerObjects)
             {
                 gameObjects.Add(element);
             }
+
+            foreach (GameObject element in gameObjects)
+            {
+                element.position += startPosition.ToVector2();
+            }
+
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
-            positionBGSprite = startPosition.ToVector2();
+            positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
 
             gameObjects.Add(Player.Nyr);
+
+            Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
         }
 
         //put here things like setup from enemies
@@ -54,11 +64,13 @@ namespace Valkyrie_Nyr
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
         {
+            Vector2 moveValue = Vector2.Zero;
+
             if (States.CurrentPlayerState == Playerstates.JUMP)
             {
                 if(!Player.Nyr.onGround)
                 {
-                    Player.Nyr.jump(gameTime); 
+                    moveValue.Y -= Player.Nyr.jumpHeight;
                 }
                 else
                 {
@@ -69,66 +81,79 @@ namespace Valkyrie_Nyr
             //get Input from Keyboard
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
-                Vector2 moveValue = Vector2.Zero;
 
                 switch (element)
                 {
                     case Keys.A:
-                        moveValue = new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         break;
                     case Keys.D:
-                        moveValue = new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         break;
                     case Keys.Space:
                         if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP)
                         {
                             States.CurrentPlayerState = Playerstates.JUMP;
-                            Player.Nyr.jump(gameTime);
+                            moveValue.Y -= Player.Nyr.jumpHeight;
                         }
                         break;
                 }
-                //if moving, then check if you can move there
-                if (moveValue != Vector2.Zero)
-                {
-                    if (checkCollision(moveValue))
-                    {
-                        Camera.Main.move(moveValue);
-                    }
-                }
             }
+
+            //Let PLayer fall and save the moveValue in overall Movement
+            moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+
+            //let em move, after all collisions have manipulated the movement
+            Vector2 newMoveValue = checkCollision(moveValue);
+
+            if (newMoveValue != Vector2.Zero)
+            {
+                Camera.Main.move(newMoveValue);
+            }
+
+            //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
+
+            //trigger all triggers, that have been triggered
+            Player.Nyr.activateTrigger();
         }
 
-        //theorethical move and seeing what happens
-        bool checkCollision(Vector2 moveValue)
+        //theoretical move and seeing what happens
+        public Vector2 checkCollision(Vector2 moveValue)
         {
-            GameObject[] collidedObjects = Player.Nyr.Collision(gameObjects.ToArray(), Player.Nyr.position + moveValue);
+            Vector2 newPos = Player.Nyr.position + moveValue;
+
+            GameObject[] collidedObjects = Player.Nyr.Collision(gameObjects.ToArray(), newPos);
+
+            bool collidedLeft = false;
+            bool collidedRight = false;
+            bool collidedTop = false;
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.isTrigger && triggerObjects.Contains(element))
+                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && element.name != "platform")
                 {
-                    foreach(Trigger triggerElement in triggerObjects)
-                    {
-                        if(triggerElement == element)
-                        {
-                            activateTrigger(triggerElement);
-                            break;
-                        }
-                    }
+                    collidedLeft = true;
                 }
-                else
+                if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && element.name != "platform")
                 {
-                    return false;
+                    collidedRight = true;
+                }
+                if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && element.name != "platform")
+                {
+                    collidedTop = true;
                 }
             }
-            return true;
-        }
 
-        private void activateTrigger(Trigger element)
-        {
-            gameObjects.Remove(element);
-            triggerObjects.Remove(element);
+            if (collidedLeft || collidedRight)
+            {
+                moveValue.X = 0;
+            }
+            if (collidedTop)
+            {
+                moveValue.Y = 0;
+            }
+            return moveValue;
         }
 
         //move all Objects in this Level
@@ -149,30 +174,34 @@ namespace Valkyrie_Nyr
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
         private void useGrav(GameTime gameTime)
         {
-            foreach (GameObject element in gameObjects)
+            for (int i = 0; i < gameObjects.Count; i++)
             {
-                if (!element.isStationary)
+                if (gameObjects[i].mass > 0 && !gameObjects[i].onGround)
                 {
-                    element.Fall(gameTime, gameObjects.ToArray());
+                    if (gameObjects[i].name == "Nyr")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        gameObjects[i].position = gameObjects[i].Fall(gameTime, gameObjects.ToArray());
+                    }
                 }
             }
 
             for (int i = 0; i < gameObjects.Count;)
             {
-                //fällt aus der Welt und wird aus gelöscht
+                //fällt aus der Welt und wird gelöscht
                 if (gameObjects[i].position.Y > height)
                 {
-                    //und wenn es der Player ist, wird das Spiel beendet
-                    if (gameObjects[i].name == "player")
+                    for (int j = 0; j < triggerObjects.Count(); j++)
                     {
-                        States.CurrentPlayerState = Playerstates.DEAD;
-
-                        States.CurrentGameState = GameStates.EXIT;
+                        if (triggerObjects[j] == gameObjects[i])
+                        {
+                            triggerObjects.RemoveAt(j);
+                        }
                     }
-                    else
-                    {
-                        gameObjects.RemoveAt(i);
-                    }
+                    gameObjects.RemoveAt(i);
                 }
                 else
                 {

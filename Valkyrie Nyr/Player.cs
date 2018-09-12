@@ -19,15 +19,15 @@ namespace Valkyrie_Nyr
 
         public float speed;
 
-        private float jumpHeight;
+        public float jumpHeight;
 
-        public Player(string name, bool isStationary, bool isTrigger, int mass, int height, int width, Vector2 position) : base(name, isStationary, isTrigger, mass, height, width, position)
+        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position) : base(name, isTrigger, mass, height, width, position)
         {
-            speed = 250;
+            speed = 500;
             frame = 0;
             States.CurrentPlayerState = Playerstates.IDLE;
             animLength = new int[] { 3, 2, 2, 3, 4, 3 };
-            jumpHeight = 10;
+            jumpHeight = 15;
         }
 
         public void init()
@@ -37,7 +37,7 @@ namespace Valkyrie_Nyr
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, false, 10, 30, 20, new Vector2(10, 10)); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero); } return nyr; } }
 
         //this method is called, if the Player dies/falls out of the world
         public void gameOver()
@@ -51,12 +51,9 @@ namespace Valkyrie_Nyr
 
         }
 
-        //moves the Player
-        public void move(Vector2 moveValue)
+        public void activateTrigger()
         {
-            Vector2 newPos = position + moveValue;
-
-            GameObject[] collidedObjects = Collision(Level.Current.gameObjects.ToArray(), newPos);
+            GameObject[] collidedObjects = Collision(Level.Current.gameObjects.ToArray(), position);
 
             foreach (GameObject element in collidedObjects)
             {
@@ -64,13 +61,22 @@ namespace Valkyrie_Nyr
                 {
                     collect(element);
                     Level.Current.gameObjects.Remove(element);
-                }
-                else
-                {
-                    return;
+                    for (int j = 0; j < Level.Current.triggerObjects.Count; j++)
+                    {
+                        if (Level.Current.triggerObjects[j] == element)
+                        {
+                            Level.Current.triggerObjects.RemoveAt(j);
+                        }
+                    }
                 }
             }
+        }
 
+        //moves the Player
+        public void move(Vector2 moveValue)
+        {
+            Vector2 newPos = position + moveValue;
+            
             position = newPos;
         }
 
@@ -94,25 +100,6 @@ namespace Valkyrie_Nyr
             {
                 spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int)frame, 20, 20, 30), Color.White);
             }
-        }
-
-        //move the PLayer up, until it hit something or the gravition gets too strong and pulls him down
-        public void jump(GameTime gameTime)
-        {
-            GameObject[] collidedObjects;
-            collidedObjects = this.Collision(Level.Current.gameObjects.ToArray(), this.position - new Vector2(0, jumpHeight));
-
-            foreach(GameObject element in collidedObjects)
-            {
-                if (!element.isTrigger)
-                {
-                    States.CurrentPlayerState = Playerstates.IDLE;
-                    return;
-                }
-            }
-            
-            onGround = false;
-            position.Y -= jumpHeight;
         }
     }
 }

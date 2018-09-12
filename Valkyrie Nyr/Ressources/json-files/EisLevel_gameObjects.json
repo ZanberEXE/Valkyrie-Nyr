@@ -1,0 +1,52 @@
+[
+  {
+    "name": "platform",
+    "isStationary": true,
+    "isTrigger": false,
+    "mass": 0,
+    "height": 50,
+    "width": 250,
+    "position": "500, 1250",
+	"triggerType": ""
+  },
+  {
+    "name": "ground",
+    "isStationary": true,
+    "isTrigger": false,
+    "mass": 0,
+    "height": 30,
+    "width": 100,
+    "position": "0, 100",
+	"triggerType": ""
+  },
+  {
+    "name": "ground",
+    "isStationary": true,
+    "isTrigger": false,
+    "mass": 0,
+    "height": 50,
+    "width": 300,
+    "position": "0, 1500",
+	"triggerType": ""
+  },
+  {
+    "name": "ground",
+    "isStationary": true,
+    "isTrigger": false,
+    "mass": 0,
+    "height": 200,
+    "width": 10000,
+    "position": "0, 9900",
+	"triggerType": ""
+  },
+  {
+    "name": "platform",
+    "isStationary": true,
+    "isTrigger": false,
+    "mass": 0,
+    "height": 10,
+    "width": 100,
+    "position": "200, 770",
+	"triggerType": ""
+  }
+]

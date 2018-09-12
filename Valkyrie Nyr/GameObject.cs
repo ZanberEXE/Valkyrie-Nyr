@@ -12,7 +12,6 @@ namespace Valkyrie_Nyr
     {
         //Constants
         public string name;
-        public bool isStationary;
         public bool isTrigger;
         public int mass;
         public int height;
@@ -26,13 +25,12 @@ namespace Valkyrie_Nyr
         public Texture2D sprite;
 
         //Constructor
-        public GameObject(string _name, bool _isStationary, bool _isTrigger, int _mass, int _height, int _width, Vector2 _position)
+        public GameObject(string _name, bool _isTrigger, int _mass, int _height, int _width, Vector2 _position)
         {
             onGround = false;
             gravValue = 1;
             gravitation = 1;
             name = _name;
-            isStationary = _isStationary;
             isTrigger = _isTrigger;
             mass = _mass;
             height = _height;
@@ -82,29 +80,45 @@ namespace Valkyrie_Nyr
 
             return result.ToArray();
         }
-
-        //let the gameObject fall or not, if collided with the ground
-        public void Fall(GameTime gameTime, GameObject[] gameObjects)
+        
+        //let obejct fall an return position, that is actually accessable
+        public Vector2 Fall(GameTime gameTime, GameObject[] gameObjects)
         {
-            if(!isStationary)
+            Vector2 newPosition = new Vector2(position.X, position.Y + mass * gravitation * gravValue * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            GameObject[] collidedObjects = Collision(gameObjects, newPosition); //all Objects, that you would Collide with if you'd fall
+
+            bool thisIsInsideElementX;
+            bool elementIsInsideThisX;
+            bool thisIsOnTopOfElement;
+
+            //List of grounds, so you always land at the highest PLatform, when you fall
+            List<int> grounds = new List<int>();
+
+            foreach (GameObject element in collidedObjects)
             {
-                Vector2 newPosition = new Vector2(position.X, position.Y + mass * gravitation * gravValue * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                GameObject[] collidedObjects = Collision(gameObjects, newPosition); //all Objects, that you would Collide with if you'd fall
-                
-                foreach (GameObject element in collidedObjects)
+                if (element.name == "ground" || element.name == "platform")
                 {
-                    if (!element.isTrigger && (element.name == "ground" || element.name == "platform"))
+                    thisIsInsideElementX = this.position.X + this.width > element.position.X && this.position.X < element.position.X + element.width;
+                    elementIsInsideThisX = this.position.X + this.width > element.position.X + element.width && this.position.X < element.position.X;
+                    thisIsOnTopOfElement = this.position.Y + this.height < element.position.Y + 1;
+
+                    if ((thisIsInsideElementX || elementIsInsideThisX ) && thisIsOnTopOfElement)
                     {
                         gravValue = 1;
                         onGround = true;
-                        this.position.Y = element.position.Y - this.height - 0.1f;
-                        return;
+                        grounds.Add((int) element.position.Y);
                     }
                 }
-                onGround = false;
-                position = newPosition;
-                gravValue += 2.5f;
             }
+
+            if(grounds.Count > 0)
+            {
+                return new Vector2(this.position.X, grounds.Min() - this.height - 0.1f);
+            }
+
+            onGround = false;
+            gravValue += 2.5f;
+            return newPosition;
         }
 
         public void render (GameTime gametime, SpriteBatch spriteBatch)
