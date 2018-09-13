@@ -6,10 +6,11 @@ using System.Collections.Generic;
 namespace Valkyrie_Nyr
 {
 
-    class Player : GameObject
+    class Player : Entity
     {
 
         private static Player nyr;
+        
 
         private int[] animLength;
         
@@ -21,23 +22,27 @@ namespace Valkyrie_Nyr
 
         public float jumpHeight;
 
-        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position) : base(name, isTrigger, mass, height, width, position)
+        
+
+        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, isTrigger, mass, height, width, position, hp, dmg)
         {
             speed = 500;
             frame = 0;
             States.CurrentPlayerState = Playerstates.IDLE;
             animLength = new int[] { 3, 2, 2, 3, 4, 3 };
             jumpHeight = 15;
+            
         }
 
         public void init()
         {
-            spriteSheet = Game1.Ressources.Load<Texture2D>("test");
+            //spriteSheet = Game1.Ressources.Load<Texture2D>("test");
             States.CurrentPlayerState = Playerstates.IDLE;
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero, 2000, 200); } return nyr; } }
+
 
         //this method is called, if the Player dies/falls out of the world
         public void gameOver()
@@ -81,7 +86,7 @@ namespace Valkyrie_Nyr
         }
 
         //TODO: überarbeiten (nicht ganz funktionstauglich)
-        public void render(SpriteBatch spriteBatch, GameTime gameTime)
+        /*public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
 
             frame += (float)gameTime.ElapsedGameTime.TotalSeconds * 2; //gibt die geschwindigkeit der Animation an
@@ -100,6 +105,6 @@ namespace Valkyrie_Nyr
             {
                 spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int)frame, 20, 20, 30), Color.White);
             }
-        }
+        }*/
     }
 }

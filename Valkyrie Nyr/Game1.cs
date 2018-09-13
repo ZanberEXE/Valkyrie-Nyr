@@ -39,6 +39,7 @@ namespace Valkyrie_Nyr
         {
 
             pxl = Game1.Ressources.Load<Texture2D>("index");
+            
 
             //create Nyr
             Player.Nyr.init();
@@ -132,6 +133,7 @@ namespace Valkyrie_Nyr
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            
 
             if (States.CurrentGameState == GameStates.PLAYING)
             {

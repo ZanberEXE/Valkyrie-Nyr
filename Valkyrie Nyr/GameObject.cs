@@ -128,7 +128,7 @@ namespace Valkyrie_Nyr
                 if (Game1.Ressources.RootDirectory.Contains(name))
                 {
                     sprite = Game1.Ressources.Load<Texture2D>(name);
-                }
+                 }
                 else
                 {
                     return;

@@ -13,8 +13,11 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
+        public Enemy ryn;
+
         public List<GameObject> gameObjects;
         public List<Trigger> triggerObjects;
+        public List<Entity> entityObjects;
 
         public int height;
         public int width;
@@ -31,22 +34,31 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(Point startPosition, Point levelBorders, string levelName)
         {
+            ryn = new Enemy("ryn", false, 5, 100, 60, new Vector2(300, 0), 300, 20);
+
             width = levelBorders.X;
             height = levelBorders.Y;
             
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
-            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_triggerObjects.json"));
             
+            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_triggerObjects.json"));
+
+            entityObjects = new List<Entity>();
+
+            entityObjects.Add(ryn);
+            entityObjects.Add(Player.Nyr);
+
             foreach (Trigger element in triggerObjects)
             {
                 gameObjects.Add(element);
             }
 
+
             foreach (GameObject element in gameObjects)
             {
                 element.position += startPosition.ToVector2();
             }
-
+            gameObjects.Add(ryn);
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
 
@@ -96,6 +108,9 @@ namespace Valkyrie_Nyr
                             States.CurrentPlayerState = Playerstates.JUMP;
                             moveValue.Y -= Player.Nyr.jumpHeight;
                         }
+                        break;
+                    case Keys.Enter:
+                        Player.Nyr.attack();
                         break;
                 }
             }
@@ -216,7 +231,10 @@ namespace Valkyrie_Nyr
             spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
             //Draw all GameObjects such as Enemys
-            Player.Nyr.render(spriteBatch, gameTime);
+            foreach (Entity element in entityObjects)
+            {
+                element.entityRender(gameTime, spriteBatch);
+            }
         }
     }
 }
