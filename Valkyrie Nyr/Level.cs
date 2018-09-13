@@ -43,25 +43,28 @@ namespace Valkyrie_Nyr
             
             triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_triggerObjects.json"));
 
-            entityObjects = new List<Entity>();
+            entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
 
-            entityObjects.Add(ryn);
-            entityObjects.Add(Player.Nyr);
+          
 
             foreach (Trigger element in triggerObjects)
             {
                 gameObjects.Add(element);
             }
-
+            foreach (Entity element in entityObjects)
+            {
+                gameObjects.Add(element);
+            }
 
             foreach (GameObject element in gameObjects)
             {
                 element.position += startPosition.ToVector2();
             }
-            gameObjects.Add(ryn);
+            
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
 
+            entityObjects.Add(Player.Nyr);
             gameObjects.Add(Player.Nyr);
 
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
