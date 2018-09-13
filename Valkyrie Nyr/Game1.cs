@@ -136,11 +136,39 @@ namespace Valkyrie_Nyr
             if (States.CurrentGameState == GameStates.PLAYING)
             {
                 Level.Current.render(spriteBatch, gameTime);
+
                 //draw Colliders for Debugging
                 //TODO: Delete
+                int r = 0;
+                int g = 0;
+                int b = 0;
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), Color.LightGreen * 0.5f);
+                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 255));
+                    if(b == 0 && r != 256)
+                    {
+                        r += 8;
+                    }
+                    if (r == 256 && g != 256)
+                    {
+                        g += 8;
+                    }
+                    if (g == 256 && b != 256)
+                    {
+                        b += 8;
+                    }
+                    if(b == 256 && r != 0)
+                    {
+                        r -= 8;
+                    }
+                    if(r == 0 && g != 0)
+                    {
+                        g -= 8;
+                    }
+                    if(g == 0 && b != 0)
+                    {
+                        b -= 8;
+                    }
                 }
             }
             else if (States.CurrentGameState == GameStates.MAINMENU)
