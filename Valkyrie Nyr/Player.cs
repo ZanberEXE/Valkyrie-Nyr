@@ -10,7 +10,7 @@ namespace Valkyrie_Nyr
     {
 
         private static Player nyr;
-        
+        public int nyrFacing;
 
         private int[] animLength;
         
@@ -81,7 +81,15 @@ namespace Valkyrie_Nyr
         public void move(Vector2 moveValue)
         {
             Vector2 newPos = position + moveValue;
-            
+            /*if(moveValue.X < 0)
+            {
+                nyrFacing = 1;
+            }
+            if (moveValue.X > 0)
+            {
+                nyrFacing = 2;
+            }
+                                                            //nyrFacing = Entity.facingDirection(position.X, newPos.X);*/
             position = newPos;
         }
 

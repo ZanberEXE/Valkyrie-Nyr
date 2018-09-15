@@ -22,9 +22,20 @@ namespace Valkyrie_Nyr
             damage = dmg;
             hitbox = new GameObject("hitbox", true, 0, 20, 100, new Vector2(60, 100));
         }
-
-        public void attack()
+            
+        public void attack(int lookPos)
         {
+            // turns the hitbox to the left of the character
+            if(lookPos == 1 && hitbox.position.X > 0)
+            {
+                hitbox.position.X = hitbox.position.X * -1;
+            }
+            // turn the hitbos to the right of the character
+            if (lookPos == 2 && hitbox.position.X < 0)
+            {
+                hitbox.position.X = hitbox.position.X * -1;
+            }
+
             GameObject[] hittetObjects = Collision(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
             List<Entity> hittetEntitys = new List<Entity>();
 
@@ -64,5 +75,7 @@ namespace Valkyrie_Nyr
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
             spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
         }
+
+      
     }
 }

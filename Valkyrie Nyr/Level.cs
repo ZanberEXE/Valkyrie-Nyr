@@ -22,6 +22,8 @@ namespace Valkyrie_Nyr
         public int height;
         public int width;
 
+        int atkCooldown;
+
         public Vector2 positionBGSprite;
 
         private static Level currentLevel;
@@ -101,9 +103,11 @@ namespace Valkyrie_Nyr
                 {
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        Player.Nyr.nyrFacing = 1;
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        Player.Nyr.nyrFacing = 2;
                         break;
                     case Keys.Space:
                         if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP)
@@ -112,12 +116,22 @@ namespace Valkyrie_Nyr
                             moveValue.Y -= Player.Nyr.jumpHeight;
                         }
                         break;
-                    case Keys.Enter:
-                        Player.Nyr.attack();
+                    case Keys.LeftShift:
+                        if (atkCooldown == 0)
+                        { 
+                            Player.Nyr.attack(Player.Nyr.nyrFacing);
+                            atkCooldown = 60;
+                        }
+                        
                         break;
                 }
             }
 
+            if (atkCooldown > 0)
+            {
+                atkCooldown--;
+            }
+                
             //Let PLayer fall and save the moveValue in overall Movement
             moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
 
