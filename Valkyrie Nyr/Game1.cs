@@ -141,6 +141,7 @@ namespace Valkyrie_Nyr
 
                 //draw Colliders for Debugging
                 //TODO: Delete
+                /*  UM ANIMATION ZU PRÜFEN
                 int r = 0;
                 int g = 0;
                 int b = 0;
@@ -172,6 +173,7 @@ namespace Valkyrie_Nyr
                         b -= 8;
                     }
                 }
+                */// UM ANIMATION ZU PRÜFEN
             }
             else if (States.CurrentGameState == GameStates.MAINMENU)
             {

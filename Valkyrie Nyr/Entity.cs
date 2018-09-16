@@ -66,13 +66,17 @@ namespace Valkyrie_Nyr
         
         public void entityRender(GameTime gametime, SpriteBatch spriteBatch)
         {
-            if (sprite == null)
+            /*
+             * if (sprite == null)
             {
                     sprite = Game1.Ressources.Load<Texture2D>(name);
             }
 
             spriteBatch.Draw(sprite, new Rectangle(position.ToPoint(), new Point(width, height)), Color.White);
+            */
+
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
+            // draw hitbox
             spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
         }
 

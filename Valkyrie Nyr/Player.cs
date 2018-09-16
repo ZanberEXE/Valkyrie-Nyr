@@ -12,26 +12,30 @@ namespace Valkyrie_Nyr
         private static Player nyr;
         public int nyrFacing;
 
-        private int[] animLength;
-        
-        private float frame;
-
-        private Texture2D spriteSheet;
-
         public float speed;
-
         public float jumpHeight;
 
-        
+        public Texture2D animTex { get; set; }
 
-        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, isTrigger, mass, height, width, position, hp, dmg)
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+
+        private int currentFrame;
+        private int totalFrames;
+        private int timeSinceLastFrame = 0;
+        private int millisecondsPerFrame = 5;
+
+        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg, Texture2D texture, int rows, int columns) : base(name, isTrigger, mass, height, width, position, hp, dmg)
         {
             speed = 500;
-            frame = 0;
             States.CurrentPlayerState = Playerstates.IDLE;
-            animLength = new int[] { 3, 2, 2, 3, 4, 3 };
             jumpHeight = 15;
-            
+
+            animTex = texture;
+            Rows = rows;
+            Columns = columns;
+            currentFrame = 0;
+            totalFrames = Rows * Columns;
         }
 
         public void init()
@@ -41,7 +45,7 @@ namespace Valkyrie_Nyr
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero, 2000, 200); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero, 2000, 200, Game1.Ressources.Load<Texture2D>("Player/Idle"), 1, 25); } return nyr; } }
 
 
         //this method is called, if the Player dies/falls out of the world
@@ -81,18 +85,40 @@ namespace Valkyrie_Nyr
         public void move(Vector2 moveValue)
         {
             Vector2 newPos = position + moveValue;
-            /*if(moveValue.X < 0)
-            {
-                nyrFacing = 1;
-            }
-            if (moveValue.X > 0)
-            {
-                nyrFacing = 2;
-            }
-                                                            //nyrFacing = Entity.facingDirection(position.X, newPos.X);*/
+
             position = newPos;
         }
 
+        public void Update(GameTime gameTime)
+        {
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeSinceLastFrame > millisecondsPerFrame)
+            {
+                timeSinceLastFrame -= millisecondsPerFrame;
+
+                currentFrame++;
+
+                timeSinceLastFrame = 0;
+
+                if (currentFrame == totalFrames)
+                {
+                    currentFrame = 0;
+                }
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            int width = animTex.Width / Columns;
+            int height = animTex.Height / Rows;
+            int row = (int)((float)currentFrame / Columns);
+            int column = currentFrame % Columns;
+
+            Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
+            Rectangle destinationRectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+
+            spriteBatch.Draw(animTex, destinationRectangle, sourceRectangle, Color.White);
+        }
         //TODO: überarbeiten (nicht ganz funktionstauglich)
         /*public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {

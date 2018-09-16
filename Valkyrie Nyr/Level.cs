@@ -83,6 +83,8 @@ namespace Valkyrie_Nyr
         {
             Vector2 moveValue = Vector2.Zero;
 
+            Player.Nyr.Update(gameTime);
+
             if (States.CurrentPlayerState == Playerstates.JUMP)
             {
                 if(!Player.Nyr.onGround)
@@ -104,10 +106,12 @@ namespace Valkyrie_Nyr
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.nyrFacing = 1;
+                        Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Walking Side");
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.nyrFacing = 2;
+                        Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Walking Side");
                         break;
                     case Keys.Space:
                         if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP)
@@ -120,6 +124,7 @@ namespace Valkyrie_Nyr
                         if (atkCooldown == 0)
                         { 
                             Player.Nyr.attack(Player.Nyr.nyrFacing);
+                            Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Attack");
                             atkCooldown = 60;
                         }
                         
@@ -252,6 +257,7 @@ namespace Valkyrie_Nyr
             {
                 element.entityRender(gameTime, spriteBatch);
             }
+            Player.Nyr.Draw(spriteBatch);
         }
     }
 }
