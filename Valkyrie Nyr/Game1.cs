@@ -58,7 +58,7 @@ namespace Valkyrie_Nyr
             base.Initialize();
         }
 
-        //TODO: delete
+        //TODO: proper content
         void mMainMenu()
         {
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
@@ -143,6 +143,7 @@ namespace Valkyrie_Nyr
         {
 
             //TODO:deleted
+            //TODO:Lose Screen when dead and respawn?
             if (States.CurrentPlayerState == Playerstates.DEAD)
             {
                 Exit();
