@@ -16,27 +16,27 @@ namespace Valkyrie_Nyr
 
         private GameObject hitbox;
 
-        public Entity(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, isTrigger, mass, height, width, position)
+        public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position)
         {
             health = hp;
             damage = dmg;
-            hitbox = new GameObject("hitbox", true, 0, 20, 100, new Vector2(60, 100));
+            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(60, 100));
         }
             
         public void attack(int lookPos)
         {
             // turns the hitbox to the left of the character
-            if(lookPos == 1 && hitbox.position.X > 0)
+            if(lookPos == -1 && hitbox.position.X > 0)
             {
                 hitbox.position.X = hitbox.position.X * -1;
             }
             // turn the hitbos to the right of the character
-            if (lookPos == 2 && hitbox.position.X < 0)
+            if (lookPos == 1 && hitbox.position.X < 0)
             {
                 hitbox.position.X = hitbox.position.X * -1;
             }
 
-            GameObject[] hittetObjects = Collision(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
+            GameObject[] hittetObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
             List<Entity> hittetEntitys = new List<Entity>();
 
             if (hittetObjects.Length == 0)

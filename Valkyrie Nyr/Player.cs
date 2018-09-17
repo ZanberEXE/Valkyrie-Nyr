@@ -14,38 +14,52 @@ namespace Valkyrie_Nyr
 
         public float speed;
         public float jumpHeight;
+        public bool onIce;
 
-        public Texture2D animTex { get; set; }
+        public Texture2D[] animTex { get; set; }
 
         public int Rows { get; set; }
         public int Columns { get; set; }
 
-        private int currentFrame;
+        public int currentFrame;
         private int totalFrames;
         private int timeSinceLastFrame = 0;
         private int millisecondsPerFrame = 5;
 
-        public Player(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg, Texture2D texture, int rows, int columns) : base(name, isTrigger, mass, height, width, position, hp, dmg)
+        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, string textureType, int rows, int columns) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
             speed = 500;
-            States.CurrentPlayerState = Playerstates.IDLE;
             jumpHeight = 15;
 
-            animTex = texture;
+            animTex = new Texture2D[]
+            {
+                Game1.Ressources.Load<Texture2D>("Player/Idle"),
+                Game1.Ressources.Load<Texture2D>("Player/Walking Side"),
+                Game1.Ressources.Load<Texture2D>("Player/Jump"),
+                Game1.Ressources.Load<Texture2D>("Player/Attack"),
+                Game1.Ressources.Load<Texture2D>("Player/Hurt"),
+                Game1.Ressources.Load<Texture2D>("Player/Dead"),
+                Game1.Ressources.Load<Texture2D>("Player/Dance"),
+                Game1.Ressources.Load<Texture2D>("Player/Falling"),
+                Game1.Ressources.Load<Texture2D>("Player/Landing"),
+                Game1.Ressources.Load<Texture2D>("Player/Stop Running"),
+                Game1.Ressources.Load<Texture2D>("Player/Crouch")
+            };
+            
             Rows = rows;
             Columns = columns;
             currentFrame = 0;
             totalFrames = Rows * Columns;
+            onIce = false;
         }
 
         public void init()
         {
-            //spriteSheet = Game1.Ressources.Load<Texture2D>("test");
             States.CurrentPlayerState = Playerstates.IDLE;
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", false, 10, 180, 120, Vector2.Zero, 2000, 200, Game1.Ressources.Load<Texture2D>("Player/Idle"), 1, 25); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", "", 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
 
 
         //this method is called, if the Player dies/falls out of the world
@@ -55,27 +69,89 @@ namespace Valkyrie_Nyr
         }
 
         //put here stuff that happens if you collect something
-        public void collect(GameObject collectable)
+        public void trigger(GameObject activatedTrigger)
         {
+            switch(activatedTrigger.triggerType)
+            {
+                case "collectable":
+                    collect(activatedTrigger.name);
+                    break;
+                case "area":
+                    areaTrigger(activatedTrigger.name);
+                    break;
+                case "loader":
+                    loader(activatedTrigger.name);
+                    break;
+            }
+        }
 
+        private void collect(string item)
+        {
+            switch (item)
+            {
+                case "health":
+                    this.health += 10;
+                    break;
+            }
+        }
+
+        private void areaTrigger(string activatedArea)
+        {
+            switch (activatedArea)
+            {
+                case "lava":
+                    States.CurrentPlayerState = Playerstates.DEAD;
+                    break;
+                case "ice":
+                    onIce = true;
+                    break;
+            }
+        }
+
+        private void loader(string newLevel)
+        {
+            switch (newLevel)
+            {
+                case "BossstageLoader":
+                    Level.Current.loadLevel("Bossstage");
+                    break;
+                case "ErdLevelLoader":
+                    Level.Current.loadLevel("ErdLevel");
+                    break;
+                case "EisLevelLoader":
+                    Level.Current.loadLevel("EisLevel");
+                    break;
+                case "FeuerLevelLoader":
+                    Level.Current.loadLevel("FeuerLevel");
+                    break;
+                case "BlitzLevelLoader":
+                    Level.Current.loadLevel("BlitzLevel");
+                    break;
+                case "OverworldLoader":
+                    Level.Current.loadLevel("Overworld");
+                    break;
+                case "HubLoader":
+                    Level.Current.loadLevel("Hub");
+                    break;
+            }
         }
 
         public void activateTrigger()
         {
-            GameObject[] collidedObjects = Collision(Level.Current.gameObjects.ToArray(), position);
+            GameObject[] collidedObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), position);
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.isTrigger)
+                if (element.triggerType == "")
                 {
-                    collect(element);
+                    trigger(element);
                     Level.Current.gameObjects.Remove(element);
                     for (int j = 0; j < Level.Current.triggerObjects.Count; j++)
                     {
-                        if (Level.Current.triggerObjects[j] == element)
-                        {
-                            Level.Current.triggerObjects.RemoveAt(j);
-                        }
+                        //if (Level.Current.triggerObjects[j] == element)
+                        //{
+                        //    Level.Current.triggerObjects.RemoveAt(j);
+                        //}
                     }
                 }
             }
@@ -103,42 +179,30 @@ namespace Valkyrie_Nyr
                 if (currentFrame == totalFrames)
                 {
                     currentFrame = 0;
+                    States.CurrentPlayerState = States.NextPlayerState;
                 }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            int width = animTex.Width / Columns;
-            int height = animTex.Height / Rows;
+            int width = animTex[(int)States.CurrentPlayerState].Width / Columns;
+            int height = animTex[(int)States.CurrentPlayerState].Height / Rows;
             int row = (int)((float)currentFrame / Columns);
             int column = currentFrame % Columns;
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
 
-            spriteBatch.Draw(animTex, destinationRectangle, sourceRectangle, Color.White);
+            if (nyrFacing == 1)
+            {
+                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState], destinationRectangle, sourceRectangle, Color.White);
+            }
+            else
+            {
+                destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
+                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState], destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f );
+            }
         }
-        //TODO: überarbeiten (nicht ganz funktionstauglich)
-        /*public void render(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-
-            frame += (float)gameTime.ElapsedGameTime.TotalSeconds * 2; //gibt die geschwindigkeit der Animation an
-
-            if ((int)frame > animLength[(int)States.CurrentPlayerState])
-            {
-                frame = 0;
-                States.CurrentPlayerState = States.NextPlayerState;
-            }
-
-            if (States.CurrentPlayerState == Playerstates.IDLE)
-            {
-                spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int) frame, 0, 20, 30), Color.White);
-            }
-            else if (States.CurrentPlayerState == Playerstates.WALK)
-            {
-                spriteBatch.Draw(spriteSheet, position, new Rectangle(30 * (int)frame, 20, 20, 30), Color.White);
-            }
-        }*/
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Valkyrie_Nyr
 {
-    enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DEAD };
+    enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DEAD, DANCE, FALL, LAND, STOP, CROUCH };
 
     enum GameStates { MAINMENU, PLAYING, EXIT }
 
@@ -18,7 +18,7 @@ namespace Valkyrie_Nyr
         private static Playerstates nextPlayerState;
 
         public static GameStates CurrentGameState { get { return currentGameState; } set { currentGameState = value; } }
-        public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; nextPlayerState = value; } }
+        public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; Player.Nyr.currentFrame = 0; } }
         public static Playerstates NextPlayerState { get { return nextPlayerState; } set { nextPlayerState = value; } }
 
     }

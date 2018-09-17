@@ -12,7 +12,7 @@ namespace Valkyrie_Nyr
     {
         //Constants
         public string name;
-        public bool isTrigger;
+        public string triggerType;
         public int mass;
         public int height;
         public int width;
@@ -25,13 +25,13 @@ namespace Valkyrie_Nyr
         public Texture2D sprite;
 
         //Constructor
-        public GameObject(string _name, bool _isTrigger, int _mass, int _height, int _width, Vector2 _position)
+        public GameObject(string _name, string _triggerType, int _mass, int _height, int _width, Vector2 _position)
         {
             onGround = false;
             gravValue = 1;
             gravitation = 1;
             name = _name;
-            isTrigger = _isTrigger;
+            triggerType = _triggerType;
             mass = _mass;
             height = _height;
             width = _width;
@@ -39,12 +39,17 @@ namespace Valkyrie_Nyr
         }
 
         //Check Collision of Objects and returns Array with all collided Objects or null, if none has collided
-        public GameObject[] Collision(GameObject[] gameObjects, Vector2 newPos)
+        //public GameObject[] Collision(GameObject[] gameObjects, Vector2 newPos)
+        public T[] Collision<T>(GameObject[] gameObjects, Vector2 newPos)
         {
-            List<GameObject> result = new List<GameObject>();
+            List<T> result = new List<T>();
 
             foreach (GameObject element in gameObjects)
             {
+                if(element.GetType() != typeof(T))
+                {
+                    continue;
+                }
 
                 //TODO: not collided with top if platform
 
@@ -69,11 +74,11 @@ namespace Valkyrie_Nyr
                 {
                     if (collider.Contains(newPosCorner1) || collider.Contains(newPosCorner2) || collider.Contains(newPosCorner3) || collider.Contains(newPosCorner4))
                     {
-                        result.Add(element);
+                        result.Add((T) Convert.ChangeType(element, typeof(T)));
                     }
                     else if(newPosRect.Contains(colliderCorner1) || newPosRect.Contains(colliderCorner2) || newPosRect.Contains(colliderCorner3) || newPosRect.Contains(colliderCorner4))
                     {
-                        result.Add(element);
+                        result.Add((T) Convert.ChangeType(element, typeof(T)));
                     }
                 }
             }
@@ -85,7 +90,7 @@ namespace Valkyrie_Nyr
         public Vector2 Fall(GameTime gameTime, GameObject[] gameObjects)
         {
             Vector2 newPosition = new Vector2(position.X, position.Y + mass * gravitation * gravValue * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            GameObject[] collidedObjects = Collision(gameObjects, newPosition); //all Objects, that you would Collide with if you'd fall
+            GameObject[] collidedObjects = Collision<GameObject>(gameObjects, newPosition); //all Objects, that you would Collide with if you'd fall
 
             bool thisIsInsideElementX;
             bool elementIsInsideThisX;
@@ -121,7 +126,7 @@ namespace Valkyrie_Nyr
             return newPosition;
         }
 
-        public void render (GameTime gametime, SpriteBatch spriteBatch)
+        public void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
             if(sprite == null)
             {

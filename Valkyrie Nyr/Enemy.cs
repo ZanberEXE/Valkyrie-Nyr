@@ -11,7 +11,7 @@ namespace Valkyrie_Nyr
     class Enemy : Entity
     {
         
-        public Enemy(string name, bool isTrigger, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, isTrigger, mass, height, width, position, hp, dmg)
+        public Enemy(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
           
         }

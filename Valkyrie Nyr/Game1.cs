@@ -61,28 +61,37 @@ namespace Valkyrie_Nyr
         //TODO: delete
         void mainMenu()
         {
+
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
                 switch (element)
                 {
                     case Keys.NumPad1:
-                        Level.Current.loadLevel(new Point(0, -9000), new Point(7500 * Camera.Main.zoom, 2500 * Camera.Main.zoom), "Overworld");
+                        Level.Current.loadLevel("Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.NumPad2:
-                        Level.Current.loadLevel(Point.Zero, new Point(3750 * Camera.Main.zoom, 1250 * Camera.Main.zoom), "ErdLevel");
+                        Level.Current.loadLevel("ErdLevel");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.NumPad3:
-                        //Level.Current.loadLevel(Point.Zero, new Point(15000 * Camera.Main.zoom, 5000 * Camera.Main.zoom), "Level_Eis_halfed");
-                        //States.CurrentGameState = GameStates.PLAYING;
+                        Level.Current.loadLevel("EisLevel");
+                        States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.NumPad4:
-                        Level.Current.loadLevel(Point.Zero, new Point(3750 * Camera.Main.zoom, 1250 * Camera.Main.zoom), "FeuerLevel");
+                        Level.Current.loadLevel("FeuerLevel");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.NumPad5:
-                        Level.Current.loadLevel(Point.Zero, new Point(3750 * Camera.Main.zoom, 1250 * Camera.Main.zoom), "BlitzLevel");
+                        Level.Current.loadLevel("BlitzLevel");
+                        States.CurrentGameState = GameStates.PLAYING;
+                        return;
+                    case Keys.NumPad6:
+                        Level.Current.loadLevel("Bossstage");
+                        States.CurrentGameState = GameStates.PLAYING;
+                        return;
+                    case Keys.NumPad7:
+                        Level.Current.loadLevel("Hub");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.Escape:
@@ -141,13 +150,13 @@ namespace Valkyrie_Nyr
 
                 //draw Colliders for Debugging
                 //TODO: Delete
-                /*  UM ANIMATION ZU PRÜFEN
+                //UM ANIMATION ZU PRÜFEN
                 int r = 0;
                 int g = 0;
                 int b = 0;
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 255));
+                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 100));
                     if(b == 0 && r != 256)
                     {
                         r += 8;
@@ -173,7 +182,7 @@ namespace Valkyrie_Nyr
                         b -= 8;
                     }
                 }
-                */// UM ANIMATION ZU PRÜFEN
+                //UM ANIMATION ZU PRÜFEN
             }
             else if (States.CurrentGameState == GameStates.MAINMENU)
             {

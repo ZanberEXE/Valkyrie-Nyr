@@ -34,12 +34,35 @@ namespace Valkyrie_Nyr
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
         //loads the level
-        public void loadLevel(Point startPosition, Point levelBorders, string levelName)
+        public void loadLevel(string levelName)
         {
-            ryn = new Enemy("ryn", false, 5, 100, 60, new Vector2(300, 0), 300, 20);
+            ryn = new Enemy("ryn", "", 5, 100, 60, new Vector2(300, 0), 300, 20);
 
-            width = levelBorders.X;
-            height = levelBorders.Y;
+            Point startPosition;
+
+            switch (levelName)
+            {
+                case "Bossstage":
+                    width = 7500 * Camera.Main.zoom;
+                    height = 2500 * Camera.Main.zoom;
+                    startPosition = new Point(0, -9000);
+                    break;
+                case "Hub":
+                    width = 1250 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(0, 0);
+                    break;
+                case "Overworld":
+                    width = 3000 * Camera.Main.zoom;
+                    height = 1000 * Camera.Main.zoom;
+                    startPosition = new Point(0, 0);
+                    break;
+                default:
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(0, -4500);
+                    break;
+            }
             
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
             
@@ -49,10 +72,10 @@ namespace Valkyrie_Nyr
 
           
 
-            foreach (Trigger element in triggerObjects)
-            {
-                gameObjects.Add(element);
-            }
+            //foreach (Trigger element in triggerObjects)
+            //{
+            //    gameObjects.Add(element);
+            //}
             foreach (Entity element in entityObjects)
             {
                 gameObjects.Add(element);
@@ -98,38 +121,60 @@ namespace Valkyrie_Nyr
             }
 
             //get Input from Keyboard
+            bool anyKeyPressed = false;
+            
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
+                anyKeyPressed = true;
 
                 switch (element)
                 {
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = 1;
-                        Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Walking Side");
+                        Player.Nyr.nyrFacing = -1;
+                        if (States.CurrentPlayerState != Playerstates.WALK && States.CurrentPlayerState != Playerstates.JUMP)
+                        {
+                            States.CurrentPlayerState = Playerstates.WALK;
+                            States.NextPlayerState = Playerstates.WALK;
+                        }
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = 2;
-                        Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Walking Side");
+                        Player.Nyr.nyrFacing = 1;
+                        if (States.CurrentPlayerState != Playerstates.WALK && States.CurrentPlayerState != Playerstates.JUMP)
+                        {
+                            States.CurrentPlayerState = Playerstates.WALK;
+                            States.NextPlayerState = Playerstates.WALK;
+                        }
                         break;
                     case Keys.Space:
-                        if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP)
+                        if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP && States.CurrentPlayerState != Playerstates.JUMP)
                         {
                             States.CurrentPlayerState = Playerstates.JUMP;
+                            States.NextPlayerState = Playerstates.JUMP;
                             moveValue.Y -= Player.Nyr.jumpHeight;
                         }
                         break;
                     case Keys.LeftShift:
                         if (atkCooldown == 0)
-                        { 
+                        {
+                            States.CurrentPlayerState = Playerstates.FIGHT;
+                            States.NextPlayerState = Playerstates.IDLE;
                             Player.Nyr.attack(Player.Nyr.nyrFacing);
-                            Player.Nyr.animTex = Game1.Ressources.Load<Texture2D>("Player/Attack");
                             atkCooldown = 60;
                         }
                         
                         break;
+                    default:
+                        States.CurrentPlayerState = Playerstates.IDLE;
+                        States.NextPlayerState = Playerstates.IDLE;
+                        break;
                 }
+            }
+
+            if(!anyKeyPressed)
+            {
+               States.NextPlayerState = Playerstates.IDLE;
             }
 
             if (atkCooldown > 0)
@@ -160,7 +205,7 @@ namespace Valkyrie_Nyr
         {
             Vector2 newPos = Player.Nyr.position + moveValue;
 
-            GameObject[] collidedObjects = Player.Nyr.Collision(gameObjects.ToArray(), newPos);
+            GameObject[] collidedObjects = Player.Nyr.Collision<GameObject>(gameObjects.ToArray(), newPos);
 
             bool collidedLeft = false;
             bool collidedRight = false;
@@ -168,6 +213,10 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
+                if (element.triggerType != "")
+                {
+                    continue;
+                }
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && element.name != "platform")
                 {
                     collidedLeft = true;
@@ -233,10 +282,10 @@ namespace Valkyrie_Nyr
                 {
                     for (int j = 0; j < triggerObjects.Count(); j++)
                     {
-                        if (triggerObjects[j] == gameObjects[i])
-                        {
-                            triggerObjects.RemoveAt(j);
-                        }
+                        //if (triggerObjects[j] == gameObjects[i])
+                        //{
+                        //    triggerObjects.RemoveAt(j);
+                        //}
                     }
                     gameObjects.RemoveAt(i);
                 }

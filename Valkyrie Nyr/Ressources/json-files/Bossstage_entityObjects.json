@@ -1,0 +1,12 @@
+[
+  {
+    "name": "ryn",
+    "isTrigger": false,
+    "mass": 6,
+    "height": 100,
+    "width": 60,
+    "position": "200, 9500",
+    "hp": 300,
+    "dmg": 20
+  }
+]
