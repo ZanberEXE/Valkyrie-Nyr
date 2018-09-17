@@ -36,7 +36,7 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(string levelName)
         {
-            ryn = new Enemy("ryn", "", 5, 100, 60, new Vector2(300, 0), 300, 20);
+            ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
 
             Point startPosition;
 
@@ -93,6 +93,9 @@ namespace Valkyrie_Nyr
             gameObjects.Add(Player.Nyr);
 
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
+
+            Camera.Main.position = Vector2.Zero;
+            Player.Nyr.position = Vector2.Zero;
         }
 
         //put here things like setup from enemies
@@ -174,6 +177,10 @@ namespace Valkyrie_Nyr
 
             if(!anyKeyPressed)
             {
+                if(States.CurrentPlayerState == Playerstates.WALK)
+                {
+                    States.CurrentPlayerState = Playerstates.STOP;
+                }
                States.NextPlayerState = Playerstates.IDLE;
             }
 
@@ -213,10 +220,11 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.triggerType != "")
+                if (element.triggerType != null)
                 {
                     continue;
                 }
+
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && element.name != "platform")
                 {
                     collidedLeft = true;

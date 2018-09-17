@@ -28,7 +28,7 @@ namespace Valkyrie_Nyr
 
         public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, string textureType, int rows, int columns) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
-            speed = 500;
+            speed = 700;
             jumpHeight = 15;
 
             animTex = new Texture2D[]
@@ -59,7 +59,7 @@ namespace Valkyrie_Nyr
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", "", 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
 
 
         //this method is called, if the Player dies/falls out of the world
@@ -142,7 +142,7 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.triggerType == "")
+                if (element.triggerType != null)
                 {
                     trigger(element);
                     Level.Current.gameObjects.Remove(element);

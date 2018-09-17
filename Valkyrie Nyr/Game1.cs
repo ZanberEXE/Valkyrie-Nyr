@@ -37,22 +37,14 @@ namespace Valkyrie_Nyr
 
         protected override void Initialize()
         {
-
+            //TODO:delete
             pxl = Game1.Ressources.Load<Texture2D>("index");
             
-
             //create Nyr
             Player.Nyr.init();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-
-
-            //load Level
-            //Level.Current.loadLevel(Point.Zero, new Point(15000 * 2, 5000 * 2), "Level_Overworld_halfed");
-
-            //set the borders of the Level to the Cameradd
-            
+                        
             States.CurrentGameState = GameStates.MAINMENU;
 
             base.Initialize();
@@ -66,7 +58,7 @@ namespace Valkyrie_Nyr
                 switch (element)
                 {
                     case Keys.D1:
-                        Level.Current.loadLevel(new Point(0, -9000), new Point(7500 * Camera.Main.zoom, 2500 * Camera.Main.zoom), "Overworld");
+                        Level.Current.loadLevel("Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
                     case Keys.D2:
@@ -142,19 +134,13 @@ namespace Valkyrie_Nyr
         protected override void Update(GameTime gameTime)
         {
 
-            //TODO:deleted
+            //TODO:delete
             //TODO:Lose Screen when dead and respawn?
             if (States.CurrentPlayerState == Playerstates.DEAD)
             {
                 Exit();
             }
 
-            //press escape to close
-            //TODO:delete
-            //if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //{
-            //    States.CurrentGameState = GameStates.EXIT;
-            //}
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.PLAYING)
             {
                 States.CurrentGameState = GameStates.PAUSE;
@@ -163,7 +149,6 @@ namespace Valkyrie_Nyr
             switch (States.CurrentGameState)
             {
                 case GameStates.MAINMENU:
-                    //TODO: Fill with Content
                     mMainMenu();
                     break;
 
@@ -224,50 +209,15 @@ namespace Valkyrie_Nyr
                     break;
             }
 
-            //if (States.CurrentGameState == GameStates.PLAYING)
-            //{
-            //    Level.Current.render(spriteBatch, gameTime);
-
-            //    //draw Colliders for Debugging
-            //    //TODO: Delete
-            //    /*  UM ANIMATION ZU PRÜFEN
-            //    int r = 0;
-            //    int g = 0;
-            //    int b = 0;
-            //    foreach (GameObject collider in Level.Current.gameObjects)
-            //    {
-            //        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 255));
-            //        if(b == 0 && r != 256)
-            //        {
-            //            r += 8;
-            //        }
-            //        if (r == 256 && g != 256)
-            //        {
-            //            g += 8;
-            //        }
-            //        if (g == 256 && b != 256)
-            //        {
-            //            b += 8;
-            //        }
-            //        if(b == 256 && r != 0)
-            //        {
-            //            r -= 8;
-            //        }
-            //        if(r == 0 && g != 0)
-            //        {
-            //            g -= 8;
-            //        }
-            //        if(g == 0 && b != 0)
-            //        {
-            //            b -= 8;
-            //        }
-            //    }
-            //    */// UM ANIMATION ZU PRÜFEN
-            //}
-            //else if (States.CurrentGameState == GameStates.MAINMENU)
-            //{
-            //    spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
-            //}
+            //draw Colliders for Debugging
+            //TODO: Delete
+            if (States.CurrentGameState == GameStates.PLAYING)
+            {
+                foreach (GameObject collider in Level.Current.gameObjects)
+                {
+                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                }
+            }
 
 
             spriteBatch.End();
