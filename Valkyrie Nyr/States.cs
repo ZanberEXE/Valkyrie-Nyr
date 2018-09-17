@@ -8,7 +8,7 @@ namespace Valkyrie_Nyr
 {
     enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DEAD };
 
-    enum GameStates { MAINMENU, PLAYING, EXIT }
+    enum GameStates { MAINMENU, PLAYING, EXIT, OPTIONS, CREDITS, PAUSE, LOSE, SPLASHSCREEN }
 
     //just saves the States, so they are accessable from everywhere
     class States
