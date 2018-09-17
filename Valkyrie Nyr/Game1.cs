@@ -58,53 +58,92 @@ namespace Valkyrie_Nyr
             base.Initialize();
         }
 
-        //TODO: delete
-        void mainMenu()
+        //TODO: proper content
+        void mMainMenu()
         {
-
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
                 switch (element)
                 {
-                    case Keys.NumPad1:
-                        Level.Current.loadLevel("Overworld");
+                    case Keys.D1:
+                        Level.Current.loadLevel(new Point(0, -9000), new Point(7500 * Camera.Main.zoom, 2500 * Camera.Main.zoom), "Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
                         return;
-                    case Keys.NumPad2:
-                        Level.Current.loadLevel("ErdLevel");
-                        States.CurrentGameState = GameStates.PLAYING;
+                    case Keys.D2:
+                        States.CurrentGameState = GameStates.OPTIONS;
                         return;
-                    case Keys.NumPad3:
-                        Level.Current.loadLevel("EisLevel");
-                        States.CurrentGameState = GameStates.PLAYING;
+                    case Keys.D3:
+                        States.CurrentGameState = GameStates.CREDITS;
                         return;
-                    case Keys.NumPad4:
-                        Level.Current.loadLevel("FeuerLevel");
-                        States.CurrentGameState = GameStates.PLAYING;
-                        return;
-                    case Keys.NumPad5:
-                        Level.Current.loadLevel("BlitzLevel");
-                        States.CurrentGameState = GameStates.PLAYING;
-                        return;
-                    case Keys.NumPad6:
-                        Level.Current.loadLevel("Bossstage");
-                        States.CurrentGameState = GameStates.PLAYING;
-                        return;
-                    case Keys.NumPad7:
-                        Level.Current.loadLevel("Hub");
-                        States.CurrentGameState = GameStates.PLAYING;
-                        return;
-                    case Keys.Escape:
+                    case Keys.D4:
                         States.CurrentGameState = GameStates.EXIT;
                         return;
                 }
             }
         }
-        
+
+        void mOptions()
+        {
+            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            {
+                switch (element)
+                {
+                    case Keys.Escape:
+                        States.CurrentGameState = GameStates.MAINMENU;
+                        break;
+                }
+            }
+        }
+
+        void mCredits()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) == true)
+            {
+                States.CurrentGameState = GameStates.MAINMENU;
+                return;
+            }
+        }
+
+        void mPause()
+        {
+            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            {
+                switch (element)
+                {
+                    case Keys.D1:
+                        States.CurrentGameState = GameStates.OPTIONS;
+                        break;
+                    case Keys.D2:
+                        States.CurrentGameState = GameStates.PLAYING;
+                        break;
+                    case Keys.D3:
+                        States.CurrentGameState = GameStates.MAINMENU;
+                        break;
+                }
+            }
+        }
+
+        void mLose()
+        {
+            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            {
+                switch (element)
+                {
+                    case Keys.D1:
+                        States.CurrentGameState = GameStates.PLAYING;
+                        break;
+                    case Keys.D2:
+                        States.CurrentGameState = GameStates.MAINMENU;
+                        break;
+                }
+            }
+        }
+
         protected override void Update(GameTime gameTime)
         {
 
             //TODO:deleted
+            //TODO:Lose Screen when dead and respawn?
             if (States.CurrentPlayerState == Playerstates.DEAD)
             {
                 Exit();
@@ -112,20 +151,40 @@ namespace Valkyrie_Nyr
 
             //press escape to close
             //TODO:delete
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //{
+            //    States.CurrentGameState = GameStates.EXIT;
+            //}
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.PLAYING)
             {
-                States.CurrentGameState = GameStates.EXIT;
+                States.CurrentGameState = GameStates.PAUSE;
             }
 
             switch (States.CurrentGameState)
             {
                 case GameStates.MAINMENU:
                     //TODO: Fill with Content
-                    mainMenu();
+                    mMainMenu();
                     break;
 
                 case GameStates.PLAYING:
                     Level.Current.update(gameTime);
+                    break;
+
+                case GameStates.OPTIONS:
+                    mOptions();
+                    break;
+
+                case GameStates.CREDITS:
+                    mCredits();
+                    break;
+
+                case GameStates.PAUSE:
+                    mPause();
+                    break;
+
+                case GameStates.LOSE:
+                    mLose();
                     break;
 
                 //Exits the Game
@@ -143,51 +202,72 @@ namespace Valkyrie_Nyr
 
             spriteBatch.Begin();
             
-
-            if (States.CurrentGameState == GameStates.PLAYING)
+            switch(States.CurrentGameState)
             {
-                Level.Current.render(spriteBatch, gameTime);
+                case GameStates.PLAYING:
+                    Level.Current.render(spriteBatch, gameTime);
+                    break;
+                case GameStates.MAINMENU:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+                case GameStates.OPTIONS:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("Options"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+                case GameStates.CREDITS:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("Credits"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+                case GameStates.PAUSE:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("Pause"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+                case GameStates.LOSE:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("Lose"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+            }
 
-                //draw Colliders for Debugging
-                //TODO: Delete
-                //UM ANIMATION ZU PRÜFEN
-                int r = 0;
-                int g = 0;
-                int b = 0;
-                foreach (GameObject collider in Level.Current.gameObjects)
-                {
-                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 100));
-                    if(b == 0 && r != 256)
-                    {
-                        r += 8;
-                    }
-                    if (r == 256 && g != 256)
-                    {
-                        g += 8;
-                    }
-                    if (g == 256 && b != 256)
-                    {
-                        b += 8;
-                    }
-                    if(b == 256 && r != 0)
-                    {
-                        r -= 8;
-                    }
-                    if(r == 0 && g != 0)
-                    {
-                        g -= 8;
-                    }
-                    if(g == 0 && b != 0)
-                    {
-                        b -= 8;
-                    }
-                }
-                //UM ANIMATION ZU PRÜFEN
-            }
-            else if (States.CurrentGameState == GameStates.MAINMENU)
-            {
-                spriteBatch.Draw(Ressources.Load<Texture2D>("mainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
-            }
+            //if (States.CurrentGameState == GameStates.PLAYING)
+            //{
+            //    Level.Current.render(spriteBatch, gameTime);
+
+            //    //draw Colliders for Debugging
+            //    //TODO: Delete
+            //    /*  UM ANIMATION ZU PRÜFEN
+            //    int r = 0;
+            //    int g = 0;
+            //    int b = 0;
+            //    foreach (GameObject collider in Level.Current.gameObjects)
+            //    {
+            //        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(r, g, b, 255));
+            //        if(b == 0 && r != 256)
+            //        {
+            //            r += 8;
+            //        }
+            //        if (r == 256 && g != 256)
+            //        {
+            //            g += 8;
+            //        }
+            //        if (g == 256 && b != 256)
+            //        {
+            //            b += 8;
+            //        }
+            //        if(b == 256 && r != 0)
+            //        {
+            //            r -= 8;
+            //        }
+            //        if(r == 0 && g != 0)
+            //        {
+            //            g -= 8;
+            //        }
+            //        if(g == 0 && b != 0)
+            //        {
+            //            b -= 8;
+            //        }
+            //    }
+            //    */// UM ANIMATION ZU PRÜFEN
+            //}
+            //else if (States.CurrentGameState == GameStates.MAINMENU)
+            //{
+            //    spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+            //}
 
 
             spriteBatch.End();
