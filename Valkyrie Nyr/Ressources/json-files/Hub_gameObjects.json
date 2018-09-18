@@ -123,7 +123,7 @@
       "name": "ground",
       "height": 100,
       "width": 100,
-      "position": "770, 1980",
+      "position": "770, 1700",
   },
   {
       "name": "ground",
@@ -214,5 +214,18 @@
       "height": 600,
       "width": 4500,
       "position": "0, 0",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 4500,
+      "position": "0, 2500",
+  },
+  {
+      "name": "OverworldLoader",
+	  "triggerType": "loader",
+      "height": 500,
+      "width": 300,
+      "position": "4200, 2000",
   }
 ]

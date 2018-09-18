@@ -14,7 +14,7 @@ namespace Valkyrie_Nyr
 
         public Camera()
         {
-            viewBounds = new Rectangle(Point.Zero, new Point(1920, 900));
+            viewBounds = new Rectangle(Point.Zero, Game1.WindowSize);
             levelBounds = new Rectangle(0, 0, 0, 0);
             position = new Vector2(0, 0);
             zoom = 4;

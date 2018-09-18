@@ -15,6 +15,8 @@ namespace Valkyrie_Nyr
         public float speed;
         public float jumpHeight;
         public bool onIce;
+        public bool inHub;
+        public bool interact;
 
         public Texture2D[] animTex { get; set; }
 
@@ -30,6 +32,8 @@ namespace Valkyrie_Nyr
         {
             speed = 700;
             jumpHeight = 15;
+            inHub = false;
+            interact = false;
 
             animTex = new Texture2D[]
             {
@@ -75,12 +79,16 @@ namespace Valkyrie_Nyr
             {
                 case "collectable":
                     collect(activatedTrigger.name);
+                    Level.Current.gameObjects.Remove(activatedTrigger);
                     break;
                 case "area":
                     areaTrigger(activatedTrigger.name);
                     break;
                 case "loader":
-                    loader(activatedTrigger.name);
+                    if (interact)
+                    {
+                        loader(activatedTrigger.name);
+                    }
                     break;
             }
         }
@@ -145,16 +153,9 @@ namespace Valkyrie_Nyr
                 if (element.triggerType != null)
                 {
                     trigger(element);
-                    Level.Current.gameObjects.Remove(element);
-                    for (int j = 0; j < Level.Current.triggerObjects.Count; j++)
-                    {
-                        //if (Level.Current.triggerObjects[j] == element)
-                        //{
-                        //    Level.Current.triggerObjects.RemoveAt(j);
-                        //}
-                    }
                 }
             }
+            interact = false;
         }
 
         //moves the Player

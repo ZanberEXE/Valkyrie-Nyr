@@ -16,7 +16,6 @@ namespace Valkyrie_Nyr
         public Enemy ryn;
 
         public List<GameObject> gameObjects;
-        public List<Trigger> triggerObjects;
         public List<Entity> entityObjects;
 
         public int height;
@@ -30,6 +29,8 @@ namespace Valkyrie_Nyr
 
         Texture2D levelBGSprite;
 
+        Keys[] lastPressedKeys;
+
         //get current Level from everywhere
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
@@ -39,35 +40,45 @@ namespace Valkyrie_Nyr
             ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
 
             Point startPosition;
+            Player.Nyr.inHub = false;
 
             switch (levelName)
             {
                 case "Bossstage":
                     width = 7500 * Camera.Main.zoom;
                     height = 2500 * Camera.Main.zoom;
-                    startPosition = new Point(0, -9000);
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y - 100));
+                    Player.Nyr.position = new Vector2(600, Game1.WindowSize.Y / 2);
                     break;
                 case "Hub":
-                    width = 1250 * Camera.Main.zoom;
-                    height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(0, 0);
+                    width = 1125 * Camera.Main.zoom;
+                    height = 625 * Camera.Main.zoom;
+                    startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
+                    Player.Nyr.inHub = true;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
                     height = 1000 * Camera.Main.zoom;
-                    startPosition = new Point(0, 0);
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(0, Game1.WindowSize.Y / 2);
+                    break;
+                case "BlitzLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-500, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(0, -4500);
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(0, Game1.WindowSize.Y / 2);
                     break;
             }
             
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
             
-            triggerObjects = JsonConvert.DeserializeObject<List<Trigger>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_triggerObjects.json"));
-
             entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
 
           
@@ -95,7 +106,6 @@ namespace Valkyrie_Nyr
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
 
             Camera.Main.position = Vector2.Zero;
-            Player.Nyr.position = Vector2.Zero;
         }
 
         //put here things like setup from enemies
@@ -113,7 +123,7 @@ namespace Valkyrie_Nyr
 
             if (States.CurrentPlayerState == Playerstates.JUMP)
             {
-                if(!Player.Nyr.onGround)
+                if (!Player.Nyr.onGround)
                 {
                     moveValue.Y -= Player.Nyr.jumpHeight;
                 }
@@ -123,10 +133,17 @@ namespace Valkyrie_Nyr
                 }
             }
 
+            if (atkCooldown > 0)
+            {
+                atkCooldown--;
+            }
+
             //get Input from Keyboard
             bool anyKeyPressed = false;
-            
-            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+
+            Keys[] newPressedKeys = Keyboard.GetState().GetPressedKeys();
+
+            foreach (Keys element in newPressedKeys)
             {
                 anyKeyPressed = true;
 
@@ -151,46 +168,76 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.Space:
-                        if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP && States.CurrentPlayerState != Playerstates.JUMP)
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            States.CurrentPlayerState = Playerstates.JUMP;
-                            States.NextPlayerState = Playerstates.JUMP;
-                            moveValue.Y -= Player.Nyr.jumpHeight;
+                            if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP && !Player.Nyr.inHub)
+                            {
+                                States.CurrentPlayerState = Playerstates.JUMP;
+                                States.NextPlayerState = Playerstates.JUMP;
+                                moveValue.Y -= Player.Nyr.jumpHeight;
+                            }
+                        }
+                        break;
+                    case Keys.W:
+                        if (Player.Nyr.inHub)
+                        {
+                            moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                            States.NextPlayerState = Playerstates.WALK;
+                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            {
+                                States.CurrentPlayerState = Playerstates.WALK;
+                            }
+                        }
+                        break;
+                    case Keys.S:
+                        if (Player.Nyr.inHub)
+                        {
+                            moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                            States.NextPlayerState = Playerstates.WALK;
+                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            {
+                                States.CurrentPlayerState = Playerstates.WALK;
+                            }
+                        }
+                        break;
+                    case Keys.F:
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
+                        {
+                            Player.Nyr.interact = true;
                         }
                         break;
                     case Keys.LeftShift:
-                        if (atkCooldown == 0)
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            States.CurrentPlayerState = Playerstates.FIGHT;
-                            States.NextPlayerState = Playerstates.IDLE;
-                            Player.Nyr.attack(Player.Nyr.nyrFacing);
-                            atkCooldown = 60;
+                            if (atkCooldown == 0 && !Player.Nyr.inHub)
+                            {
+                                States.CurrentPlayerState = Playerstates.FIGHT;
+                                States.NextPlayerState = Playerstates.IDLE;
+                                Player.Nyr.attack(Player.Nyr.nyrFacing);
+                                atkCooldown = 60;
+                            }
                         }
-                        
-                        break;
-                    default:
-                        States.CurrentPlayerState = Playerstates.IDLE;
-                        States.NextPlayerState = Playerstates.IDLE;
                         break;
                 }
             }
 
-            if(!anyKeyPressed)
+            if (!anyKeyPressed)
             {
-                if(States.CurrentPlayerState == Playerstates.WALK)
+                if (States.CurrentPlayerState != Playerstates.JUMP)
                 {
-                    States.CurrentPlayerState = Playerstates.STOP;
+                    if (States.CurrentPlayerState == Playerstates.WALK)
+                    {
+                        States.CurrentPlayerState = Playerstates.STOP;
+                    }
+                    States.NextPlayerState = Playerstates.IDLE;
                 }
-               States.NextPlayerState = Playerstates.IDLE;
             }
 
-            if (atkCooldown > 0)
-            {
-                atkCooldown--;
-            }
-                
             //Let PLayer fall and save the moveValue in overall Movement
-            moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+            if (!Player.Nyr.inHub)
+            {
+                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+            }
 
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
@@ -200,11 +247,14 @@ namespace Valkyrie_Nyr
                 Camera.Main.move(newMoveValue);
             }
 
+
             //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
 
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger();
+
+            lastPressedKeys = newPressedKeys;
         }
 
         //theoretical move and seeing what happens
@@ -217,6 +267,7 @@ namespace Valkyrie_Nyr
             bool collidedLeft = false;
             bool collidedRight = false;
             bool collidedTop = false;
+            bool collidedBottom = false;
 
             foreach (GameObject element in collidedObjects)
             {
@@ -237,15 +288,42 @@ namespace Valkyrie_Nyr
                 {
                     collidedTop = true;
                 }
+                if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y + element.height >= Player.Nyr.position.Y + Player.Nyr.height && element.name != "platform")
+                {
+                    collidedBottom = true;
+                }
+            }
+
+            
+            if (moveValue.Y == 0 || collidedBottom) {
+                Player.Nyr.onGround = true;
+            } else if (moveValue.Y < 0)
+            {
+                Player.Nyr.onGround = false;
+            }
+
+            if (Player.Nyr.onGround)
+            {
+                ;
             }
 
             if (collidedLeft || collidedRight)
             {
                 moveValue.X = 0;
             }
-            if (collidedTop)
+            if (collidedTop || collidedBottom)
             {
                 moveValue.Y = 0;
+
+                //if (States.CurrentPlayerState == Playerstates.JUMP)
+                //{
+                //    States.CurrentPlayerState = Playerstates.FALL;
+                //}
+                //else if(States.CurrentPlayerState == Playerstates.FALL)
+                //{
+                //    States.CurrentPlayerState = Playerstates.LAND;
+                //    States.CurrentPlayerState = Playerstates.IDLE;
+                //}
             }
             return moveValue;
         }
@@ -288,13 +366,6 @@ namespace Valkyrie_Nyr
                 //fällt aus der Welt und wird gelöscht
                 if (gameObjects[i].position.Y > height)
                 {
-                    for (int j = 0; j < triggerObjects.Count(); j++)
-                    {
-                        //if (triggerObjects[j] == gameObjects[i])
-                        //{
-                        //    triggerObjects.RemoveAt(j);
-                        //}
-                    }
                     gameObjects.RemoveAt(i);
                 }
                 else

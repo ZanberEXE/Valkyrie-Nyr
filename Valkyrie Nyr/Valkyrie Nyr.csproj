@@ -130,16 +130,10 @@
     <None Include="Ressources\json-files\BlitzLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\BlitzLevel_triggerObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Ressources\json-files\Bossstage_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Bossstage_gameObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Ressources\json-files\Bossstage_triggerObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\EisLevel_entityObjects.json">
@@ -148,16 +142,10 @@
     <None Include="Ressources\json-files\EisLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\EisLevel_triggerObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Ressources\json-files\ErdLevel_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\ErdLevel_gameObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Ressources\json-files\ErdLevel_triggerObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\FeuerLevel_entityObjects.json">
@@ -166,25 +154,16 @@
     <None Include="Ressources\json-files\FeuerLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\FeuerLevel_triggerObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Ressources\json-files\Hub_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Hub_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\Hub_triggerObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Ressources\json-files\Overworld_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Overworld_gameObjects.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Ressources\json-files\Overworld_triggerObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\Level\overworld.json" />

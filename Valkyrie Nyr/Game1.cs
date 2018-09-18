@@ -16,7 +16,7 @@ namespace Valkyrie_Nyr
         Texture2D pxl;
 
         public static ContentManager Ressources;
-        public static string CurrentRootDirectory;
+        public static Point WindowSize;
 
         public Game1()
         {
@@ -27,7 +27,10 @@ namespace Valkyrie_Nyr
             graphics.PreferredBackBufferWidth = 1920;
             //graphics.IsFullScreen = true;
 
+            WindowSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+
             Content.RootDirectory = "Content";
+
 
             //Now you can load content from everywhere
             Ressources = Content;

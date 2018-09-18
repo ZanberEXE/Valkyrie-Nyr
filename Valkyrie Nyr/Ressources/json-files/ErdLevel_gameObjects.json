@@ -1,5 +1,29 @@
 [
   {
+      "name": "platform",
+      "height": 50,
+      "width": 300,
+      "position": "6700, 3450",
+  },
+  {
+      "name": "platform",
+      "height": 50,
+      "width": 500,
+      "position": "6500, 3700",
+  },
+  {
+      "name": "platform",
+      "height": 50,
+      "width": 300,
+      "position": "6000, 3900",
+  },
+  {
+      "name": "platform",
+      "height": 50,
+      "width": 1000,
+      "position": "5500, 3250",
+  },
+  {
       "name": "ground",
       "height": 500,
       "width": 14000,
@@ -40,30 +64,6 @@
       "height": 400,
       "width": 500,
       "position": "5500, 3300",
-  },
-  {
-      "name": "ground",
-      "height": 50,
-      "width": 300,
-      "position": "6700, 3450",
-  },
-  {
-      "name": "ground",
-      "height": 50,
-      "width": 500,
-      "position": "6500, 3700",
-  },
-  {
-      "name": "ground",
-      "height": 50,
-      "width": 300,
-      "position": "6000, 3900",
-  },
-  {
-      "name": "ground",
-      "height": 50,
-      "width": 1000,
-      "position": "5500, 3250",
   },
   {
       "name": "ground",
@@ -135,7 +135,7 @@
       "name": "ground",
       "height": 150,
       "width": 350,
-      "position": "3950, 2000",
+      "position": "3950, 2250",
   },
   {
       "name": "ground",
@@ -232,5 +232,12 @@
       "height": 200,
       "width": 15000,
       "position": "0, 4800",
+  },
+  {
+      "name": "OverworldLoader",
+	  "triggerType": "loader",
+      "height": 500,
+      "width": 300,
+      "position": "0, 4300",
   }
 ]

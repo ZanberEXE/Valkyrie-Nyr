@@ -118,7 +118,7 @@ namespace Valkyrie_Nyr
 
             if(grounds.Count > 0)
             {
-                return new Vector2(this.position.X, grounds.Min() - this.height - 0.1f);
+                return new Vector2(this.position.X, grounds.Min() - this.height);
             }
 
             onGround = false;
