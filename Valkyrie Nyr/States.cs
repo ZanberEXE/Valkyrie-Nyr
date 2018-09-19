@@ -8,7 +8,7 @@ namespace Valkyrie_Nyr
 {
     enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DANCE, FALL, LAND, STOP, CROUCH, DEAD };
     enum Enemystates { IDLE, WALK, ATTACK, AGGRO }
-    enum Bossstates { IDLE, WALK, ATTACK1, ATTACK2, ATTACK3 }
+    enum Bossstates { IDLE, WALK, ATTACK1, ATTACK2, ATTACK3, ATTACK4, Special1 }
 
     enum GameStates { MAINMENU, PLAYING, EXIT, OPTIONS, CREDITS, PAUSE, LOSE, SPLASHSCREEN }
 

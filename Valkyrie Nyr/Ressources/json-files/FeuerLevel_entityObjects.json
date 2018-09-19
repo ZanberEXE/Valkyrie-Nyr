@@ -1,3 +1,59 @@
 [
-  
+  {
+    "name": "Ina",
+    "triggerType": "",
+    "mass": 4,
+    "height": 800,
+    "width": 1000,
+    "position": "800, 3000",
+    "health": 900,
+    "damage": 30,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Ina/InaIdle",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "Bosses/Ina/InaMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Ina/InaAttack",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "Bosses/Ina/InaFireball",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 93
+      },
+      {
+        "path": "Bosses/Ina/InaMeteorShower",
+        "Columns": 10,
+        "Rows": 20,
+        "maxFrames": 197
+      },
+      {
+        "path": "Bosses/Ina/InaExplosion",
+        "Columns": 10,
+        "Rows": 19,
+        "maxFrames": 187
+      }
+    ],
+    "hitbox": {
+      "name": "InaHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 800,
+      "width": 1000,
+      "position": "0, 0"
+    }
+  }
 ]

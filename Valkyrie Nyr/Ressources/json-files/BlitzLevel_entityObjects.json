@@ -1,3 +1,53 @@
 [
-  
+  {
+    "name": "Monomono",
+    "triggerType": "",
+    "mass": 10,
+    "height": 1000,
+    "width": 400,
+    "position": "800, 3200",
+    "health": 1100,
+    "damage": 40,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Monomono/MonoIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Monomono/MonoRun",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "Bosses/Monomono/MonoLighntning",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Monomono/MonoProjectile",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Monomono/MonoBlitzball",
+        "Columns": 20,
+        "Rows": 32,
+        "maxFrames": 625
+      }
+    ],
+    "hitbox": {
+      "name": "MonoHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 1000,
+      "width": 400,
+      "position": "0, 0"
+    }
+  }
 ]

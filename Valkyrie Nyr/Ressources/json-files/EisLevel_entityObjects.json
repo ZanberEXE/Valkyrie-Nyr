@@ -1,3 +1,308 @@
 [
-  
+  {
+    "name": "Yinyin1",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "800, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  },
+  {
+    "name": "Yinyin2",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "400, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  },
+  {
+    "name": "Yinyin2",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "400, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  },
+  {
+    "name": "Yinyin3",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "200, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  },
+  {
+    "name": "Yinyin4",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "600, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 0,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  },
+  {
+    "name": "Yinyin5",
+    "triggerType": "",
+    "mass": 8,
+    "height": 400,
+    "width": 800,
+    "position": "1000, 3000",
+    "health": 600,
+    "damage": 60,
+    "entityFacing": 0,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Yinyin/YinIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 18
+      },
+      {
+        "path": "Bosses/Yinyin/YinMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinSpit",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Yinyin/YinFlip",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Yinyin/YinBreath",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      }
+    ],
+    "hitbox": {
+      "name": "YinyinHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 800,
+      "position": "0, 0"
+    }
+  }
 ]

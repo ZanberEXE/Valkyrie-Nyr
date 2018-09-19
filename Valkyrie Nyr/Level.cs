@@ -85,7 +85,6 @@ namespace Valkyrie_Nyr
             {
                 gameObjects.Add(element);
                 element.initialize();
-                element.Update(gameTime);
             }
 
             foreach (GameObject element in gameObjects)
