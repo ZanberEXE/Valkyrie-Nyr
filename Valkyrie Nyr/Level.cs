@@ -165,6 +165,7 @@ namespace Valkyrie_Nyr
                             if (Player.Nyr.onGround && !Player.Nyr.inJump && !Player.Nyr.inHub)
                             {
                                 States.CurrentPlayerState = Playerstates.JUMP;
+                                States.NextPlayerState = Playerstates.FALL;
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
@@ -216,6 +217,8 @@ namespace Valkyrie_Nyr
             if (!Player.Nyr.inHub)
             {
                 moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+
+                
             }
 
             //let em move, after all collisions have manipulated the movement
@@ -223,10 +226,6 @@ namespace Valkyrie_Nyr
 
             if (newMoveValue != Vector2.Zero)
             {
-                if(States.CurrentPlayerState != Playerstates.FALL && newMoveValue.Y > 0)
-                {
-                    States.CurrentPlayerState = Playerstates.FALL;
-                }
                 if (States.CurrentPlayerState == Playerstates.FALL && Player.Nyr.onGround)
                 {
                     States.CurrentPlayerState = Playerstates.LAND;
@@ -289,7 +288,7 @@ namespace Valkyrie_Nyr
                 {
                     collidedTop = true;
                 }
-                else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y + element.height >= Player.Nyr.position.Y + Player.Nyr.height && element.name != "platform")
+                else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y > newPos.Y)
                 {
                     collidedBottom = true;
                 }
@@ -303,7 +302,7 @@ namespace Valkyrie_Nyr
             {
                 Player.Nyr.onGround = true;
             }
-            else if (moveValue.Y < 0)
+            if (moveValue.Y < 0)
             {
                 Player.Nyr.onGround = false;
             }
@@ -312,7 +311,7 @@ namespace Valkyrie_Nyr
             {
                 moveValue.X = 0;
             }
-            if (collidedTop || collidedBottom)
+            if ((collidedTop && moveValue.Y < 0) || (collidedBottom && moveValue.Y > 0))
             {
                 moveValue.Y = 0;
             }
