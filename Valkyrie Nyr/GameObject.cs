@@ -46,7 +46,7 @@ namespace Valkyrie_Nyr
             string[] allAssets = Directory.GetFiles(Game1.Ressources.RootDirectory);
             if (Array.IndexOf(allAssets, "Content\\" + this.name + ".xnb") > -1)
             {
-                //sprite = Game1.Ressources.Load<Texture2D>(this.name);
+                sprite = Game1.Ressources.Load<Texture2D>(this.name);
             }
         }
 
