@@ -139,10 +139,6 @@ namespace Valkyrie_Nyr
 
             //TODO:delete
             //TODO:Lose Screen when dead and respawn?
-            if (States.CurrentPlayerState == Playerstates.DEAD)
-            {
-                Exit();
-            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.PLAYING)
             {

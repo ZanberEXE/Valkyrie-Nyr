@@ -96,7 +96,7 @@ namespace Valkyrie_Nyr
             bool elementIsInsideThisX;
             bool thisIsOnTopOfElement;
 
-            //List of grounds, so you always land at the highest PLatform, when you fall
+            //List of grounds, so you always land at the highest Platform, when you fall
             List<int> grounds = new List<int>();
 
             foreach (GameObject element in collidedObjects)

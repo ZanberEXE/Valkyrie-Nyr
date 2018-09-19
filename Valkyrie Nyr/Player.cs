@@ -17,6 +17,7 @@ namespace Valkyrie_Nyr
         public bool onIce;
         public bool inHub;
         public bool interact;
+        public bool inJump;
 
         public Texture2D[] animTex { get; set; }
 
@@ -34,6 +35,7 @@ namespace Valkyrie_Nyr
             jumpHeight = 15;
             inHub = false;
             interact = false;
+            inJump = false;
 
             animTex = new Texture2D[]
             {
@@ -66,11 +68,7 @@ namespace Valkyrie_Nyr
         public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
 
 
-        //this method is called, if the Player dies/falls out of the world
-        public void gameOver()
-        {
-            Console.WriteLine("You died!");
-        }
+       
 
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger)
@@ -142,6 +140,12 @@ namespace Valkyrie_Nyr
                     Level.Current.loadLevel("Hub");
                     break;
             }
+        }
+
+        //this method is called, if the Player dies/falls out of the world
+        public void gameOver()
+        {
+            Level.Current.loadLevel("Hub");
         }
 
         public void activateTrigger()

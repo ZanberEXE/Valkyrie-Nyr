@@ -53,7 +53,7 @@ namespace Valkyrie_Nyr
                 case "Hub":
                     width = 1125 * Camera.Main.zoom;
                     height = 625 * Camera.Main.zoom;
-                    startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y - 50));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
                     break;
@@ -80,13 +80,7 @@ namespace Valkyrie_Nyr
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
             
             entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
-
-          
-
-            //foreach (Trigger element in triggerObjects)
-            //{
-            //    gameObjects.Add(element);
-            //}
+            
             foreach (Entity element in entityObjects)
             {
                 gameObjects.Add(element);
@@ -121,7 +115,7 @@ namespace Valkyrie_Nyr
 
             Player.Nyr.Update(gameTime);
 
-            if (States.CurrentPlayerState == Playerstates.JUMP)
+            if (Player.Nyr.inJump)
             {
                 if (!Player.Nyr.onGround)
                 {
@@ -129,7 +123,7 @@ namespace Valkyrie_Nyr
                 }
                 else
                 {
-                    States.CurrentPlayerState = Playerstates.IDLE;
+                    Player.Nyr.inJump = false;
                 }
             }
 
@@ -152,28 +146,27 @@ namespace Valkyrie_Nyr
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.nyrFacing = -1;
-                        if (States.CurrentPlayerState != Playerstates.WALK && States.CurrentPlayerState != Playerstates.JUMP)
+                        if (States.CurrentPlayerState == Playerstates.IDLE)
                         {
                             States.CurrentPlayerState = Playerstates.WALK;
-                            States.NextPlayerState = Playerstates.WALK;
                         }
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.nyrFacing = 1;
-                        if (States.CurrentPlayerState != Playerstates.WALK && States.CurrentPlayerState != Playerstates.JUMP)
+                        if (States.CurrentPlayerState == Playerstates.IDLE)
                         {
                             States.CurrentPlayerState = Playerstates.WALK;
-                            States.NextPlayerState = Playerstates.WALK;
                         }
                         break;
                     case Keys.Space:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            if (Player.Nyr.onGround && States.CurrentPlayerState != Playerstates.JUMP && !Player.Nyr.inHub)
+                            if (Player.Nyr.onGround && !Player.Nyr.inJump && !Player.Nyr.inHub)
                             {
                                 States.CurrentPlayerState = Playerstates.JUMP;
-                                States.NextPlayerState = Playerstates.JUMP;
+                                Player.Nyr.inJump = true;
+                                Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
                             }
                         }
@@ -182,7 +175,6 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            States.NextPlayerState = Playerstates.WALK;
                             if (States.CurrentPlayerState != Playerstates.WALK)
                             {
                                 States.CurrentPlayerState = Playerstates.WALK;
@@ -193,7 +185,6 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            States.NextPlayerState = Playerstates.WALK;
                             if (States.CurrentPlayerState != Playerstates.WALK)
                             {
                                 States.CurrentPlayerState = Playerstates.WALK;
@@ -221,18 +212,6 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            if (!anyKeyPressed)
-            {
-                if (States.CurrentPlayerState != Playerstates.JUMP)
-                {
-                    if (States.CurrentPlayerState == Playerstates.WALK)
-                    {
-                        States.CurrentPlayerState = Playerstates.STOP;
-                    }
-                    States.NextPlayerState = Playerstates.IDLE;
-                }
-            }
-
             //Let PLayer fall and save the moveValue in overall Movement
             if (!Player.Nyr.inHub)
             {
@@ -244,6 +223,16 @@ namespace Valkyrie_Nyr
 
             if (newMoveValue != Vector2.Zero)
             {
+                if(States.CurrentPlayerState != Playerstates.FALL && newMoveValue.Y > 0)
+                {
+                    States.CurrentPlayerState = Playerstates.FALL;
+                }
+                if (States.CurrentPlayerState == Playerstates.FALL && Player.Nyr.onGround)
+                {
+                    States.CurrentPlayerState = Playerstates.LAND;
+                    States.NextPlayerState = Playerstates.IDLE;
+                }
+
                 Camera.Main.move(newMoveValue);
             }
 
@@ -253,6 +242,18 @@ namespace Valkyrie_Nyr
 
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger();
+
+            if (!anyKeyPressed)
+            {
+                if (!(States.CurrentPlayerState == Playerstates.JUMP || States.CurrentPlayerState == Playerstates.FALL || States.CurrentPlayerState == Playerstates.LAND))
+                {
+                    if (States.CurrentPlayerState == Playerstates.WALK && Player.Nyr.onGround)
+                    {
+                        States.CurrentPlayerState = Playerstates.STOP;
+                    }
+                    States.NextPlayerState = Playerstates.IDLE;
+                }
+            }
 
             lastPressedKeys = newPressedKeys;
         }
@@ -280,31 +281,31 @@ namespace Valkyrie_Nyr
                 {
                     collidedLeft = true;
                 }
-                if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && element.name != "platform")
+                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && element.name != "platform")
                 {
                     collidedRight = true;
                 }
-                if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && element.name != "platform")
+                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && element.name != "platform")
                 {
                     collidedTop = true;
                 }
-                if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y + element.height >= Player.Nyr.position.Y + Player.Nyr.height && element.name != "platform")
+                else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y + element.height >= Player.Nyr.position.Y + Player.Nyr.height && element.name != "platform")
                 {
                     collidedBottom = true;
                 }
             }
 
-            
-            if (moveValue.Y == 0 || collidedBottom) {
+            if (collidedBottom)
+            {
                 Player.Nyr.onGround = true;
-            } else if (moveValue.Y < 0)
+            }
+            if (moveValue.Y == 0)
+            {
+                Player.Nyr.onGround = true;
+            }
+            else if (moveValue.Y < 0)
             {
                 Player.Nyr.onGround = false;
-            }
-
-            if (Player.Nyr.onGround)
-            {
-                ;
             }
 
             if (collidedLeft || collidedRight)
@@ -314,16 +315,6 @@ namespace Valkyrie_Nyr
             if (collidedTop || collidedBottom)
             {
                 moveValue.Y = 0;
-
-                //if (States.CurrentPlayerState == Playerstates.JUMP)
-                //{
-                //    States.CurrentPlayerState = Playerstates.FALL;
-                //}
-                //else if(States.CurrentPlayerState == Playerstates.FALL)
-                //{
-                //    States.CurrentPlayerState = Playerstates.LAND;
-                //    States.CurrentPlayerState = Playerstates.IDLE;
-                //}
             }
             return moveValue;
         }

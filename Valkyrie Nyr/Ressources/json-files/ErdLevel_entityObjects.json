@@ -1,12 +1,3 @@
 [
-  {
-    "name": "collectable",
-    "isStationary": false,
-    "isTrigger": true,
-    "mass": 1,
-    "height": 10,
-    "width": 10,
-    "position": "50, 50",
-	"triggerType": ""
-  }
+  
 ]

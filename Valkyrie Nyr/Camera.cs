@@ -42,7 +42,7 @@ namespace Valkyrie_Nyr
             }
             if (Player.Nyr.position.Y + moveValue.Y + position.Y > levelBounds.Y + levelBounds.Height)
             {
-                States.CurrentPlayerState = Playerstates.DEAD;
+                Player.Nyr.gameOver();
             }
 
             //is true, if the new position is bigger than the middle, while the old position is smaller, or otherwise. So the player must move to the middle
