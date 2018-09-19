@@ -89,6 +89,7 @@ namespace Valkyrie_Nyr
             foreach (GameObject element in gameObjects)
             {
                 element.position += startPosition.ToVector2();
+                element.init();
             }
             
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
@@ -100,12 +101,8 @@ namespace Valkyrie_Nyr
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
 
             Camera.Main.position = Vector2.Zero;
-        }
 
-        //put here things like setup from enemies
-        public void startLevel()
-        {
-            Player.Nyr.position = Vector2.Zero;
+            States.CurrentPlayerState = Playerstates.IDLE;
         }
 
         //get input and update the elements inside the level
@@ -114,6 +111,12 @@ namespace Valkyrie_Nyr
             Vector2 moveValue = Vector2.Zero;
 
             Player.Nyr.Update(gameTime);
+
+            //Let PLayer fall and save the moveValue in overall Movement
+            if (!Player.Nyr.inHub)
+            {
+                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+            }
 
             if (Player.Nyr.inJump)
             {
@@ -124,6 +127,8 @@ namespace Valkyrie_Nyr
                 else
                 {
                     Player.Nyr.inJump = false;
+                    States.CurrentPlayerState = Playerstates.LAND;
+                    States.NextPlayerState = Playerstates.IDLE;
                 }
             }
 
@@ -213,13 +218,7 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            //Let PLayer fall and save the moveValue in overall Movement
-            if (!Player.Nyr.inHub)
-            {
-                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
-
-                
-            }
+            
 
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
@@ -294,18 +293,18 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            if (collidedBottom)
-            {
-                Player.Nyr.onGround = true;
-            }
-            if (moveValue.Y == 0)
-            {
-                Player.Nyr.onGround = true;
-            }
-            if (moveValue.Y < 0)
-            {
-                Player.Nyr.onGround = false;
-            }
+            //if (collidedBottom)
+            //{
+            //    Player.Nyr.onGround = true;
+            //}
+            //if (moveValue.Y == 0)
+            //{
+            //    Player.Nyr.onGround = true;
+            //}
+            //if (moveValue.Y < 0)
+            //{
+            //    Player.Nyr.onGround = false;
+            //}
 
             if (collidedLeft || collidedRight)
             {
@@ -374,6 +373,10 @@ namespace Valkyrie_Nyr
             foreach (Entity element in entityObjects)
             {
                 element.entityRender(gameTime, spriteBatch);
+            }
+            foreach (GameObject element in gameObjects)
+            {
+                element.Draw(gameTime, spriteBatch);
             }
             Player.Nyr.Draw(spriteBatch);
         }

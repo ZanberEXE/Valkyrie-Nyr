@@ -69,17 +69,9 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10 , 4 , 31),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10 , 3 , 25),
             };
-
-        
-
             
             currentFrame = 0;
             onIce = false;
-        }
-
-        public void init()
-        {
-            States.CurrentPlayerState = Playerstates.IDLE;
         }
 
         //get Nyr from everywhere

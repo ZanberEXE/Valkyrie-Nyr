@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Valkyrie_Nyr
         public bool onGround;
         public Texture2D sprite;
 
+        
         //Constructor
         public GameObject(string _name, string _triggerType, int _mass, int _height, int _width, Vector2 _position)
         {
@@ -36,6 +38,16 @@ namespace Valkyrie_Nyr
             height = _height;
             width = _width;
             position = _position;
+            
+        }
+
+        public void init()
+        {
+            string[] allAssets = Directory.GetFiles(Game1.Ressources.RootDirectory);
+            if (Array.IndexOf(allAssets, "Content\\" + this.name + ".xnb") > -1)
+            {
+                //sprite = Game1.Ressources.Load<Texture2D>(this.name);
+            }
         }
 
         //Check Collision of Objects and returns Array with all collided Objects or null, if none has collided
@@ -85,7 +97,7 @@ namespace Valkyrie_Nyr
 
             return result.ToArray();
         }
-        
+
         //let obejct fall an return position, that is actually accessable
         public Vector2 Fall(GameTime gameTime, GameObject[] gameObjects)
         {
@@ -107,16 +119,16 @@ namespace Valkyrie_Nyr
                     elementIsInsideThisX = this.position.X + this.width > element.position.X + element.width && this.position.X < element.position.X;
                     thisIsOnTopOfElement = this.position.Y + this.height < element.position.Y + 1;
 
-                    if ((thisIsInsideElementX || elementIsInsideThisX ) && thisIsOnTopOfElement)
+                    if ((thisIsInsideElementX || elementIsInsideThisX) && thisIsOnTopOfElement)
                     {
                         gravValue = 1;
                         onGround = true;
-                        grounds.Add((int) element.position.Y);
+                        grounds.Add((int)element.position.Y);
                     }
                 }
             }
 
-            if(grounds.Count > 0)
+            if (grounds.Count > 0)
             {
                 return new Vector2(this.position.X, grounds.Min() - this.height);
             }
@@ -130,14 +142,7 @@ namespace Valkyrie_Nyr
         {
             if(sprite == null)
             {
-                if (Game1.Ressources.RootDirectory.Contains(name))
-                {
-                    sprite = Game1.Ressources.Load<Texture2D>(name);
-                 }
-                else
-                {
-                    return;
-                }
+                return;
             }
 
             spriteBatch.Draw(sprite, new Rectangle(position.ToPoint(), new Point(width, height)), Color.White);
