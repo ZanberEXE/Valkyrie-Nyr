@@ -42,9 +42,8 @@ namespace Valkyrie_Nyr
         {
             //TODO:delete
             pxl = Game1.Ressources.Load<Texture2D>("index");
-            
-            //create Nyr
-            Player.Nyr.init();
+
+            States.CurrentPlayerState = Playerstates.IDLE;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
                         
