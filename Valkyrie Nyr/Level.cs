@@ -115,6 +115,13 @@ namespace Valkyrie_Nyr
 
             Player.Nyr.Update(gameTime);
 
+
+            //Let PLayer fall and save the moveValue in overall Movement
+            if (!Player.Nyr.inHub)
+            {
+                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+            }
+
             if (Player.Nyr.inJump)
             {
                 if (!Player.Nyr.onGround)
@@ -213,13 +220,7 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            //Let PLayer fall and save the moveValue in overall Movement
-            if (!Player.Nyr.inHub)
-            {
-                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
-
-                
-            }
+            
 
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
