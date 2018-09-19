@@ -84,6 +84,8 @@ namespace Valkyrie_Nyr
             foreach (Entity element in entityObjects)
             {
                 gameObjects.Add(element);
+                element.initialize();
+                element.Update(gameTime);
             }
 
             foreach (GameObject element in gameObjects)
@@ -110,7 +112,7 @@ namespace Valkyrie_Nyr
         {
             Vector2 moveValue = Vector2.Zero;
 
-            Player.Nyr.Update(gameTime);
+           // Player.Nyr.Update(gameTime);
 
             //Let PLayer fall and save the moveValue in overall Movement
             if (!Player.Nyr.inHub)
@@ -150,7 +152,7 @@ namespace Valkyrie_Nyr
                 {
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = -1;
+                        Player.Nyr.entityFacing = -1;
                         if (States.CurrentPlayerState == Playerstates.IDLE)
                         {
                             States.CurrentPlayerState = Playerstates.WALK;
@@ -158,7 +160,7 @@ namespace Valkyrie_Nyr
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = 1;
+                        Player.Nyr.entityFacing = 1;
                         if (States.CurrentPlayerState == Playerstates.IDLE)
                         {
                             States.CurrentPlayerState = Playerstates.WALK;
@@ -210,7 +212,7 @@ namespace Valkyrie_Nyr
                             {
                                 States.CurrentPlayerState = Playerstates.FIGHT;
                                 States.NextPlayerState = Playerstates.IDLE;
-                                Player.Nyr.attack(Player.Nyr.nyrFacing);
+                                Player.Nyr.attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
                             }
                         }
@@ -240,6 +242,12 @@ namespace Valkyrie_Nyr
 
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger();
+
+            foreach (Entity element in entityObjects)
+            {
+                element.Update(gameTime);
+            }
+            
 
             if (!anyKeyPressed)
             {
@@ -378,7 +386,7 @@ namespace Valkyrie_Nyr
             {
                 element.Draw(gameTime, spriteBatch);
             }
-            Player.Nyr.Draw(spriteBatch);
+            //Player.Nyr.Draw(spriteBatch);
         }
     }
 }

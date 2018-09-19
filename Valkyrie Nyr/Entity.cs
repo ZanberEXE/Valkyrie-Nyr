@@ -8,21 +8,87 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Valkyrie_Nyr
 {
+    
     class Entity : GameObject
     {
+
+        public struct animationPrefab
+        {
+            public string path;
+            public int Columns;
+            public int Rows;
+            public int maxFrames;
+            public animationPrefab(string _path, int _columns, int _rows, int _maxFrames)
+            {
+                path = _path;
+                Columns = _columns;
+                Rows = _rows;
+                maxFrames = _maxFrames;
+            }
+        }
+        protected struct animation
+        {
+            public Texture2D texture;
+            public int Columns;
+            public int Rows;
+            public int Width;
+            public int Height;
+            public int maxFrames;
+            public animation(Texture2D _texture, int _columns, int _rows, int _maxFrames)
+            {
+                texture = _texture;
+                Columns = _columns;
+                Rows = _rows;
+                Width = _texture.Width / _columns;
+                Height = _texture.Height / _rows;
+                maxFrames = _maxFrames;
+            }
+        }
+
+
+        protected animation[] animTex;
+        public animationPrefab[] animationPrefabs;
+        // public Texture2D[] animTex { get; set; }
+        public string[] paths;
+
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+
+        public int entityFacing;
+        public int currentFrame = 0;
+
+        private int totalFrames = 0;
+        private int timeSinceLastFrame = 0;
+        private int millisecondsPerFrame = 5;
+
         public int health;
-        int damage;
+        protected int damage;
 
+        public int entitystates = 0;
 
-        private GameObject hitbox;
+        public GameObject hitbox;
+        
 
         public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position)
         {
-            health = hp;
-            damage = dmg;
-            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(60, 100));
+            
+            
         }
             
+        public void initialize()
+        {
+            animTex = new animation[animationPrefabs.Length];
+            for (int i = 0; i < animationPrefabs.Length; i++)
+            {
+                animTex[i].Rows = animationPrefabs[i].Rows;
+                animTex[i].Columns = animationPrefabs[i].Columns;
+                animTex[i].texture = Game1.Ressources.Load<Texture2D>(animationPrefabs[i].path);
+                animTex[i].Width = animTex[i].texture.Width / animTex[i].Columns;
+                animTex[i].Height = animTex[i].texture.Height / animTex[i].Rows;
+                animTex[i].maxFrames = animationPrefabs[i].maxFrames;
+            }
+        }
+
         public void attack(int lookPos)
         {
             // turns the hitbox to the left of the character
@@ -63,21 +129,63 @@ namespace Valkyrie_Nyr
                 }
             }
         }
-        
+        /// <summary>
+        /// UPDATE
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Update(GameTime gameTime)
+        {
+            totalFrames = animTex[entitystates].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeSinceLastFrame > millisecondsPerFrame)
+            {
+                timeSinceLastFrame -= millisecondsPerFrame;
+
+                currentFrame++;
+
+                timeSinceLastFrame = 0;
+
+                if (currentFrame >= totalFrames)
+                {
+                    currentFrame = 0;
+                    States.CurrentPlayerState = States.NextPlayerState;
+                    if (name == "Banshee")
+                    {
+                        if (entitystates == (int)Enemystates.AGGRO)
+                        {
+                            entitystates = (int)Enemystates.WALK;
+                        }
+                    }
+                }
+            }
+            
+
+          
+        }
+
         public void entityRender(GameTime gametime, SpriteBatch spriteBatch)
         {
-            /*
-             * if (sprite == null)
-            {
-                    sprite = Game1.Ressources.Load<Texture2D>(name);
-            }
+            int animWidth = animTex[entitystates].Width;
+            int animHeight = animTex[entitystates].Height;
+            int row = (int)((float)currentFrame / animTex[(int)entitystates].Columns);
+            int column = currentFrame % animTex[(int)entitystates].Columns;
 
-            spriteBatch.Draw(sprite, new Rectangle(position.ToPoint(), new Point(width, height)), Color.White);
-            */
+            Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
+            Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
+
+            if (entityFacing == 1)
+            {
+                spriteBatch.Draw(animTex[(int)entitystates].texture, destinationRectangle, sourceRectangle, Color.White);
+            }
+            else
+            {
+                //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
+                spriteBatch.Draw(animTex[(int)entitystates].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+            }
 
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
             // draw hitbox
-            spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
         }
 
       

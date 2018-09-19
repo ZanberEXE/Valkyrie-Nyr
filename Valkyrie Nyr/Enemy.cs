@@ -10,22 +10,34 @@ namespace Valkyrie_Nyr
 {
     class Enemy : Entity
     {
-
-        int senseRadius;
+        
+        
         
         public Enemy(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
-            senseRadius = 500;
+            
         }
-
+        /// <summary>
+        /// ////////////////// DIE UPDATE FUNKTION WIRD NIE AUFGERUFEN ABER ICH HABE KEINE AHNUNG WIE ICH DIE AUFRUFE!!!!! :'/
+        /// </summary>
         public void update()
         {
-            if (nyrInReach())
+
+            
+
+            if (nyrInReach(200))
             {
-                React();
+                currentFrame = 0;
+                entitystates = (int)Enemystates.AGGRO;
+           
+            }
+            if (nyrInReach(50))
+            {
+                entitystates = (int)Enemystates.ATTACK;
+                currentFrame = 0;
             }
         }
-        private bool nyrInReach()
+        private bool nyrInReach(int senseRadius)
         {
             if(Vector2.Distance(this.position, Player.Nyr.position) <= senseRadius)
             {

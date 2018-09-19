@@ -5,30 +5,13 @@ using System.Collections.Generic;
 
 namespace Valkyrie_Nyr
 {
-    struct animation
-    {
-        public Texture2D texture;
-        public int Columns;
-        public int Rows;
-        public int Width;
-        public int Height;
-        public int maxFrames;
-        public animation(Texture2D _texture, int _columns, int _rows, int _maxFrames)
-        {
-            texture = _texture;
-            Columns = _columns;
-            Rows = _rows;
-            Width = _texture.Width / _columns;
-            Height = _texture.Height / _rows;
-            maxFrames = _maxFrames;
-        }
-    }
+    
 
     class Player : Entity
     {
 
         private static Player nyr;
-        public int nyrFacing;
+       
 
         public float speed;
         public float jumpHeight;
@@ -37,18 +20,9 @@ namespace Valkyrie_Nyr
         public bool interact;
         public bool inJump;
 
-        public animation[] animTex;
-       // public Texture2D[] animTex { get; set; }
+        
 
-        public int Rows { get; set; }
-        public int Columns { get; set; }
-
-        public int currentFrame;
-        private int totalFrames = 0;
-        private int timeSinceLastFrame = 0;
-        private int millisecondsPerFrame = 5;
-
-        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, string textureType, int rows, int columns) : base(name, triggerType, mass, height, width, position, hp, dmg)
+        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
             speed = 700;
             jumpHeight = 15;
@@ -58,27 +32,31 @@ namespace Valkyrie_Nyr
 
             animTex = new animation[]
             {
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Idle"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10 , 2 , 18),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10 , 63 , 625),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10 , 2 , 12),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10 , 4 , 31),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Idle"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10, 2, 18),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 63, 625),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25)
             };
-            
-            currentFrame = 0;
             onIce = false;
+            health = hp;
+            damage = dmg;
+            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(60, 100));
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200); } return nyr; } }
 
 
-       
+        public void changeState()
+        {
+            entitystates = (int)States.CurrentPlayerState;
+        }
 
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger)
@@ -180,46 +158,12 @@ namespace Valkyrie_Nyr
             position = newPos;
         }
 
-        public void Update(GameTime gameTime)
-        {
-            totalFrames = animTex[(int)States.CurrentPlayerState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > millisecondsPerFrame)
-            {
-                timeSinceLastFrame -= millisecondsPerFrame;
-
-                currentFrame++;
-
-                timeSinceLastFrame = 0;
-
-                if (currentFrame == totalFrames)
-                {
-                    currentFrame = 0;
-                    States.CurrentPlayerState = States.NextPlayerState;
-                }
-            }
-        }
+        
 
         public void Draw(SpriteBatch spriteBatch)
         {
             
-            int animWidth = animTex[(int)States.CurrentPlayerState].Width;
-            int animHeight = animTex[(int)States.CurrentPlayerState].Height;
-            int row = (int)((float)currentFrame / animTex[(int)States.CurrentPlayerState].Columns);
-            int column = currentFrame % animTex[(int)States.CurrentPlayerState].Columns;
-
-            Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
-            Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
-
-            if (nyrFacing == 1)
-            {
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White);
-            }
-            else
-            {
-                //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f );
-            }
+           
         }
     }
 }
