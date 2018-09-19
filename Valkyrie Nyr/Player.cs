@@ -5,6 +5,24 @@ using System.Collections.Generic;
 
 namespace Valkyrie_Nyr
 {
+    struct animation
+    {
+        public Texture2D texture;
+        public int Columns;
+        public int Rows;
+        public int Width;
+        public int Height;
+        public int maxFrames;
+        public animation(Texture2D _texture, int _columns, int _rows, int _maxFrames)
+        {
+            texture = _texture;
+            Columns = _columns;
+            Rows = _rows;
+            Width = _texture.Width / _columns;
+            Height = _texture.Height / _rows;
+            maxFrames = _maxFrames;
+        }
+    }
 
     class Player : Entity
     {
@@ -19,13 +37,14 @@ namespace Valkyrie_Nyr
         public bool interact;
         public bool inJump;
 
-        public Texture2D[] animTex { get; set; }
+        public animation[] animTex;
+       // public Texture2D[] animTex { get; set; }
 
         public int Rows { get; set; }
         public int Columns { get; set; }
 
         public int currentFrame;
-        private int totalFrames;
+        private int totalFrames = 0;
         private int timeSinceLastFrame = 0;
         private int millisecondsPerFrame = 5;
 
@@ -37,25 +56,24 @@ namespace Valkyrie_Nyr
             interact = false;
             inJump = false;
 
-            animTex = new Texture2D[]
+            animTex = new animation[]
             {
-                Game1.Ressources.Load<Texture2D>("Player/Idle"),
-                Game1.Ressources.Load<Texture2D>("Player/Walking Side"),
-                Game1.Ressources.Load<Texture2D>("Player/Jump"),
-                Game1.Ressources.Load<Texture2D>("Player/Attack"),
-                Game1.Ressources.Load<Texture2D>("Player/Hurt"),
-                Game1.Ressources.Load<Texture2D>("Player/Dead"),
-                Game1.Ressources.Load<Texture2D>("Player/Dance"),
-                Game1.Ressources.Load<Texture2D>("Player/Falling"),
-                Game1.Ressources.Load<Texture2D>("Player/Landing"),
-                Game1.Ressources.Load<Texture2D>("Player/Stop Running"),
-                Game1.Ressources.Load<Texture2D>("Player/Crouch")
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Idle"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10 , 2 , 18),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10 , 63 , 625),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10 , 2 , 12),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10 , 4 , 31),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10 , 3 , 25),
             };
+
+        
+
             
-            Rows = rows;
-            Columns = columns;
             currentFrame = 0;
-            totalFrames = Rows * Columns;
             onIce = false;
         }
 
@@ -172,6 +190,7 @@ namespace Valkyrie_Nyr
 
         public void Update(GameTime gameTime)
         {
+            totalFrames = animTex[(int)States.CurrentPlayerState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)
             {
@@ -191,22 +210,23 @@ namespace Valkyrie_Nyr
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            int width = animTex[(int)States.CurrentPlayerState].Width / Columns;
-            int height = animTex[(int)States.CurrentPlayerState].Height / Rows;
-            int row = (int)((float)currentFrame / Columns);
-            int column = currentFrame % Columns;
+            
+            int animWidth = animTex[(int)States.CurrentPlayerState].Width;
+            int animHeight = animTex[(int)States.CurrentPlayerState].Height;
+            int row = (int)((float)currentFrame / animTex[(int)States.CurrentPlayerState].Columns);
+            int column = currentFrame % animTex[(int)States.CurrentPlayerState].Columns;
 
-            Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
-            Rectangle destinationRectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+            Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
+            Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
 
             if (nyrFacing == 1)
             {
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState], destinationRectangle, sourceRectangle, Color.White);
+                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White);
             }
             else
             {
-                destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState], destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f );
+                //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
+                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f );
             }
         }
     }
