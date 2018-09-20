@@ -64,7 +64,7 @@ namespace Valkyrie_Nyr
 
                 if (cameraAtMaxLeft || cameraAtMaxRight)
                 {
-                    Player.Nyr.move(new Vector2(moveValue.X, 0));
+                    Player.Nyr.Move(new Vector2(moveValue.X, 0));
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace Valkyrie_Nyr
             }
             else
             {
-                Player.Nyr.move(new Vector2(moveValue.X, 0));
+                Player.Nyr.Move(new Vector2(moveValue.X, 0));
             }
             //move y-axis
             if (PlayerIsMiddleY)
@@ -83,7 +83,7 @@ namespace Valkyrie_Nyr
 
                 if (cameraAtMaxTop || cameraAtMaxBottom)
                 {
-                    Player.Nyr.move(new Vector2(0, moveValue.Y));
+                    Player.Nyr.Move(new Vector2(0, moveValue.Y));
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace Valkyrie_Nyr
             }
             else
             {
-                Player.Nyr.move(new Vector2(0, moveValue.Y));
+                Player.Nyr.Move(new Vector2(0, moveValue.Y));
             }
         }
     }

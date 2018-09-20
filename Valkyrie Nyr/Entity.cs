@@ -75,7 +75,7 @@ namespace Valkyrie_Nyr
             
         }
             
-        public void initialize()
+        public void Initialize()
         {
             animTex = new animation[animationPrefabs.Length];
             for (int i = 0; i < animationPrefabs.Length; i++)
@@ -88,8 +88,14 @@ namespace Valkyrie_Nyr
                 animTex[i].maxFrames = animationPrefabs[i].maxFrames;
             }
         }
+        //moves the Player
+        public void Move(Vector2 moveValue)
+        {
+            Vector2 newPos = position + moveValue;
 
-        public void attack(int lookPos)
+            position = newPos;
+        }
+        public void Attack(int lookPos)
         {
             // turns the hitbox to the left of the character
             if(lookPos == -1 && hitbox.position.X > 0)
@@ -102,7 +108,7 @@ namespace Valkyrie_Nyr
                 hitbox.position.X = hitbox.position.X * -1;
             }
 
-            GameObject[] hittetObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
+            GameObject[] hittetObjects = Collision<Enemy>(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
             List<Entity> hittetEntitys = new List<Entity>();
 
             if (hittetObjects.Length == 0)
@@ -133,7 +139,7 @@ namespace Valkyrie_Nyr
         /// UPDATE
         /// </summary>
         /// <param name="gameTime"></param>
-        public void entityUpdate(GameTime gameTime)
+        public void EntityUpdate(GameTime gameTime)
         {
             totalFrames = animTex[currentEntityState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -151,12 +157,18 @@ namespace Valkyrie_Nyr
                     currentEntityState = nextEntityState;
                 }
             }
-            
-
+           
+            if (health <= 0)
+            {
+                if (name == "Nyr")
+                {
+                    Player.Nyr.gameOver();
+                }
+            }
           
         }
 
-        public void entityRender(GameTime gametime, SpriteBatch spriteBatch)
+        public void EntityRender(GameTime gametime, SpriteBatch spriteBatch)
         {
             int animWidth = animTex[currentEntityState].Width;
             int animHeight = animTex[currentEntityState].Height;
@@ -175,10 +187,10 @@ namespace Valkyrie_Nyr
                 //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
                 spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
             }
-
+            
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
-            // draw hitbox
-            //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+            //draw hitbox
+            spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
         }
 
       

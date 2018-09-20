@@ -373,18 +373,6 @@
 /processorParam:TextureFormat=Color
 /build:smallEnemies/Banshee/BansheeAggro.png
 
-#begin smallEnemies/Banshee/BansheeExplode.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:smallEnemies/Banshee/BansheeExplode.png
-
 #begin smallEnemies/Banshee/BansheeIdle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -685,10 +673,15 @@
 /processorParam:TextureFormat=Color
 /build:Bosses/Monomono/MonoBlitzball.png
 
-#begin File.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
+#begin smallEnemies/Banshee/BansheeExplode.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:File.spritefont
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:smallEnemies/Banshee/BansheeExplode.png
 

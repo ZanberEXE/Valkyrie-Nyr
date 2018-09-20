@@ -94,7 +94,7 @@ namespace Valkyrie_Nyr
             foreach (Enemy element in enemyObjects)
             {
                 gameObjects.Add(element);
-                element.initialize();
+                element.Initialize();
             }
             foreach (NSC element in nscObjects)
             {
@@ -236,7 +236,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                                Player.Nyr.attack(Player.Nyr.entityFacing);
+                                Player.Nyr.Attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
                             }
                         }break;
@@ -314,7 +314,7 @@ namespace Valkyrie_Nyr
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger(gameTime);
 
-            Player.Nyr.entityUpdate(gameTime);
+            Player.Nyr.EntityUpdate(gameTime);
 
             foreach (Enemy element in enemyObjects)
             {
@@ -442,13 +442,13 @@ namespace Valkyrie_Nyr
             //Draw all GameObjects such as Enemys
             foreach (Enemy element in enemyObjects)
             {
-                element.entityRender(gameTime, spriteBatch);
+                element.EntityRender(gameTime, spriteBatch);
             }
             foreach (GameObject element in gameObjects)
             {
                 element.Draw(gameTime, spriteBatch);
             }
-            Player.Nyr.entityRender(gameTime, spriteBatch);
+            Player.Nyr.EntityRender(gameTime, spriteBatch);
         }
     }
 }
