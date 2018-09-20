@@ -160,6 +160,9 @@
     <None Include="Ressources\json-files\Hub_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\Overworld_enemyObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\Overworld_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

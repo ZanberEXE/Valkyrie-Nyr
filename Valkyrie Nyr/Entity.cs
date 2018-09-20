@@ -48,7 +48,6 @@ namespace Valkyrie_Nyr
 
         protected animation[] animTex;
         public animationPrefab[] animationPrefabs;
-        // public Texture2D[] animTex { get; set; }
         public string[] paths;
 
         public int Rows { get; set; }
@@ -64,7 +63,8 @@ namespace Valkyrie_Nyr
         public int health;
         protected int damage;
 
-        public int entitystates = 0;
+        public int currentEntityState = 0;
+        public int nextEntityState = 0;
 
         public GameObject hitbox;
         
@@ -111,20 +111,20 @@ namespace Valkyrie_Nyr
             }
             foreach(GameObject element in hittetObjects)
             {
-                for (int i = 0; i < Level.Current.entityObjects.Count(); i++)
+                for (int i = 0; i < Level.Current.enemyObjects.Count(); i++)
                 {
-                    if(Level.Current.entityObjects[i].Equals(element))
+                    if(Level.Current.enemyObjects[i].Equals(element))
                     {
-                        hittetEntitys.Add(Level.Current.entityObjects[i]);
+                        hittetEntitys.Add(Level.Current.enemyObjects[i]);
                     }
                 }
             }
-            foreach(Entity element in hittetEntitys)
+            foreach(Enemy element in hittetEntitys)
             {
                 element.health -= this.damage;
                 if(element.health <= 0)
                 {
-                    Level.Current.entityObjects.Remove(element);
+                    Level.Current.enemyObjects.Remove(element);
                     Level.Current.gameObjects.Remove(element);
                 }
             }
@@ -133,9 +133,9 @@ namespace Valkyrie_Nyr
         /// UPDATE
         /// </summary>
         /// <param name="gameTime"></param>
-        public void Update(GameTime gameTime)
+        public void entityUpdate(GameTime gameTime)
         {
-            totalFrames = animTex[entitystates].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
+            totalFrames = animTex[currentEntityState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)
             {
@@ -148,14 +148,7 @@ namespace Valkyrie_Nyr
                 if (currentFrame >= totalFrames)
                 {
                     currentFrame = 0;
-                    States.CurrentPlayerState = States.NextPlayerState;
-                    if (name == "Banshee")
-                    {
-                        if (entitystates == (int)Enemystates.AGGRO)
-                        {
-                            entitystates = (int)Enemystates.WALK;
-                        }
-                    }
+                    currentEntityState = nextEntityState;
                 }
             }
             
@@ -165,22 +158,22 @@ namespace Valkyrie_Nyr
 
         public void entityRender(GameTime gametime, SpriteBatch spriteBatch)
         {
-            int animWidth = animTex[entitystates].Width;
-            int animHeight = animTex[entitystates].Height;
-            int row = (int)((float)currentFrame / animTex[(int)entitystates].Columns);
-            int column = currentFrame % animTex[(int)entitystates].Columns;
+            int animWidth = animTex[currentEntityState].Width;
+            int animHeight = animTex[currentEntityState].Height;
+            int row = (int)((float)currentFrame / animTex[(int)currentEntityState].Columns);
+            int column = currentFrame % animTex[(int)currentEntityState].Columns;
 
             Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
             Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
 
             if (entityFacing == 1)
             {
-                spriteBatch.Draw(animTex[(int)entitystates].texture, destinationRectangle, sourceRectangle, Color.White);
+                spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White);
             }
             else
             {
                 //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
-                spriteBatch.Draw(animTex[(int)entitystates].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+                spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
             }
 
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");

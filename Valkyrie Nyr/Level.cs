@@ -16,7 +16,8 @@ namespace Valkyrie_Nyr
         public Enemy ryn;
 
         public List<GameObject> gameObjects;
-        public List<Entity> entityObjects;
+        //public List<Entity> entityObjects;
+        public List<Enemy> enemyObjects;
 
         public int height;
         public int width;
@@ -41,7 +42,7 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(string levelName)
         {
-            ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
+            //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
 
             Point startPosition;
             Player.Nyr.inHub = false;
@@ -83,9 +84,10 @@ namespace Valkyrie_Nyr
             
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
             
-            entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
+            //entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
+            enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
             
-            foreach (Entity element in entityObjects)
+            foreach (Enemy element in enemyObjects)
             {
                 gameObjects.Add(element);
                 element.initialize();
@@ -99,15 +101,15 @@ namespace Valkyrie_Nyr
             
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
-
-            entityObjects.Add(Player.Nyr);
-            gameObjects.Add(Player.Nyr);
+            
 
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
 
             Camera.Main.position = Vector2.Zero;
 
-            States.CurrentPlayerState = Playerstates.IDLE;
+            Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
+            
+
         }
 
         //get input and update the elements inside the level
@@ -132,8 +134,8 @@ namespace Valkyrie_Nyr
                 else
                 {
                     Player.Nyr.inJump = false;
-                    States.CurrentPlayerState = Playerstates.LAND;
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
             }
 
@@ -156,17 +158,19 @@ namespace Valkyrie_Nyr
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.entityFacing = -1;
-                        if (States.CurrentPlayerState == Playerstates.IDLE)
+                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE)
                         {
-                            States.CurrentPlayerState = Playerstates.WALK;
+                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                         }
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.entityFacing = 1;
-                        if (States.CurrentPlayerState == Playerstates.IDLE)
+                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE)
                         {
-                            States.CurrentPlayerState = Playerstates.WALK;
+                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                         }
                         break;
                     case Keys.Space:
@@ -174,8 +178,8 @@ namespace Valkyrie_Nyr
                         {
                             if (Player.Nyr.onGround && !Player.Nyr.inJump && !Player.Nyr.inHub)
                             {
-                                States.CurrentPlayerState = Playerstates.JUMP;
-                                States.NextPlayerState = Playerstates.FALL;
+                                Player.Nyr.currentEntityState = (int)Playerstates.JUMP;
+                                Player.Nyr.nextEntityState = (int)Playerstates.FALL;
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
@@ -186,9 +190,10 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
                             {
-                                States.CurrentPlayerState = Playerstates.WALK;
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                             }
                         }
                         break;
@@ -196,9 +201,10 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
                             {
-                                States.CurrentPlayerState = Playerstates.WALK;
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                             }
                         }
                         break;
@@ -213,8 +219,8 @@ namespace Valkyrie_Nyr
                         {
                             if (atkCooldown == 0 && !Player.Nyr.inHub)
                             {
-                                States.CurrentPlayerState = Playerstates.FIGHT;
-                                States.NextPlayerState = Playerstates.IDLE;
+                                Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
+                                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
                             }
@@ -260,10 +266,10 @@ namespace Valkyrie_Nyr
 
             if (newMoveValue != Vector2.Zero)
             {
-                if (States.CurrentPlayerState == Playerstates.FALL && Player.Nyr.onGround)
+                if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
                 {
-                    States.CurrentPlayerState = Playerstates.LAND;
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
 
                 Camera.Main.move(newMoveValue);
@@ -276,7 +282,9 @@ namespace Valkyrie_Nyr
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger();
 
-            foreach (Entity element in entityObjects)
+            Player.Nyr.entityUpdate(gameTime);
+
+            foreach (Enemy element in enemyObjects)
             {
                 element.Update(gameTime);
             }
@@ -284,13 +292,13 @@ namespace Valkyrie_Nyr
 
             if (!anyKeyPressed)
             {
-                if (!(States.CurrentPlayerState == Playerstates.JUMP || States.CurrentPlayerState == Playerstates.FALL || States.CurrentPlayerState == Playerstates.LAND))
+                if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND))
                 {
-                    if (States.CurrentPlayerState == Playerstates.WALK && Player.Nyr.onGround)
+                    if (Player.Nyr.currentEntityState == (int)Playerstates.WALK && Player.Nyr.onGround)
                     {
-                        States.CurrentPlayerState = Playerstates.STOP;
+                        Player.Nyr.currentEntityState = (int)Playerstates.STOP;
                     }
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
             }
 
@@ -398,7 +406,7 @@ namespace Valkyrie_Nyr
             spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
             //Draw all GameObjects such as Enemys
-            foreach (Entity element in entityObjects)
+            foreach (Enemy element in enemyObjects)
             {
                 element.entityRender(gameTime, spriteBatch);
             }
@@ -406,7 +414,7 @@ namespace Valkyrie_Nyr
             {
                 element.Draw(gameTime, spriteBatch);
             }
-            //Player.Nyr.Draw(spriteBatch);
+            Player.Nyr.entityRender(gameTime, spriteBatch);
         }
     }
 }

@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Banshee",
+    "triggerType": "",
+    "mass": 0,
+    "height": 40,
+    "width": 40,
+    "position": "800, 3700",
+    "health": 5,
+    "damage": 1000,
+    "entityFacing": 1,
+	"aggroRange" : 200,
+	"attackRange" : 50,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/Banshee/BansheeIdle",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeMove",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeExplode",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeAggro",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 43
+      }
+    ],
+    "hitbox": {
+      "name": "BansheeHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 400,
+      "width": 400,
+      "position": "0, 0"
+    }
+  }
+]

@@ -10,34 +10,44 @@ namespace Valkyrie_Nyr
 {
     class Enemy : Entity
     {
+
+        public int aggroRange;
+        public int attackRange;
         
-        
-        
-        public Enemy(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
+        public Enemy(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _aggroRange, int _attackRange) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
-            
-        }
+            aggroRange = _aggroRange;
+            attackRange = _attackRange;
+    }
         /// <summary>
         /// ////////////////// DIE UPDATE FUNKTION WIRD NIE AUFGERUFEN ABER ICH HABE KEINE AHNUNG WIE ICH DIE AUFRUFE!!!!! :'/
+        /// 
+        /// es müssen noch die json-dateien umbenannt werden (entityObjects -> enemyObjects)
+        /// anschließend müssen sie dann noch in visual studio dem ressources ordner hinzugefügt werden und auf "immer kopieren" gestellt werden
+        /// 
+        /// Ich habe jetzt noch die Animationen von Nyr über die Entitystates laufen lassen
+        /// 
+        /// Außerdem ist der erkennungsradius der Gegner jetzt in der Json-Datei
         /// </summary>
-        public void update()
+        public void Update(GameTime gameTime)
         {
+            base.entityUpdate(gameTime);            
 
-            
-
-            if (nyrInReach(200))
+            if (NyrBy(aggroRange))
             {
                 currentFrame = 0;
-                entitystates = (int)Enemystates.AGGRO;
-           
+                currentEntityState = (int)Enemystates.AGGRO;
+                nextEntityState = (int)Enemystates.WALK;
+
             }
-            if (nyrInReach(50))
+            if (NyrBy(attackRange))
             {
-                entitystates = (int)Enemystates.ATTACK;
+                currentEntityState = (int)Enemystates.ATTACK;
+                nextEntityState = (int)Enemystates.IDLE;
                 currentFrame = 0;
             }
         }
-        private bool nyrInReach(int senseRadius)
+        private bool NyrBy(int senseRadius)
         {
             if(Vector2.Distance(this.position, Player.Nyr.position) <= senseRadius)
             {

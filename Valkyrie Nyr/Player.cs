@@ -58,12 +58,7 @@ namespace Valkyrie_Nyr
 
         //get Nyr from everywhere
         public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200); } return nyr; } }
-
-
-        public void changeState()
-        {
-            entitystates = (int)States.CurrentPlayerState;
-        }
+        
 
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger)
@@ -107,7 +102,7 @@ namespace Valkyrie_Nyr
             switch (activatedArea)
             {
                 case "lava":
-                    States.CurrentPlayerState = Playerstates.DEAD;
+                    Player.Nyr.currentEntityState = (int) Playerstates.DEAD;
                     break;
                 case "ice":
                     onIce = true;
@@ -169,14 +164,6 @@ namespace Valkyrie_Nyr
             Vector2 newPos = position + moveValue;
 
             position = newPos;
-        }
-
-        
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            
-           
         }
     }
 }

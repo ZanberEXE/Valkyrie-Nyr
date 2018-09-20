@@ -20,8 +20,8 @@ namespace Valkyrie_Nyr
         private static Playerstates nextPlayerState;
 
         public static GameStates CurrentGameState { get { return currentGameState; } set { currentGameState = value; } }
-        public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; Player.Nyr.currentFrame = 0; nextPlayerState = value; Player.Nyr.changeState(); } }
-        public static Playerstates NextPlayerState { get { return nextPlayerState; } set { nextPlayerState = value; } }
+        //public static Playerstates CurrentPlayerState { get { return currentPlayerState; } set { currentPlayerState = value; Player.Nyr.currentFrame = 0; nextPlayerState = value; Player.Nyr.changeState(); } }
+        //public static Playerstates NextPlayerState { get { return nextPlayerState; } set { nextPlayerState = value; Player.Nyr.changeState(); } }
 
     }
 }

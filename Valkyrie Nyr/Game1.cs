@@ -36,15 +36,16 @@ namespace Valkyrie_Nyr
             Ressources = Content;
 
             IsMouseVisible = true;
+
+            ////////////////////////
+            
         }
 
         protected override void Initialize()
         {
             //TODO:delete
             pxl = Game1.Ressources.Load<Texture2D>("index");
-
-            States.CurrentPlayerState = Playerstates.IDLE;
-
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
                         
             States.CurrentGameState = GameStates.MAINMENU;
@@ -213,7 +214,7 @@ namespace Valkyrie_Nyr
             {
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                 }
             }
 
