@@ -52,7 +52,7 @@
     "triggerType": "",
     "mass": 4,
     "height": 120,
-    "width": 70,
+    "width": 20,
     "position": "800, 3000",
     "health": 900,
     "damage": 30,

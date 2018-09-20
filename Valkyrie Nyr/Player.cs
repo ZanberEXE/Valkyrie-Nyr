@@ -53,7 +53,11 @@ namespace Valkyrie_Nyr
             onIce = false;
             health = hp;
             damage = dmg;
-            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(100, 80));
+
+            attackBox.X = 100;
+            attackBox.Y = 80;
+            attackBox.Width = 100;
+            attackBox.Height = 20;
         }
 
         //get Nyr from everywhere

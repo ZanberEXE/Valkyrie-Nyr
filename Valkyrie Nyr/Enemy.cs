@@ -50,10 +50,10 @@ namespace Valkyrie_Nyr
 
             if (isAttacking && currentEntityState != (int)Enemystates.IDLE)
             {
-                if (wasInAggroRange == false)
+                if (wasInAttackRange == false)
                 {
                     currentFrame = 0;
-                    wasInAggroRange = true;
+                    wasInAttackRange = true;
                 }
                 currentEntityState = (int)Enemystates.ATTACK;
                 Attack(entityFacing);

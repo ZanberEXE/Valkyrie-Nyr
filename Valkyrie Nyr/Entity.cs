@@ -46,6 +46,7 @@ namespace Valkyrie_Nyr
         }
 
 
+
         protected animation[] animTex;
         public animationPrefab[] animationPrefabs;
         public string[] paths;
@@ -66,8 +67,8 @@ namespace Valkyrie_Nyr
         public int currentEntityState = 0;
         public int nextEntityState = 0;
 
-        public GameObject hitbox;
-        
+        public Rectangle attackBox = new Rectangle();
+        public Rectangle hurtBox = new Rectangle();
 
         public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position)
         {
@@ -88,8 +89,24 @@ namespace Valkyrie_Nyr
                 animTex[i].maxFrames = animationPrefabs[i].maxFrames;
             }
         }
-        //moves the Player
-        public void Move(Vector2 moveValue)
+
+        bool CollisionAABB(Rectangle recA, Rectangle recB)
+        {
+	        if (
+                recA.X + recA.Width >= recB.X &&
+		        recB.X + recB.Width >= recA.X &&
+		        recA.Y + recA.Height >= recB.Y &&
+		        recB.Y + recB.Height >= recA.Y
+		    )
+	        {
+		        return true;
+	    }
+	
+	        return false;
+        }
+
+    //moves the Player
+    public void Move(Vector2 moveValue)
         {
             Vector2 newPos = position + moveValue;
 
@@ -97,17 +114,25 @@ namespace Valkyrie_Nyr
         }
         public void Attack(int lookPos)
         {
+
+            
             // turns the hitbox to the left of the character
-            if(lookPos == -1 && hitbox.position.X > 0)
+            if(lookPos == -1 && attackBox.X > 0)
             {
-                hitbox.position.X = hitbox.position.X * -1;
+                attackBox.X = attackBox.X * -1;
             }
             // turn the hitbos to the right of the character
-            if (lookPos == 1 && hitbox.position.X < 0)
+            if (lookPos == 1 && attackBox.X < 0)
             {
-                hitbox.position.X = hitbox.position.X * -1;
+                attackBox.X = attackBox.X * -1;
             }
 
+            if (CollisionAABB(attackBox, hurtBox))
+            {
+
+            }
+
+            /*
             GameObject[] hittetObjects = Collision<Enemy>(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
             List<Entity> hittetEntitys = new List<Entity>();
 
@@ -133,7 +158,7 @@ namespace Valkyrie_Nyr
                     Level.Current.enemyObjects.Remove(element);
                     Level.Current.gameObjects.Remove(element);
                 }
-            }
+            }*/
         }
         /// <summary>
         /// UPDATE
@@ -141,6 +166,13 @@ namespace Valkyrie_Nyr
         /// <param name="gameTime"></param>
         public void EntityUpdate(GameTime gameTime)
         {
+            hurtBox.X = (int)position.X;
+            hurtBox.Y = (int)position.Y;
+            hurtBox.Width = width;
+            hurtBox.Height = height;
+
+            attackBox.X = 
+
             totalFrames = animTex[currentEntityState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)
@@ -190,7 +222,8 @@ namespace Valkyrie_Nyr
             
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
             //draw hitbox
-            spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+            spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.BlueViolet * 0.5f);
         }
 
       
