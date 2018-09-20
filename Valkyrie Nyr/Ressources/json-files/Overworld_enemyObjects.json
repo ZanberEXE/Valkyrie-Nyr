@@ -7,10 +7,11 @@
     "width": 40,
     "position": "800, 3700",
     "health": 5,
-    "damage": 1000,
+    "damage": 10000,
     "entityFacing": 1,
-	"aggroRange" : 200,
-	"attackRange" : 50,
+    "aggroRange": 500,
+    "attackRange": 50,
+    "speed": 200,
     "animationPrefabs": [
       {
         "path": "smallEnemies/Banshee/BansheeIdle",
@@ -27,8 +28,8 @@
       {
         "path": "smallEnemies/Banshee/BansheeExplode",
         "Columns": 10,
-        "Rows": 5,
-        "maxFrames": 50
+        "Rows": 13,
+        "maxFrames": 125
       },
       {
         "path": "smallEnemies/Banshee/BansheeAggro",
@@ -41,8 +42,68 @@
       "name": "BansheeHitbox",
       "triggerType": "hitbox",
       "mass": 0,
-      "height": 400,
-      "width": 400,
+      "height": 300,
+      "width": 300,
+      "position": "-120, -150"
+    }
+  },
+  {
+    "name": "Ina",
+    "triggerType": "",
+    "mass": 4,
+    "height": 120,
+    "width": 70,
+    "position": "800, 3000",
+    "health": 900,
+    "damage": 30,
+    "entityFacing": 1,
+    "aggroRange": 0,
+    "attackRange": 0,
+    "speed": 200,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Ina/InaIdle",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "Bosses/Ina/InaMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Ina/InaAttack",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "Bosses/Ina/InaFireball",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 93
+      },
+      {
+        "path": "Bosses/Ina/InaMeteorShower",
+        "Columns": 10,
+        "Rows": 20,
+        "maxFrames": 197
+      },
+      {
+        "path": "Bosses/Ina/InaExplosion",
+        "Columns": 10,
+        "Rows": 19,
+        "maxFrames": 187
+      }
+    ],
+    "hitbox": {
+      "name": "InaHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 20,
+      "width": 20,
       "position": "0, 0"
     }
   }

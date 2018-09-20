@@ -53,11 +53,11 @@ namespace Valkyrie_Nyr
             onIce = false;
             health = hp;
             damage = dmg;
-            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(60, 100));
+            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(100, 80));
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2000); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -158,12 +158,6 @@ namespace Valkyrie_Nyr
             interact = false;
         }
 
-        //moves the Player
-        public void move(Vector2 moveValue)
-        {
-            Vector2 newPos = position + moveValue;
-
-            position = newPos;
-        }
+        
     }
 }
