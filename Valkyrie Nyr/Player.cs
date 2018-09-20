@@ -20,7 +20,14 @@ namespace Valkyrie_Nyr
         public bool interact;
         public bool inJump;
 
-        
+        // Feature bools
+        public bool hasHeadband = true;
+        public bool hasFireArmor = false;
+        public bool hasBoots = false;
+        public bool hasBracer = false;
+
+        private bool isInvulnerable { get; set; }
+        private int invulnerableTimer;
 
         public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
         {
@@ -77,6 +84,12 @@ namespace Valkyrie_Nyr
                     }
                     break;
             }
+        }
+        //TODO: Invulnerability erzeugen
+        public void makeInvulnerable(int timer)
+        {
+            isInvulnerable = true;
+            invulnerableTimer = timer;
         }
 
         private void collect(string item)

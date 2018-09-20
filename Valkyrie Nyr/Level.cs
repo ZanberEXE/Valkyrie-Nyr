@@ -23,6 +23,10 @@ namespace Valkyrie_Nyr
 
         int atkCooldown;
 
+        int dashtimer;
+        bool hasDashed = false;
+        Vector2 tempposition;
+
         public Vector2 positionBGSprite;
 
         private static Level currentLevel;
@@ -214,11 +218,41 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
                             }
+                        }break;
+                    case Keys.LeftControl:
+                        if (Player.Nyr.hasHeadband && hasDashed == false)
+                        {
+                            
+                            Player.Nyr.makeInvulnerable(20);
+                            dashtimer = 30;
+                            tempposition = Player.Nyr.position;
+                            hasDashed = true;
                         }
                         break;
+                    
+
                 }
             }
-
+            //TODO: Höhe beibehalten 
+            if (dashtimer >= 0)
+            {
+                if (dashtimer >= 20)
+                {
+                    if (Player.Nyr.entityFacing == -1)
+                    {
+                        moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
+                    }
+                    if (Player.Nyr.entityFacing == 1)
+                    {
+                        moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
+                    }
+                }
+                if (dashtimer <= 1)
+                {
+                    hasDashed = false;
+                }
+                dashtimer--;
+            }
             
 
             //let em move, after all collisions have manipulated the movement
@@ -299,19 +333,6 @@ namespace Valkyrie_Nyr
                     collidedBottom = true;
                 }
             }
-
-            //if (collidedBottom)
-            //{
-            //    Player.Nyr.onGround = true;
-            //}
-            //if (moveValue.Y == 0)
-            //{
-            //    Player.Nyr.onGround = true;
-            //}
-            //if (moveValue.Y < 0)
-            //{
-            //    Player.Nyr.onGround = false;
-            //}
 
             if (collidedLeft || collidedRight)
             {
