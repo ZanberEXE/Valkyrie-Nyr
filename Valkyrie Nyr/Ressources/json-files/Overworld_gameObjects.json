@@ -36,6 +36,13 @@
       "position": "0, 3900",
   },
   {
+      "name": "cloud",
+      "height": 50,
+      "width": 500,
+      "position": "600, 3700",
+      "moving": "500, 0",
+  },
+  {
       "name": "platform",
       "height": 50,
       "width": 300,

@@ -16,6 +16,7 @@ namespace Valkyrie_Nyr
         Texture2D pxl;
 
         public static ContentManager Ressources;
+        public static SpriteBatch Renderer;
         public static Point WindowSize;
 
         public Game1()
@@ -35,6 +36,7 @@ namespace Valkyrie_Nyr
             //Now you can load content from everywhere
             Ressources = Content;
 
+
             IsMouseVisible = true;
 
             ////////////////////////
@@ -47,7 +49,10 @@ namespace Valkyrie_Nyr
             pxl = Game1.Ressources.Load<Texture2D>("index");
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
-                        
+
+            Renderer = spriteBatch;
+
+
             States.CurrentGameState = GameStates.MAINMENU;
 
             base.Initialize();
@@ -144,6 +149,14 @@ namespace Valkyrie_Nyr
             {
                 States.CurrentGameState = GameStates.PAUSE;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.F) && States.CurrentGameState == GameStates.CONVERSATION)
+            {
+                Player.Nyr.conversationPartner.continueConversation(gameTime);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.CONVERSATION)
+            {
+                Player.Nyr.conversationPartner.endConversation();
+            }
 
             switch (States.CurrentGameState)
             {
@@ -190,6 +203,9 @@ namespace Valkyrie_Nyr
             {
                 case GameStates.PLAYING:
                     Level.Current.render(spriteBatch, gameTime);
+                    break;
+                case GameStates.CONVERSATION:
+                    Player.Nyr.conversationPartner.renderConversation(spriteBatch);
                     break;
                 case GameStates.MAINMENU:
                     spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);

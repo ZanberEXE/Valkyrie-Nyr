@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Valkyrie_Nyr
 {
@@ -19,6 +20,8 @@ namespace Valkyrie_Nyr
         public bool inHub;
         public bool interact;
         public bool inJump;
+        public bool inConversation;
+        public NSC conversationPartner;
 
         // Feature bools
         public bool hasHeadband = true;
@@ -61,7 +64,7 @@ namespace Valkyrie_Nyr
         
 
         //put here stuff that happens if you collect something
-        public void trigger(GameObject activatedTrigger)
+        public void trigger(GameObject activatedTrigger, GameTime gameTime)
         {
             switch(activatedTrigger.triggerType)
             {
@@ -76,6 +79,13 @@ namespace Valkyrie_Nyr
                     if (interact)
                     {
                         loader(activatedTrigger.name);
+                    }
+                    break;
+                case "nsc":
+                    if (interact)
+                    {
+                        //if anyone triggers that breakpoint, please inform me!
+                        ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
                     }
                     break;
             }
@@ -144,15 +154,19 @@ namespace Valkyrie_Nyr
             Level.Current.loadLevel("Hub");
         }
 
-        public void activateTrigger()
+        public void activateTrigger(GameTime gameTime)
         {
             GameObject[] collidedObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), position);
+            NSC[] collidedNSCs = Collision<NSC>(Level.Current.gameObjects.ToArray(), position);
+
+            //add all collided NSCs to GameObjects
+            collidedObjects = collidedObjects.Concat(collidedNSCs).ToArray();
 
             foreach (GameObject element in collidedObjects)
             {
                 if (element.triggerType != null)
                 {
-                    trigger(element);
+                    trigger(element, gameTime);
                 }
             }
             interact = false;

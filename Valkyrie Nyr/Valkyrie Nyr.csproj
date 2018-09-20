@@ -47,6 +47,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="NSC.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
@@ -154,10 +155,16 @@
     <None Include="Ressources\json-files\FeuerLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\Hub_enemyObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\Hub_entityObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Hub_gameObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\Hub_nscObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Overworld_enemyObjects.json">
