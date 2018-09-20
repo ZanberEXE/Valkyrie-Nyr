@@ -37,7 +37,7 @@ namespace Valkyrie_Nyr
             {
                 dialogueState--;
             }
-            font = Game1.Ressources.Load<SpriteFont>("File");
+            font = Game1.Ressources.Load<SpriteFont>("Font");
             Player.Nyr.conversationPartner = this;
             States.CurrentGameState = GameStates.CONVERSATION;
             currentSpeech = 0;

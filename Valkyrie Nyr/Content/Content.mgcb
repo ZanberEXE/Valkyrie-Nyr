@@ -685,3 +685,10 @@
 /processorParam:TextureFormat=Color
 /build:smallEnemies/Banshee/BansheeExplode.png
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
