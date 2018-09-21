@@ -114,7 +114,18 @@ namespace Valkyrie_Nyr
         }
         public void Attack(int lookPos)
         {
+            Rectangle victimHurtbox;
 
+            if(this.name == "Nyr")
+            {
+                GameObject newAttackBox = new GameObject("", "", 0, attackBox.Height, attackBox.Width, attackBox.Location.ToVector2());
+                Enemy[] hittedEnemies = newAttackBox.Collision<Enemy>(Level.Current.enemyObjects.ToArray(), newAttackBox.position);
+                victimHurtbox = hittedEnemies[0].hurtBox;
+            }
+            else
+            {
+                victimHurtbox = Player.Nyr.hurtBox;
+            }
             
             // turns the hitbox to the left of the character
             if(lookPos == -1 && attackBox.X > 0)
@@ -127,7 +138,7 @@ namespace Valkyrie_Nyr
                 attackBox.X = attackBox.X * -1;
             }
 
-            if (CollisionAABB(attackBox, hurtBox))
+            if (CollisionAABB(attackBox, victimHurtbox))
             {
 
             }
