@@ -25,7 +25,7 @@ namespace Valkyrie_Nyr
         public Conversation[] dialogues;
         SpriteFont font;
 
-        private int oldGameTime = 0;
+        private double oldGameTime = 0;
 
         public NSC (string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position)
         {
@@ -41,16 +41,17 @@ namespace Valkyrie_Nyr
             Player.Nyr.conversationPartner = this;
             States.CurrentGameState = GameStates.CONVERSATION;
             currentSpeech = 0;
-            oldGameTime = (int)newGameTime.TotalGameTime.TotalSeconds;
+            oldGameTime = newGameTime.TotalGameTime.TotalSeconds;
         }
 
         public void continueConversation(GameTime newGameTime)
         {
-            if((int)newGameTime.TotalGameTime.TotalSeconds - oldGameTime == 0)
+            //to wait 0.2 seconds before you can continue with reading
+            if(newGameTime.TotalGameTime.TotalSeconds - oldGameTime < 0.2)
             {
                 return;
             }
-            oldGameTime = (int)newGameTime.TotalGameTime.TotalSeconds;
+            oldGameTime = newGameTime.TotalGameTime.TotalSeconds;
             if (currentSpeech + 1 >= dialogues[dialogueState].speeches.Length)
             {
                 if (dialogueState + 1 < dialogues.Length)

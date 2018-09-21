@@ -16,10 +16,11 @@ namespace Valkyrie_Nyr
 
         public float speed;
         public float jumpHeight;
-        public bool onIce;
+        public int slide;
         public bool inHub;
         public bool interact;
         public bool inJump;
+        public bool onIce;
         public bool inConversation;
         public NSC conversationPartner;
 
@@ -53,6 +54,7 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25)
             };
+            slide = 0;
             onIce = false;
             health = hp;
             damage = dmg;
@@ -112,12 +114,19 @@ namespace Valkyrie_Nyr
             switch (activatedArea)
             {
                 case "lava":
-                    Player.Nyr.currentEntityState = (int) Playerstates.DEAD;
+                    gameOver();
                     break;
                 case "ice":
                     onIce = true;
                     break;
             }
+        }
+
+        public float slideValue(GameTime gameTime)
+        {
+            float slideAmount = speed * (float)gameTime.ElapsedGameTime.TotalSeconds * ((float)slide / 1000.0f);
+            slide -= gameTime.ElapsedGameTime.Milliseconds;
+            return slideAmount;
         }
 
         private void loader(string newLevel)

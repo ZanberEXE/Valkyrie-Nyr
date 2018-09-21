@@ -65,6 +65,7 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
                     nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
+                    Player.Nyr.inJump = false;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
@@ -116,7 +117,9 @@ namespace Valkyrie_Nyr
             Camera.Main.position = Vector2.Zero;
 
             Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
-            
+            Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.currentFrame = 0;
+
 
         }
 
@@ -148,6 +151,22 @@ namespace Valkyrie_Nyr
                 }
             }
 
+            //Let all movingPlatforms move and if Nyr stands on it, then move her too
+            foreach (GameObject element in gameObjects)
+            {
+                if (element.moving != Vector2.Zero)
+                {
+                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
+                    {
+                        moveValue += element.move(gameTime);
+                    }
+                    else
+                    {
+                        element.move(gameTime);
+                    }
+                }
+            }
+
             if (atkCooldown > 0)
             {
                 atkCooldown--;
@@ -167,6 +186,10 @@ namespace Valkyrie_Nyr
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.entityFacing = -1;
+                        if (Player.Nyr.onIce)
+                        {
+                            Player.Nyr.slide = 1000;
+                        }
                         if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
                         {
                             Player.Nyr.currentEntityState = (int)Playerstates.WALK;
@@ -177,6 +200,10 @@ namespace Valkyrie_Nyr
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                         Player.Nyr.entityFacing = 1;
+                        if (Player.Nyr.onIce)
+                        {
+                            Player.Nyr.slide = 1000;
+                        }
                         if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
                         {
                             Player.Nyr.currentEntityState = (int)Playerstates.WALK;
@@ -274,21 +301,9 @@ namespace Valkyrie_Nyr
                 }
                 dashtimer--;
             }
-
-            //Let all movingPlatforms move and if Nyr stands on it, then move her too
-            foreach(GameObject element in gameObjects)
+            if(Player.Nyr.slide > 0 && Player.Nyr.onIce)
             {
-                if(element.moving != Vector2.Zero)
-                {
-                    if(Player.Nyr.Collision<GameObject>(new GameObject[] { element}, Player.Nyr.position).Length > 0)
-                    {
-                        moveValue += element.move(gameTime);
-                    }
-                    else
-                    {
-                        element.move(gameTime);
-                    }
-                }
+                moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
             }
             
 
@@ -311,6 +326,8 @@ namespace Valkyrie_Nyr
             //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
 
+
+            Player.Nyr.onIce = false;
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger(gameTime);
 
@@ -357,15 +374,15 @@ namespace Valkyrie_Nyr
                     continue;
                 }
 
-                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && element.name != "platform")
+                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedLeft = true;
                 }
-                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && element.name != "platform")
+                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedRight = true;
                 }
-                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && element.name != "platform")
+                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedTop = true;
                 }

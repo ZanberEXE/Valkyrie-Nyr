@@ -36,13 +36,6 @@
       "position": "0, 3900",
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 500,
-      "position": "600, 3700",
-      "moving": "500, 0",
-  },
-  {
       "name": "platform",
       "height": 50,
       "width": 300,
@@ -287,6 +280,20 @@
       "height": 50,
       "width": 500,
       "position": "2000, 3400",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 200,
+      "width": 2000,
+      "position": "500, 3700"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 75,
+      "width": 1100,
+      "position": "5300, 3925"
   },
   {
       "name": "BossstageLoader",
