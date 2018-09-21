@@ -13,11 +13,13 @@ namespace Valkyrie_Nyr
         SpriteBatch spriteBatch;
 
         //white 1x1 texture
-        Texture2D pxl;
+        
 
         public static ContentManager Ressources;
         public static SpriteBatch Renderer;
         public static Point WindowSize;
+        public static SpriteFont Font;
+        public static Texture2D pxl;
 
         public Game1()
         {
@@ -47,7 +49,8 @@ namespace Valkyrie_Nyr
         {
             //TODO:delete
             pxl = Game1.Ressources.Load<Texture2D>("index");
-            
+            Font = Game1.Ressources.Load<SpriteFont>("Font");
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Renderer = spriteBatch;

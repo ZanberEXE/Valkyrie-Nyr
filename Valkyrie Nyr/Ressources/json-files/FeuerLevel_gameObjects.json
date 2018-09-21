@@ -282,6 +282,26 @@
       "position": "0, 4850",
   },
   {
+      "name": "ground",
+      "height": 5000,
+      "width": 5,
+      "position": "15000, 0",
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 75,
+      "width": 3600,
+      "position": "3300, 3325"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 75,
+      "width": 3400,
+      "position": "8200, 3325"
+  },
+  {
       "name": "OverworldLoader",
 	  "triggerType": "loader",
       "height": 500,

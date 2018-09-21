@@ -238,9 +238,85 @@
       "height": 50,
       "width": 200,
       "position": "5150, 4450",
+  },  
+  {
+      "name": "ground",
+      "height": 240,
+      "width": 75,
+      "position": "11225, 3960",
   },
-  
-  
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 150,
+      "position": "11150, 4200",
+  },
+  {
+      "name": "ground",
+      "height": 200,
+      "width": 225,
+      "position": "11075, 4350",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 300,
+      "position": "11000, 4550",
+  },
+  {
+      "name": "ground",
+      "height": 50,
+      "width": 450,
+      "position": "10850, 4700",
+  },
+  {
+      "name": "ground",
+      "height": 100,
+      "width": 100,
+      "position": "6350, 4450",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 200,
+      "position": "6250, 4550",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 300,
+      "position": "6150, 4700",
+  },
+  {
+      "name": "ground",
+      "height": 100,
+      "width": 450,
+      "position": "4500, 4450",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 700,
+      "position": "4250, 4550",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 900,
+      "position": "4050, 4700",
+  },
+  {
+      "name": "ground",
+      "height": 150,
+      "width": 15000,
+      "position": "0, 4850",
+  },
+  {
+      "name": "ground",
+      "height": 5000,
+      "width": 5,
+      "position": "15000, 0",
+  },
   {
 	  "name": "ice",
       "triggerType": "area",
@@ -519,80 +595,6 @@
       "height": 50,
       "width": 200,
       "position": "5150, 4450",
-  },
-  
-  
-  {
-      "name": "ground",
-      "height": 240,
-      "width": 75,
-      "position": "11225, 3960",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 150,
-      "position": "11150, 4200",
-  },
-  {
-      "name": "ground",
-      "height": 200,
-      "width": 225,
-      "position": "11075, 4350",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 300,
-      "position": "11000, 4550",
-  },
-  {
-      "name": "ground",
-      "height": 50,
-      "width": 450,
-      "position": "10850, 4700",
-  },
-  {
-      "name": "ground",
-      "height": 100,
-      "width": 100,
-      "position": "6350, 4450",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 200,
-      "position": "6250, 4550",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 300,
-      "position": "6150, 4700",
-  },
-  {
-      "name": "ground",
-      "height": 100,
-      "width": 450,
-      "position": "4500, 4450",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 700,
-      "position": "4250, 4550",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 900,
-      "position": "4050, 4700",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 15000,
-      "position": "0, 4850",
   },
   {
       "name": "OverworldLoader",

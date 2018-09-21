@@ -671,10 +671,116 @@
       "position": "10855, 9840",
   },
   {
-      "name": "ground",
-      "height": 75,
-      "width": 5725,
-      "position": "9500, 9925",
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "4400, 3700",
+	  "moving": "0, -2700"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "7700, 1400",
+	  "moving": "0, -700"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "8300, 700",
+	  "moving": "1500, 0"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "10000, 1500",
+	  "moving": "0, 1500"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "14850, 2800",
+	  "moving": "0, 3600"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "18200, 6500",
+	  "moving": "0, -4000"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 375,
+      "width": 7200,
+      "position": "6820, 3825"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 2700,
+      "width": 575,
+      "position": "14025, 4200"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 350,
+      "width": 900,
+      "position": "14600, 6550"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 500,
+      "width": 825,
+      "position": "15225, 9500"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 1500,
+      "width": 550,
+      "position": "15500, 8000"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 350,
+      "width": 245,
+      "position": "16225, 6800"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 350,
+      "width": 245,
+      "position": "17250, 7235"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 350,
+      "width": 600,
+      "position": "18000, 7235"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 4250,
+      "width": 140,
+      "position": "18710, 3345"
+  },
+  {
+      "name": "lava",
+      "triggerType": "area",
+      "height": 230,
+      "width": 2050,
+      "position": "19000, 2950"
   },
   {
       "name": "OverworldLoader",

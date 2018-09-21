@@ -159,13 +159,7 @@
       "name": "ground",
       "height": 1000,
       "width": 200,
-      "position": "13700, 3400",
-  },
-  {
-      "name": "ground",
-      "height": 150,
-      "width": 800,
-      "position": "12500, 3150",
+      "position": "12050, 3400",
   },
   {
       "name": "ground",
@@ -225,13 +219,19 @@
       "name": "ground",
       "height": 400,
       "width": 7000,
-      "position": "7000, 4400",
+      "position": "5250, 4400",
   },
   {
       "name": "ground",
       "height": 200,
       "width": 15000,
       "position": "0, 4800",
+  },
+  {
+      "name": "ground",
+      "height": 5000,
+      "width": 5,
+      "position": "15000, 0",
   },
   {
       "name": "OverworldLoader",

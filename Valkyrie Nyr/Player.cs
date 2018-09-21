@@ -82,12 +82,21 @@ namespace Valkyrie_Nyr
                     {
                         loader(activatedTrigger.name);
                     }
+                    else
+                    {
+                        Level.Current.textboxText = "Press \"F\" to interact";
+                    }
                     break;
                 case "nsc":
                     if (interact)
                     {
+                        
                         //if anyone triggers that breakpoint, please inform me!
                         ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
+                    }
+                    else
+                    {
+                        Level.Current.textboxText = "Press \"F\" to interact";
                     }
                     break;
             }

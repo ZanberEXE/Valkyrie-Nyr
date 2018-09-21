@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,6 @@ namespace Valkyrie_Nyr
         private int currentSpeech;
 
         public Conversation[] dialogues;
-        SpriteFont font;
 
         private double oldGameTime = 0;
 
@@ -37,7 +37,6 @@ namespace Valkyrie_Nyr
             {
                 dialogueState--;
             }
-            font = Game1.Ressources.Load<SpriteFont>("Font");
             Player.Nyr.conversationPartner = this;
             States.CurrentGameState = GameStates.CONVERSATION;
             currentSpeech = 0;
@@ -74,10 +73,29 @@ namespace Valkyrie_Nyr
         }
 
         public void renderConversation(SpriteBatch spriteBatch)
-        {            
+        {
+            string[] allFiles = Directory.GetFiles(Game1.Ressources.RootDirectory + "\\ConversationSprites");
+            for(int i = 0; i < allFiles.Length; i++)
+            {
+                string currentSpokesman = dialogues[dialogueState].spokesman[currentSpeech];
+                if (allFiles[i] == Game1.Ressources.RootDirectory + "\\ConversationSprites\\" + currentSpokesman + ".xnb")
+                {
+                    Texture2D spokemanTexture = Game1.Ressources.Load<Texture2D>("ConversationSprites/" + currentSpokesman);
+                    spriteBatch.Draw(spokemanTexture, new Rectangle((currentSpokesman == "Nyr") ? 200 : Game1.WindowSize.X - 200 - spokemanTexture.Width, 100, spokemanTexture.Width, spokemanTexture.Height), Color.White);
+                }
+            }
+            spriteBatch.Draw(Game1.pxl, new Rectangle(0, 600, Game1.WindowSize.X, Game1.WindowSize.Y - 600), Color.Black * 0.7f);
             //Draw Text
-            spriteBatch.DrawString(font, dialogues[dialogueState].spokesman[currentSpeech], new Vector2(60, 610), Color.LightBlue);
-            spriteBatch.DrawString(font, dialogues[dialogueState].speeches[currentSpeech], new Vector2(60, 700), Color.LightBlue);
+            spriteBatch.DrawString(Game1.Font, dialogues[dialogueState].spokesman[currentSpeech], new Vector2(60, 610), Color.LightBlue);
+            for (int i = 0; i <= (int)(dialogues[dialogueState].speeches[currentSpeech].Length / 100f); i++)
+            {
+                string line = dialogues[dialogueState].speeches[currentSpeech].Remove(0, 100 * i);
+                if (line.Length > 100)
+                {
+                    line = line.Remove(100);
+                }
+                spriteBatch.DrawString(Game1.Font, line, new Vector2(60, 700 + 50 * i), Color.LightBlue);
+            }
 
         }
 

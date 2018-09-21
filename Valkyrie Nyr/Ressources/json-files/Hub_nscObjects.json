@@ -46,5 +46,161 @@
 					]
 			}
 		]
+  },
+  {
+	"name": "inaSoul",
+    "triggerType": "nsc",
+    "mass": 0,
+    "height": 100,
+    "width": 100,
+    "position": "1000, 1500",
+    "health":1000,
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr"
+					],
+				"speeches":
+					[
+						"Compared to your words, this place is pretty run-down.",
+						"It's a graveyard after all.",
+						"What? You like this sort of thing?",
+						"Not particularly. But, it's quiet and peaceful.",
+						"I see. By the way, you look pretty run-down too. Don't you have some better equipment?",
+						"It's the only I have... You on the other hand look pretty beautiful in your human form.",
+						"...! T-thanks.",
+						"?",
+						"Anyways, here take this. My share of the pain for you.",
+						"-Armor enhanced with Ina's power-",
+						"This is...!",
+						"When you press [Key], you'll create a huge fire blast around you.",
+						"Thank you. You really are kind...",
+						"Huh?! Argh, people like you make no sense. Now go already!",
+						"...?"
+					]
+			}
+		]
+  },
+  {
+	"name": "yinyinSoul",
+    "triggerType": "nsc",
+    "mass": 0,
+    "height": 100,
+    "width": 100,
+    "position": "1000, 2000",
+    "health":1000,
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"",
+						"Nyr",
+						"Yinyin"
+					],
+				"speeches":
+					[
+						"Thank you for the invite. I'll make sure to show you an even better performance the next time.",
+						"As long as it's not as engaging...",
+						"Hehe. That I cannot promise. But well, I'll at the very least give you this. I'll be watching your splendid show too.",
+						"-Gauntlet enhanced with Yinyin's power-" ,
+						"Thank you!",
+						"You can shoot ice spikes by using [Key]. Make sure to use it well."
+					]
+			}
+		]
+  },
+  {
+	"name": "aiyeSoul",
+    "triggerType": "nsc",
+    "mass": 0,
+    "height": 100,
+    "width": 100,
+    "position": "1500, 2000",
+    "health":1000,
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"",
+						"Nyr",
+						"Aiye",
+						"Aiye"
+					],
+				"speeches":
+					[
+						"Yo. Finally here to grace me with your beauty?",
+						"Hello, it's good to see you again as well.",
+						"Ignored huh... well anyways. Step closer, I got a little gift for you!" ,
+						"-Boots enhanced with Aiye's power-",
+						"Oh, thank you!",
+						"These shoes will help ya.",
+						"Now that we've come this far. How about we relax from all this fighting and go out som-"
+					]
+			}
+		]
+  },
+  {
+	"name": "monomonoSoul",
+    "triggerType": "nsc",
+    "mass": 0,
+    "height": 100,
+    "width": 100,
+    "position": "1500, 1500",
+    "health":1000,
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr"
+					],
+				"speeches":
+					[
+						"This place is quite interesting. All these materials that do not exist in the realm of living. Whole new possibilities, I could create with these! Where do I even start!?",
+						"You seem to enjoy yourself...",
+						"Ah, there you are. I've been waiting for you!",
+						"Why- Wait, don't come so close!",
+						"There. Be thankful.",
+						"This is...",
+						"I enhanced your headband with my power. You should be able to dash on ground and in the air with this! You can dash by using [Key].",
+						"Is this safe...?",
+						"... It will work perfectly fine! I calculated everything correctly.",
+						"Thank you. I'll make sure to use it well..."
+					]
+			}
+		]
   }
 ]
