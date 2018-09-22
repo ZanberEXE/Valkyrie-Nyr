@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using System.Collections.Generic;
 using System;
 
 namespace Valkyrie_Nyr
@@ -17,6 +20,10 @@ namespace Valkyrie_Nyr
 
         public static ContentManager Ressources;
         public static Point WindowSize;
+
+        //Sound
+        public Song menuSong, playingSong;
+        public List<SoundEffect> sfx;
 
         public Game1()
         {
@@ -36,6 +43,11 @@ namespace Valkyrie_Nyr
             Ressources = Content;
 
             IsMouseVisible = true;
+
+            //sound stuff
+            sfx = new List<SoundEffect>();
+
+            
         }
 
         protected override void Initialize()
@@ -49,7 +61,48 @@ namespace Valkyrie_Nyr
                         
             States.CurrentGameState = GameStates.MAINMENU;
 
+            //sound stuff
+            States.CurrentBGMState = BGMStates.MENU;
+
+            
+
+            this.menuSong = Game1.Ressources.Load<Song>("music/Test");
+            this.playingSong = Game1.Ressources.Load<Song>("music/Test2");
+            MediaPlayer.Play(menuSong);
+
+            //sfx stuff
+            sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide"));
+            sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump"));
+            sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud"));
+            
+            //sfx[0].Play();
+            //var instance = sfx[0].CreateInstance();
+            //instance.Play();
+
             base.Initialize();
+        }
+
+        void testSFX()
+        {
+            if (States.CurrentPlayerState == Playerstates.JUMP)
+            {
+                sfx[1].CreateInstance().Play();
+            }
+            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            {
+                switch (element)
+                {
+                    case Keys.J:
+                        sfx[0].CreateInstance().Play();
+                        return;
+                    case Keys.K:
+                        sfx[1].CreateInstance().Play();
+                        return;
+                    case Keys.L:
+                        sfx[2].CreateInstance().Play();
+                        return;
+                }
+            }
         }
 
         //TODO: proper content
@@ -62,6 +115,7 @@ namespace Valkyrie_Nyr
                     case Keys.D1:
                         Level.Current.loadLevel("Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
+                        MediaPlayer.Play(playingSong);
                         return;
                     case Keys.D2:
                         States.CurrentGameState = GameStates.OPTIONS;
@@ -138,6 +192,8 @@ namespace Valkyrie_Nyr
 
             //TODO:delete
             //TODO:Lose Screen when dead and respawn?
+
+            testSFX();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.PLAYING)
             {
