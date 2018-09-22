@@ -1,0 +1,106 @@
+[
+  {
+    "name": "Banshee",
+    "triggerType": "",
+    "mass": 0,
+    "height": 40,
+    "width": 40,
+    "position": "2500, 3770",
+    "health": 5,
+    "damage": 200,
+    "entityFacing": 1,
+    "aggroRange": 800,
+    "attackRange": 70,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/Banshee/BansheeIdle",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeMove",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeExplode",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "smallEnemies/Banshee/BansheeAggro",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 43
+      }
+    ]
+  },
+  {
+    "name": "Aiye",
+    "triggerType": "",
+    "mass": 20,
+    "height": 220,
+    "width": 100,
+    "position": "800, 3000",
+    "health": 1500,
+    "damage": 50,
+    "entityFacing": 1,
+    "aggroRange": 100,
+    "attackRange": 0,
+    "speed": 200,
+    "attackBoxHeight": 80,
+    "attackBoxWidth": 40,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Aiye/AiyeIdle",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      },
+      {
+        "path": "Bosses/Aiye/AiyeMove",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 93
+      },
+      {
+        "path": "Bosses/Aiye/AiyeJumpAttack",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 100
+      },
+      {
+        "path": "Bosses/Aiye/AiyeEarthProjectile",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "Bosses/Aiye/AiyeCreateWall",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Aiye/AiyeAttack",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 31
+      },
+      {
+        "path": "Bosses/Aiye/AiyeJump",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  }
+]

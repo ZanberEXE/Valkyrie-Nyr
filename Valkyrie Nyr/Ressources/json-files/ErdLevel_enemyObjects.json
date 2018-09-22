@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Aiye",
+    "triggerType": "",
+    "mass": 20,
+    "height": 500,
+    "width": 400,
+    "position": "800, 3000",
+    "health": 1500,
+    "damage": 50,
+    "entityFacing": 1,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Aiye/AiyeIdle",
+        "Columns": 10,
+        "Rows": 25,
+        "maxFrames": 250
+      },
+      {
+        "path": "Bosses/Aiye/AiyeMove",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 93
+      },
+      {
+        "path": "Bosses/Aiye/AiyeAttack",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 31
+      },
+      {
+        "path": "Bosses/Aiye/AiyeEarthProjectile",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "Bosses/Aiye/AiyeJumpAttack",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 100
+      },
+      {
+        "path": "Bosses/Aiye/AiyeCreateWall",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Aiye/AiyeJump",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ],
+    "hitbox": {
+      "name": "AiyeHitbox",
+      "triggerType": "hitbox",
+      "mass": 0,
+      "height": 500,
+      "width": 400,
+      "position": "0, 0"
+    }
+  }
+]

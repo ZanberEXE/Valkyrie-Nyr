@@ -18,6 +18,8 @@ namespace Valkyrie_Nyr
         public int height;
         public int width;
         public int gravitation;
+        public Vector2 moving;
+        public Vector2 startPosition;
 
         //Variables
         public Vector2 position;
@@ -43,11 +45,27 @@ namespace Valkyrie_Nyr
 
         public void init()
         {
+            startPosition = position;
             string[] allAssets = Directory.GetFiles(Game1.Ressources.RootDirectory);
             if (Array.IndexOf(allAssets, "Content\\" + this.name + ".xnb") > -1)
             {
                 sprite = Game1.Ressources.Load<Texture2D>(this.name);
             }
+        }
+
+        public Vector2 move(GameTime gameTime)
+        {
+            Vector2 moveValue = moving * (float) ( 0.25 * gameTime.ElapsedGameTime.TotalSeconds);
+
+            //check if moving platform has hit max
+            if ((position.X - startPosition.X > moving.X && moving.X > 0) || (position.X - startPosition.X < moving.X && moving.X < 0) || (position.Y - startPosition.Y > moving.Y && moving.Y > 0) || (position.Y - startPosition.Y < moving.Y && moving.Y < 0))
+            {
+                moving *= -1;
+                startPosition = position;
+                return Vector2.Zero;
+            }
+            position += moveValue;
+            return moveValue;
         }
 
         //Check Collision of Objects and returns Array with all collided Objects or null, if none has collided
@@ -113,7 +131,7 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.name == "ground" || element.name == "platform")
+                if (element.name == "ground" || element.name == "platform" || element.name == "cloud")
                 {
                     thisIsInsideElementX = this.position.X + this.width > element.position.X && this.position.X < element.position.X + element.width;
                     elementIsInsideThisX = this.position.X + this.width > element.position.X + element.width && this.position.X < element.position.X;

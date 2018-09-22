@@ -2,53 +2,37 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Valkyrie_Nyr
 {
-    struct animation
-    {
-        public Texture2D texture;
-        public int Columns;
-        public int Rows;
-        public int Width;
-        public int Height;
-        public int maxFrames;
-        public animation(Texture2D _texture, int _columns, int _rows, int _maxFrames)
-        {
-            texture = _texture;
-            Columns = _columns;
-            Rows = _rows;
-            Width = _texture.Width / _columns;
-            Height = _texture.Height / _rows;
-            maxFrames = _maxFrames;
-        }
-    }
+    
 
     class Player : Entity
     {
 
         private static Player nyr;
-        public int nyrFacing;
+       
 
         public float speed;
         public float jumpHeight;
-        public bool onIce;
+        public int slide;
         public bool inHub;
         public bool interact;
         public bool inJump;
+        public bool onIce;
+        public bool inConversation;
+        public NSC conversationPartner;
 
-        public animation[] animTex;
-       // public Texture2D[] animTex { get; set; }
+        // Feature bools
+        public bool hasHeadband = true;
+        public bool hasFireArmor = false;
+        public bool hasBoots = false;
+        public bool hasBracer = false;
 
-        public int Rows { get; set; }
-        public int Columns { get; set; }
+        
 
-        public int currentFrame;
-        private int totalFrames = 0;
-        private int timeSinceLastFrame = 0;
-        private int millisecondsPerFrame = 5;
-
-        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, string textureType, int rows, int columns) : base(name, triggerType, mass, height, width, position, hp, dmg)
+        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
             speed = 700;
             jumpHeight = 15;
@@ -58,30 +42,39 @@ namespace Valkyrie_Nyr
 
             animTex = new animation[]
             {
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Idle"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10 , 2 , 18),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10 , 63 , 625),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10 , 2 , 12),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10 , 3 , 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10 , 4 , 31),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10 , 3 , 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Idle"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10, 2, 18),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 63, 625),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25)
             };
-            
-            currentFrame = 0;
+            slide = 0;
             onIce = false;
+            health = hp;
+            damage = dmg;
+
+            attackBox.X = 100;
+            attackBox.Y = 80;
+            attackBox.Width = attackBoxWidth;
+            attackBox.Height = attackBoxHeight;
+
+            hurtBox.X = (int)position.X;
+            hurtBox.Y = (int)position.Y;
+            hurtBox.Width = width;
+            hurtBox.Height = height;
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 2000, 200, "Player/Idle", 1, 25); } return nyr; } }
-
-
-       
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2000, 100, 20, false); } return nyr; } }
+        
 
         //put here stuff that happens if you collect something
-        public void trigger(GameObject activatedTrigger)
+        public void trigger(GameObject activatedTrigger, GameTime gameTime)
         {
             switch(activatedTrigger.triggerType)
             {
@@ -98,8 +91,16 @@ namespace Valkyrie_Nyr
                         loader(activatedTrigger.name);
                     }
                     break;
+                case "nsc":
+                    if (interact)
+                    {
+                        //if anyone triggers that breakpoint, please inform me!
+                        ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
+                    }
+                    break;
             }
         }
+        
 
         private void collect(string item)
         {
@@ -116,12 +117,19 @@ namespace Valkyrie_Nyr
             switch (activatedArea)
             {
                 case "lava":
-                    States.CurrentPlayerState = Playerstates.DEAD;
+                    gameOver();
                     break;
                 case "ice":
                     onIce = true;
                     break;
             }
+        }
+
+        public float slideValue(GameTime gameTime)
+        {
+            float slideAmount = speed * (float)gameTime.ElapsedGameTime.TotalSeconds * ((float)slide / 1000.0f);
+            slide -= gameTime.ElapsedGameTime.Milliseconds;
+            return slideAmount;
         }
 
         private void loader(string newLevel)
@@ -158,68 +166,24 @@ namespace Valkyrie_Nyr
             Level.Current.loadLevel("Hub");
         }
 
-        public void activateTrigger()
+        public void activateTrigger(GameTime gameTime)
         {
             GameObject[] collidedObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), position);
+            NSC[] collidedNSCs = Collision<NSC>(Level.Current.gameObjects.ToArray(), position);
+
+            //add all collided NSCs to GameObjects
+            collidedObjects = collidedObjects.Concat(collidedNSCs).ToArray();
 
             foreach (GameObject element in collidedObjects)
             {
                 if (element.triggerType != null)
                 {
-                    trigger(element);
+                    trigger(element, gameTime);
                 }
             }
             interact = false;
         }
 
-        //moves the Player
-        public void move(Vector2 moveValue)
-        {
-            Vector2 newPos = position + moveValue;
-
-            position = newPos;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            totalFrames = animTex[(int)States.CurrentPlayerState].maxFrames; // * animTex[(int)States.CurrentPlayerState].Columns;
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > millisecondsPerFrame)
-            {
-                timeSinceLastFrame -= millisecondsPerFrame;
-
-                currentFrame++;
-
-                timeSinceLastFrame = 0;
-
-                if (currentFrame == totalFrames)
-                {
-                    currentFrame = 0;
-                    States.CurrentPlayerState = States.NextPlayerState;
-                }
-            }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            
-            int animWidth = animTex[(int)States.CurrentPlayerState].Width;
-            int animHeight = animTex[(int)States.CurrentPlayerState].Height;
-            int row = (int)((float)currentFrame / animTex[(int)States.CurrentPlayerState].Columns);
-            int column = currentFrame % animTex[(int)States.CurrentPlayerState].Columns;
-
-            Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
-            Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
-
-            if (nyrFacing == 1)
-            {
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White);
-            }
-            else
-            {
-                //destinationRectangle.X = destinationRectangle.X - (sourceRectangle.Width - this.width);
-                spriteBatch.Draw(animTex[(int)States.CurrentPlayerState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f );
-            }
-        }
+        
     }
 }

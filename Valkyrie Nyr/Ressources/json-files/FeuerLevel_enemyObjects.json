@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Ina",
+    "triggerType": "",
+    "mass": 4,
+    "height": 120,
+    "width": 70,
+    "position": "14800, 3000",
+    "health": 900,
+    "damage": 30,
+    "entityFacing": -1,
+    "aggroRange": 900,
+    "attackRange": 0,
+    "speed": 200,
+    "attackBoxHeight": 120,
+    "attackBoxWidth": 70,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "Bosses/Ina/InaIdle",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "Bosses/Ina/InaMove",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "Bosses/Ina/InaFireball",
+        "Columns": 10,
+        "Rows": 10,
+        "maxFrames": 93
+      },
+      {
+        "path": "Bosses/Ina/InaMeteorShower",
+        "Columns": 10,
+        "Rows": 19,
+        "maxFrames": 187
+      },
+      {
+        "path": "Bosses/Ina/InaExplosion",
+        "Columns": 10,
+        "Rows": 19,
+        "maxFrames": 187
+      },
+      {
+        "path": "Bosses/Ina/InaAttack",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      }
+    ]
+  }
+]

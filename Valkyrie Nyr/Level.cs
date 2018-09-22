@@ -22,12 +22,18 @@ namespace Valkyrie_Nyr
         public Enemy ryn;
 
         public List<GameObject> gameObjects;
-        public List<Entity> entityObjects;
+        //public List<Entity> entityObjects;
+        public List<Enemy> enemyObjects;
+        public List<NSC> nscObjects;
 
         public int height;
         public int width;
 
         int atkCooldown;
+
+        int dashtimer;
+        bool hasDashed = false;
+        Vector2 tempposition;
 
         public Vector2 positionBGSprite;
 
@@ -43,10 +49,12 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(string levelName)
         {
-            ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
+            //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
 
             Point startPosition;
             Player.Nyr.inHub = false;
+
+            nscObjects = new List<NSC>();
 
             switch (levelName)
             {
@@ -62,6 +70,8 @@ namespace Valkyrie_Nyr
                     startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y - 50));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
+                    nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
+                    Player.Nyr.inJump = false;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
@@ -85,9 +95,17 @@ namespace Valkyrie_Nyr
             
             gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_gameObjects.json"));
             
-            entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
-            
-            foreach (Entity element in entityObjects)
+            //entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
+            enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
+
+            foreach (Enemy element in enemyObjects)
+            {
+                gameObjects.Add(element);
+                element.Initialize();
+                //element.hurtBox.Location += startPosition;
+                //element.attackBox.Location += startPosition;
+            }
+            foreach (NSC element in nscObjects)
             {
                 gameObjects.Add(element);
             }
@@ -100,9 +118,7 @@ namespace Valkyrie_Nyr
             
             levelBGSprite = Game1.Ressources.Load<Texture2D>(levelName);
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
-
-            entityObjects.Add(Player.Nyr);
-            gameObjects.Add(Player.Nyr);
+            
 
             Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
 
@@ -115,6 +131,11 @@ namespace Valkyrie_Nyr
             jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
             attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
             thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
+            Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.currentFrame = 0;
+
+
         }
 
         //get input and update the elements inside the level
@@ -122,7 +143,7 @@ namespace Valkyrie_Nyr
         {
             Vector2 moveValue = Vector2.Zero;
 
-            Player.Nyr.Update(gameTime);
+           // Player.Nyr.Update(gameTime);
 
             //Let PLayer fall and save the moveValue in overall Movement
             if (!Player.Nyr.inHub)
@@ -139,8 +160,25 @@ namespace Valkyrie_Nyr
                 else
                 {
                     Player.Nyr.inJump = false;
-                    States.CurrentPlayerState = Playerstates.LAND;
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
+                    Player.Nyr.currentFrame = 0;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                }
+            }
+
+            //Let all movingPlatforms move and if Nyr stands on it, then move her too
+            foreach (GameObject element in gameObjects)
+            {
+                if (element.moving != Vector2.Zero)
+                {
+                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
+                    {
+                        moveValue += element.move(gameTime);
+                    }
+                    else
+                    {
+                        element.move(gameTime);
+                    }
                 }
             }
 
@@ -162,18 +200,30 @@ namespace Valkyrie_Nyr
                 {
                     case Keys.A:
                         moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = -1;
-                        if (States.CurrentPlayerState == Playerstates.IDLE)
+                        Player.Nyr.entityFacing = -1;
+                        if (Player.Nyr.onIce)
                         {
-                            States.CurrentPlayerState = Playerstates.WALK;
+                            Player.Nyr.slide = 1000;
+                        }
+                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
+                        {
+                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                            Player.Nyr.currentFrame = 0;
+                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                         }
                         break;
                     case Keys.D:
                         moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.nyrFacing = 1;
-                        if (States.CurrentPlayerState == Playerstates.IDLE)
+                        Player.Nyr.entityFacing = 1;
+                        if (Player.Nyr.onIce)
                         {
-                            States.CurrentPlayerState = Playerstates.WALK;
+                            Player.Nyr.slide = 1000;
+                        }
+                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
+                        {
+                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                            Player.Nyr.currentFrame = 0;
+                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                         }
                         break;
                     case Keys.Space:
@@ -181,8 +231,9 @@ namespace Valkyrie_Nyr
                         {
                             if (Player.Nyr.onGround && !Player.Nyr.inJump && !Player.Nyr.inHub)
                             {
-                                States.CurrentPlayerState = Playerstates.JUMP;
-                                States.NextPlayerState = Playerstates.FALL;
+                                Player.Nyr.currentEntityState = (int)Playerstates.JUMP;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.FALL;
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
@@ -197,9 +248,11 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
                             {
-                                States.CurrentPlayerState = Playerstates.WALK;
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                             }
                         }
                         break;
@@ -207,9 +260,11 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (States.CurrentPlayerState != Playerstates.WALK)
+                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
                             {
-                                States.CurrentPlayerState = Playerstates.WALK;
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                             }
                         }
                         break;
@@ -224,18 +279,53 @@ namespace Valkyrie_Nyr
                         {
                             if (atkCooldown == 0 && !Player.Nyr.inHub)
                             {
-                                States.CurrentPlayerState = Playerstates.FIGHT;
-                                States.NextPlayerState = Playerstates.IDLE;
-                                Player.Nyr.attack(Player.Nyr.nyrFacing);
+                                Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                                Player.Nyr.Attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
 
                                 jump.CreateInstance().Play();
                             }
+                        }break;
+                    case Keys.LeftControl:
+                        if (Player.Nyr.hasHeadband && hasDashed == false)
+                        {
+                            
+                            Player.Nyr.MakeInvulnerable();
+                            dashtimer = 30;
+                            tempposition = Player.Nyr.position;
+                            hasDashed = true;
                         }
                         break;
+                    
+
                 }
             }
-
+            //TODO: Höhe beibehalten 
+            if (dashtimer >= 0)
+            {
+                if (dashtimer >= 20)
+                {
+                    if (Player.Nyr.entityFacing == -1)
+                    {
+                        moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
+                    }
+                    if (Player.Nyr.entityFacing == 1)
+                    {
+                        moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
+                    }
+                }
+                if (dashtimer <= 1)
+                {
+                    hasDashed = false;
+                }
+                dashtimer--;
+            }
+            if(Player.Nyr.slide > 0 && Player.Nyr.onIce)
+            {
+                moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
+            }
             
 
             //let em move, after all collisions have manipulated the movement
@@ -243,10 +333,11 @@ namespace Valkyrie_Nyr
 
             if (newMoveValue != Vector2.Zero)
             {
-                if (States.CurrentPlayerState == Playerstates.FALL && Player.Nyr.onGround)
+                if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
                 {
-                    States.CurrentPlayerState = Playerstates.LAND;
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
+                    Player.Nyr.currentFrame = 0;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
 
                 Camera.Main.move(newMoveValue);
@@ -256,18 +347,29 @@ namespace Valkyrie_Nyr
             //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
 
+
+            Player.Nyr.onIce = false;
             //trigger all triggers, that have been triggered
-            Player.Nyr.activateTrigger();
+            Player.Nyr.activateTrigger(gameTime);
+
+            Player.Nyr.EntityUpdate(gameTime);
+
+            foreach (Enemy element in enemyObjects)
+            {
+                element.Update(gameTime);
+            }
+            
 
             if (!anyKeyPressed)
             {
-                if (!(States.CurrentPlayerState == Playerstates.JUMP || States.CurrentPlayerState == Playerstates.FALL || States.CurrentPlayerState == Playerstates.LAND))
+                if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND))
                 {
-                    if (States.CurrentPlayerState == Playerstates.WALK && Player.Nyr.onGround)
+                    if (Player.Nyr.currentEntityState == (int)Playerstates.WALK && Player.Nyr.onGround)
                     {
-                        States.CurrentPlayerState = Playerstates.STOP;
+                        Player.Nyr.currentEntityState = (int)Playerstates.STOP;
+                        Player.Nyr.currentFrame = 0;
                     }
-                    States.NextPlayerState = Playerstates.IDLE;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
             }
 
@@ -293,15 +395,15 @@ namespace Valkyrie_Nyr
                     continue;
                 }
 
-                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && element.name != "platform")
+                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedLeft = true;
                 }
-                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && element.name != "platform")
+                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedRight = true;
                 }
-                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && element.name != "platform")
+                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedTop = true;
                 }
@@ -309,19 +411,6 @@ namespace Valkyrie_Nyr
                 {
                     collidedBottom = true;
                 }
-            }
-
-            if (collidedBottom)
-            {
-                Player.Nyr.onGround = true;
-            }
-            if (moveValue.Y == 0)
-            {
-                Player.Nyr.onGround = true;
-            }
-            if (moveValue.Y < 0)
-            {
-                Player.Nyr.onGround = false;
             }
 
             if (collidedLeft || collidedRight)
@@ -334,7 +423,7 @@ namespace Valkyrie_Nyr
             }
             return moveValue;
         }
-
+        
         //move all Objects in this Level
         public void moveGameObjects(Vector2 moveValue)
         {
@@ -347,6 +436,12 @@ namespace Valkyrie_Nyr
                 }
 
                 gameObject.position -= moveValue;
+                
+                gameObject.startPosition -= moveValue;
+            }
+            foreach (Enemy element in enemyObjects)
+            {
+                element.tempPosition -= moveValue;
             }
         }
 
@@ -388,15 +483,15 @@ namespace Valkyrie_Nyr
             spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
             //Draw all GameObjects such as Enemys
-            foreach (Entity element in entityObjects)
+            foreach (Enemy element in enemyObjects)
             {
-                element.entityRender(gameTime, spriteBatch);
+                element.EntityRender(gameTime, spriteBatch);
             }
             foreach (GameObject element in gameObjects)
             {
                 element.Draw(gameTime, spriteBatch);
             }
-            Player.Nyr.Draw(spriteBatch);
+            Player.Nyr.EntityRender(gameTime, spriteBatch);
         }
     }
 }

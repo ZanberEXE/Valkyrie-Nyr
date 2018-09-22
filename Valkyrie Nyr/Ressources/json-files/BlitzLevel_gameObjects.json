@@ -1,5 +1,33 @@
 [
   {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "5000, 4500",
+	  "moving": "0, -1300"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "6350, 3200",
+	  "moving": "-850, 0"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "6850, 3000",
+	  "moving": "0, -1000"
+  },
+  {
+      "name": "cloud",
+      "height": 50,
+      "width": 350,
+      "position": "6850, 3450",
+	  "moving": "900, 0"
+  },
+  {
       "name": "platform",
       "height": 50,
       "width": 1500,
@@ -128,6 +156,13 @@
   {
       "name": "OverworldLoader",
 	  "triggerType": "loader",
+      "height": 300,
+      "width": 300,
+      "position": "1525, 4450",
+  },
+  {
+      "name": "BlitzLevelLoader",
+	  "triggerType": "",
       "height": 300,
       "width": 300,
       "position": "1525, 4450",

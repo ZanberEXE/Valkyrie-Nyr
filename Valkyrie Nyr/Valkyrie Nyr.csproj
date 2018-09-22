@@ -47,6 +47,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="NSC.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
@@ -125,40 +126,46 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
-    <None Include="Ressources\json-files\BlitzLevel_entityObjects.json">
+    <None Include="Ressources\json-files\BlitzLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\BlitzLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\Bossstage_entityObjects.json">
+    <None Include="Ressources\json-files\Bossstage_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Bossstage_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\EisLevel_entityObjects.json">
+    <None Include="Ressources\json-files\EisLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\EisLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\ErdLevel_entityObjects.json">
+    <None Include="Ressources\json-files\ErdLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\ErdLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\FeuerLevel_entityObjects.json">
+    <None Include="Ressources\json-files\FeuerLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\FeuerLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Ressources\json-files\Hub_entityObjects.json">
+    <None Include="Ressources\json-files\Hub_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Hub_gameObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\Hub_nscObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\Overworld_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Overworld_entityObjects.json">
