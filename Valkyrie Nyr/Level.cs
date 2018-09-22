@@ -186,6 +186,11 @@ namespace Valkyrie_Nyr
 
             Camera.Main.position = Vector2.Zero;
 
+            Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.currentFrame = 0;
+
+
             States.CurrentPlayerState = Playerstates.IDLE;
 
 
@@ -203,8 +208,6 @@ namespace Valkyrie_Nyr
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
         {
-            //Resetting Variables
-            textboxText = "";
             Vector2 moveValue = Vector2.Zero;
 
             // Player.Nyr.Update(gameTime);
@@ -497,12 +500,11 @@ namespace Valkyrie_Nyr
             bool collidedTop = false;
             bool collidedBottom = false;
 
-
             foreach (GameObject element in collidedObjects)
             {
                 if (element.triggerType != null)
                 {
-                        continue;
+                    continue;
                 }
 
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
