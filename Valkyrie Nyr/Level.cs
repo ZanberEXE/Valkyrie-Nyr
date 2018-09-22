@@ -19,7 +19,6 @@ namespace Valkyrie_Nyr
         public SoundEffect jump, attack, thud;
 
 
-        public string textboxText = "";
         public Enemy ryn;
 
         public List<GameObject> gameObjects;
@@ -47,9 +46,6 @@ namespace Valkyrie_Nyr
         //get current Level from everywhere
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
-        //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
-        public static bool[] soulsRescued = new bool[] { true, true, true, true };
-
         //loads the level
         public void loadLevel(string levelName)
         {
@@ -75,30 +71,6 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
                     nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
-                    //delete souls in Hub, if not rescued yet
-                    for (int i = 0; i < nscObjects.Count;)
-                    {
-                        if (nscObjects[i].name == "inaSoul" && !Level.soulsRescued[0])
-                        {
-                            nscObjects.RemoveAt(i);
-                        }
-                        else if (nscObjects[i].name == "yinyinSoul" && !Level.soulsRescued[1])
-                        {
-                            nscObjects.RemoveAt(i);
-                        }
-                        else if (nscObjects[i].name == "aiyeSoul" && !Level.soulsRescued[2])
-                        {
-                            nscObjects.RemoveAt(i);
-                        }
-                        else if (nscObjects[i].name == "monomonoSoul" && !Level.soulsRescued[3])
-                        {
-                            nscObjects.RemoveAt(i);
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                    }
                     Player.Nyr.inJump = false;
                     break;
                 case "Overworld":
@@ -152,6 +124,11 @@ namespace Valkyrie_Nyr
 
             Camera.Main.position = Vector2.Zero;
 
+            Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+            Player.Nyr.currentFrame = 0;
+
+
             States.CurrentPlayerState = Playerstates.IDLE;
 
 
@@ -159,18 +136,11 @@ namespace Valkyrie_Nyr
             jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
             attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
             thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
-            Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
-            Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-            Player.Nyr.currentFrame = 0;
-
-
         }
 
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
         {
-            //Resetting Variables
-            textboxText = "";
             Vector2 moveValue = Vector2.Zero;
 
            // Player.Nyr.Update(gameTime);
@@ -418,12 +388,11 @@ namespace Valkyrie_Nyr
             bool collidedTop = false;
             bool collidedBottom = false;
 
-
             foreach (GameObject element in collidedObjects)
             {
                 if (element.triggerType != null)
                 {
-                        continue;
+                    continue;
                 }
 
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
@@ -513,21 +482,16 @@ namespace Valkyrie_Nyr
         {
             spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
-            foreach (GameObject element in gameObjects)
-            {
-                element.Draw(gameTime, spriteBatch);
-            }
             //Draw all GameObjects such as Enemys
             foreach (Enemy element in enemyObjects)
             {
                 element.EntityRender(gameTime, spriteBatch);
             }
-            Player.Nyr.EntityRender(gameTime, spriteBatch);
-
-            if(textboxText.Length > 0)
+            foreach (GameObject element in gameObjects)
             {
-                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+                element.Draw(gameTime, spriteBatch);
             }
+            Player.Nyr.EntityRender(gameTime, spriteBatch);
         }
     }
 }
