@@ -16,13 +16,17 @@ namespace Valkyrie_Nyr
 
         public float speed;
         public float jumpHeight;
+        public float inactivityTime = 0;
         public int slide;
         public bool inHub;
         public bool interact;
         public bool inJump;
         public bool onIce;
+        public bool isCrouching;
         public bool inConversation;
         public NSC conversationPartner;
+        public int money;
+        public int maxHealth;
 
         public int fAttackCheck;
 
@@ -49,7 +53,7 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10, 2, 18),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 63, 625),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 50, 500),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
@@ -100,8 +104,6 @@ namespace Valkyrie_Nyr
                 case "nsc":
                     if (interact)
                     {
-                        
-                        //if anyone triggers that breakpoint, please inform me!
                         ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
                     }
                     else

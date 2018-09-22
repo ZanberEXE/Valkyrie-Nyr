@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
-using System;
+using System.IO;
 
 namespace Valkyrie_Nyr
 {
@@ -16,7 +16,7 @@ namespace Valkyrie_Nyr
         SpriteBatch spriteBatch;
 
         //white 1x1 texture
-        
+        Texture2D pxl;
 
         public static ContentManager Ressources;
         public static SpriteBatch Renderer;
@@ -111,6 +111,21 @@ namespace Valkyrie_Nyr
             }
         }
 
+        void LoadSaveGame()
+        {
+            if (!File.Exists("SaveGame.txt"))
+            {
+                return;
+            }
+            string[] saveData = File.ReadAllLines("SaveGame.txt");
+            for(int i = 0; i < 12; i += 3)
+            {
+                Level.soulsRescued[i / 3] = (saveData[i][0] == 'T');
+                Level.armorEnhanced[i / 3] = (saveData[i + 1][0] == 'T');
+            }
+            Player.Nyr.money = System.Int32.Parse(saveData[12]);
+        }
+
         //TODO: proper content
         void mMainMenu()
         {
@@ -119,7 +134,8 @@ namespace Valkyrie_Nyr
                 switch (element)
                 {
                     case Keys.D1:
-                        Level.Current.loadLevel("BlitzLevel");
+                        LoadSaveGame();
+                        Level.Current.loadLevel("Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
                         MediaPlayer.Play(playingSong);
                         return;
