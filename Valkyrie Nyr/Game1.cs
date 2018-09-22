@@ -15,13 +15,12 @@ namespace Valkyrie_Nyr
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //white 1x1 texture
-        public static Texture2D pxl;
 
         public static ContentManager Ressources;
         public static SpriteBatch Renderer;
         public static Point WindowSize;
         public static SpriteFont Font;
+        //white 1x1 texture
         public static Texture2D pxl;
 
         //Sound

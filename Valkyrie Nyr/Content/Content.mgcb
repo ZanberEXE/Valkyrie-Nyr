@@ -788,18 +788,6 @@
 /processorParam:TextureFormat=Color
 /build:ConversationSprites/Aiye.png
 
-#begin C:/Users/D3V!N/Desktop/Ina.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:C:/Users/D3V!N/Desktop/Ina.png
-
 #begin ConversationSprites/Monomono.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -215,15 +215,17 @@ namespace Valkyrie_Nyr
 
 
             //sound test
-            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
+            //jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
+            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
+            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
         }
 
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
-        {
+        {   
+            //Resetting Values
             Vector2 moveValue = Vector2.Zero;
+            textboxText = "";
 
             // Player.Nyr.Update(gameTime);
 
