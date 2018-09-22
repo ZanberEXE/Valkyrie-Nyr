@@ -671,6 +671,12 @@
       "position": "10855, 9840",
   },
   {
+      "name": "ground",
+      "height": 80,
+      "width": 4800,
+      "position": "9500, 9920",
+  },
+  {
       "name": "cloud",
       "height": 50,
       "width": 350,
@@ -688,8 +694,8 @@
       "name": "cloud",
       "height": 50,
       "width": 350,
-      "position": "8300, 700",
-	  "moving": "1500, 0"
+      "position": "9800, 700",
+	  "moving": "-1500, 0"
   },
   {
       "name": "cloud",
@@ -710,7 +716,7 @@
       "height": 50,
       "width": 350,
       "position": "18200, 6500",
-	  "moving": "0, -4000"
+	  "moving": "0, -4500"
   },
   {
       "name": "lava",
@@ -738,7 +744,7 @@
       "triggerType": "area",
       "height": 500,
       "width": 825,
-      "position": "15225, 9500"
+      "position": "15225, 9600"
   },
   {
       "name": "lava",

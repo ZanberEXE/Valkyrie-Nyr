@@ -46,6 +46,35 @@
 					]
 			}
 		]
+  },{
+	"name": "drWhich",
+    "triggerType": "nsc",
+    "mass": 0,
+    "height": 200,
+    "width": 220,
+    "position": "3000, 1000",
+    "health":1000,
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Dr Which",
+						"Nyr",
+						"Dr Which",
+						"Nyr",
+						"Dr Which"
+					],
+				"speeches":
+					[
+						"Do you like to die less often?", 
+						"Well, that would be great I guess." ,
+						"Then i shall raise your health.",
+						"Thanks~",
+						"Now hand me the fee of 500g."						
+					]
+			}
+		]
   },
   {
 	"name": "inaSoul",
@@ -94,6 +123,32 @@
 						"Huh?! Argh, people like you make no sense. Now go already!",
 						"...?"
 					]
+			},
+			{	
+				"spokesman":
+					[
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina",
+						"Nyr",
+						"Ina"
+					],
+				"speeches":
+					[
+						"This place is way too dark! I know, how about I light it all up?",
+						"I think everything will burn down instead...",
+						"Just a little is fine, isn't it?",
+						"Don't!",
+						"...!",
+						"Ah, sorry. I just remembered something...",
+						"S-sor-",
+						"Besides, you can see the night sky so much better this way.",
+						"...Yeah, you're right."
+					]
 			}
 		]
   },
@@ -125,6 +180,50 @@
 						"-Gauntlet enhanced with Yinyin's power-" ,
 						"Thank you!",
 						"You can shoot ice spikes by using [Key]. Make sure to use it well."
+					]
+			},
+			{	
+				"spokesman":
+					[
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Yinyin",
+						"Nyr",
+						"Nyr",
+						"Yinyin",
+						"Nyr"
+					],
+				"speeches":
+					[
+						"I see you're practicing again." ,
+						"I always have to keep myself in shape, even when my body shouldn't change as a dead woman." ,
+						"What was that move you just did now?" ,
+						"A chaines turn." ,
+						"I see the quick steps look really beautiful." ,
+						"Thank you. If you are interested, I could teach you a few moves. How about the dying swan?" ,
+						"N-no thank you... I don't think I would look even half as graceful as you when I try..." ,
+						"You would be just as captivating though. Comedy is also an art form, you know?" ,
+						"Well, I'm busy fighting monster..." ,
+						"Fighting and dancing are quite similar." ,
+						"Yeah, for example that kick you threw at me." ,
+						"That was a grand jete leap." ,
+						"It just looked like an elegant flying kick to me..." ,
+						"I can gladly show you a flying kick." ,
+						"Uh-",
+						"What's this?" ,
+						"A reverence. A display of respect as thanks for before." ,
+						"I see. Thank you as well, though I will still decline your offer." 
 					]
 			}
 		]
@@ -159,6 +258,42 @@
 						"Oh, thank you!",
 						"These shoes will help ya.",
 						"Now that we've come this far. How about we relax from all this fighting and go out som-"
+					]
+			},
+			{	
+				"spokesman":
+					[
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr"
+					],
+				"speeches":
+					[
+						"There are others like me, you might be interested in." ,
+						"..." ,
+						"Hey don't be so cold now, you might get something good out of this!" ,
+						"..." ,
+						"Everyone here has something they regret when they were alive." ,
+						"A regret?" ,
+						"Something you really wanted but simply couldn't obtain." ,
+						"...I guess, I can understand that." ,
+						"I for one would love to obtain the sight of the hot and cold beauties, hahaha!" ,
+						"*sighs*" ,
+						"What's with that disappoint face!? You can't tell me you don't want to see it. Well in your case you might be more ec-static to see a man with torn clothes?" ,
+						"I don't have a particular interest in that way. But if they're like you, then I'd love to meet them as well." ,
+						"I see. But do not worry my heart will always stay true to you! So, about our next date, how about going to the top of the tower. I think we can see the night sky..." ,
+						"..." 
 					]
 			}
 		]
@@ -199,6 +334,40 @@
 						"Is this safe...?",
 						"... It will work perfectly fine! I calculated everything correctly.",
 						"Thank you. I'll make sure to use it well..."
+					]
+			},
+			{	
+				"spokesman":
+					[
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono"
+					],
+				"speeches":
+					[
+						"Isn't it amazing, how all of us are so different?" ,
+						"Isn't that natural?" ,
+						"It's not only our personalities. Think about it! All of us are have a vastly different history. Things that have occurred in my time must not necessarily happen in your past nor future." ,
+						"I never noticed that..." ,
+						"Furthermore, there are even some beings in this realm that could never exist in the world we know." ,
+						"The stories of dragon, the use of magic and places and culture I've never heard of in my living time..." ,
+						"Correct! Alchemy, magic, creatures that we have imagined but proven to not exist. They exist here as well as in their previous world." ,
+						"This place is full of mysteries..." ,
+						"I'm most interested in that goddess. How far can her power reach and what purpose does she truly serve? It is also unsettling seeing the tears of blood running down her face. What reason could have led to that?" ,
+						"I see, you're having a lot of fun.",
+						"Yes, I won't be bored for a long time if ever! On that note, there's something I would like you to try. This was made with the help of alchemy. It should greatly increase your power though I do not know what other effects it might have. You just need to drink this whole purple bottle." ,
+						"...",
+						"How strange. Where did she go?" 
 					]
 			}
 		]

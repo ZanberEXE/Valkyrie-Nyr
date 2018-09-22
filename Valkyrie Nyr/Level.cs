@@ -46,6 +46,12 @@ namespace Valkyrie_Nyr
         //get current Level from everywhere
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
+        //
+        //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
+        public static bool[] soulsRescued = new bool[] { true, true, true, true };
+        //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
+        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
+
         //loads the level
         public void loadLevel(string levelName)
         {
@@ -71,6 +77,61 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
                     nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
+                    //delete souls in Hub, if not rescued yet
+                    for (int i = 0; i < nscObjects.Count;)
+                    {
+                        if (nscObjects[i].name == "inaSoul"){
+                            if (!Level.soulsRescued[0])
+                            {
+                                nscObjects.RemoveAt(i);
+                            }
+                            else if (Level.armorEnhanced[0])
+                            {
+                                nscObjects[i].dialogueState++;
+                                i++;
+                            }
+                        }
+                        else if (nscObjects[i].name == "yinyinSoul")
+                        {
+                            if (!Level.soulsRescued[0])
+                            {
+                                nscObjects.RemoveAt(i);
+                            }
+                            else if (Level.armorEnhanced[0])
+                            {
+                                nscObjects[i].dialogueState++;
+                                i++;
+                            }
+                        }
+                        else if (nscObjects[i].name == "aiyeSoul")
+                        {
+                            if (!Level.soulsRescued[0])
+                            {
+                                nscObjects.RemoveAt(i);
+                            }
+                            else if (Level.armorEnhanced[0])
+                            {
+                                nscObjects[i].dialogueState++;
+                                i++;
+                            }
+                        }
+                        else if (nscObjects[i].name == "monomonoSoul")
+                        {
+                            if (!Level.soulsRescued[0])
+                            {
+                                nscObjects.RemoveAt(i);
+                            }
+                            else if (Level.armorEnhanced[0])
+                            {
+                                nscObjects[i].dialogueState++;
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
                     Player.Nyr.inJump = false;
                     break;
                 case "Overworld":
@@ -82,7 +143,14 @@ namespace Valkyrie_Nyr
                 case "BlitzLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-500, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(-13000, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
+                    break;
+                    //TODO: evtl lötschn
+                case "ErdLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-500 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
@@ -120,9 +188,9 @@ namespace Valkyrie_Nyr
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
             
 
-            Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
+            Camera.Main.levelBounds = new Rectangle(Vector2.Zero.ToPoint(), new Point(width, height));
 
-            Camera.Main.position = Vector2.Zero;
+            Camera.Main.position = startPosition.ToVector2() * -1;
 
             States.CurrentPlayerState = Playerstates.IDLE;
 
@@ -143,6 +211,13 @@ namespace Valkyrie_Nyr
             Player.Nyr.currentFrame = 0;
 
 
+            States.CurrentPlayerState = Playerstates.IDLE;
+
+
+            //sound test
+            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
+            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
+            thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
         }
 
         //get input and update the elements inside the level
@@ -150,7 +225,7 @@ namespace Valkyrie_Nyr
         {
             Vector2 moveValue = Vector2.Zero;
 
-           // Player.Nyr.Update(gameTime);
+            // Player.Nyr.Update(gameTime);
 
             //Let PLayer fall and save the moveValue in overall Movement
             if (!Player.Nyr.inHub)
@@ -206,31 +281,37 @@ namespace Valkyrie_Nyr
                 switch (element)
                 {
                     case Keys.A:
-                        moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.entityFacing = -1;
-                        if (Player.Nyr.onIce)
+                        if (!Player.Nyr.isCrouching)
                         {
-                            Player.Nyr.slide = 1000;
-                        }
-                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
-                        {
-                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                            Player.Nyr.currentFrame = 0;
-                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
+                            moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                            Player.Nyr.entityFacing = -1;
+                            if (Player.Nyr.onIce)
+                            {
+                                Player.Nyr.slide = 1000;
+                            }
+                            if (Player.Nyr.currentEntityState == (int)Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP || Player.Nyr.currentEntityState == (int)Playerstates.DANCE)
+                            {
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
+                            }
                         }
                         break;
                     case Keys.D:
-                        moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                        Player.Nyr.entityFacing = 1;
-                        if (Player.Nyr.onIce)
+                        if (!Player.Nyr.isCrouching)
                         {
-                            Player.Nyr.slide = 1000;
-                        }
-                        if (Player.Nyr.currentEntityState == (int) Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP)
-                        {
-                            Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                            Player.Nyr.currentFrame = 0;
-                            Player.Nyr.nextEntityState = (int)Playerstates.WALK;
+                            moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                            Player.Nyr.entityFacing = 1;
+                            if (Player.Nyr.onIce)
+                            {
+                                Player.Nyr.slide = 1000;
+                            }
+                            if (Player.Nyr.currentEntityState == (int)Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP || Player.Nyr.currentEntityState == (int)Playerstates.DANCE)
+                            {
+                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
+                            }
                         }
                         break;
                     case Keys.Space:
@@ -267,12 +348,32 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.inHub)
                         {
                             moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
+                            if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)
                             {
                                 Player.Nyr.currentEntityState = (int)Playerstates.WALK;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.WALK;
                             }
+                        }
+                        else if (Player.Nyr.onGround)
+                        {
+                            Player.Nyr.isCrouching = true;
+                            if (Player.Nyr.currentEntityState != (int)Playerstates.CROUCH)
+                            {
+                                Player.Nyr.currentEntityState = (int)Playerstates.CROUCH;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.CROUCH;
+                            }
+
+                            //TODO: set collider to crouch position
+                        }
+                        else if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Level.armorEnhanced[(int) BossElements.EARTH])
+                        {
+                            //TODO: let Nyr fall
+                            //Player.Nyr.currentEntityState = (int)Playerstates.STOMP;
+                            //Player.Nyr.currentFrame = 0;
+                            //Player.Nyr.nextEntityState = (int)Playerstates.STOMP;
+
                         }
                         break;
                     case Keys.F:
@@ -289,14 +390,14 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                                Player.Nyr.Attack(Player.Nyr.entityFacing);
+                                Player.Nyr.fAttackCheck = 20;
                                 atkCooldown = 60;
 
                                 jump.CreateInstance().Play();
                             }
                         }break;
                     case Keys.LeftControl:
-                        if (Player.Nyr.hasHeadband && hasDashed == false)
+                        if (Level.armorEnhanced[(int)BossElements.BOLT] && hasDashed == false)
                         {
                             
                             Player.Nyr.MakeInvulnerable();
@@ -367,10 +468,19 @@ namespace Valkyrie_Nyr
             {
                 element.Update(gameTime);
             }
-            
+        
 
-            if (!anyKeyPressed)
+            if (!anyKeyPressed || (Player.Nyr.currentEntityState == (int) Playerstates.CROUCH && Keyboard.GetState().IsKeyUp(Keys.S)))
             {
+                if (Player.Nyr.isCrouching)
+                {
+                    Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                    Player.Nyr.currentFrame = 0;
+                    Player.Nyr.isCrouching = false;
+                }
+
+                Player.Nyr.inactivityTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND))
                 {
                     if (Player.Nyr.currentEntityState == (int)Playerstates.WALK && Player.Nyr.onGround)
@@ -380,6 +490,16 @@ namespace Valkyrie_Nyr
                     }
                     Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
+                if(Player.Nyr.inactivityTime > 30f && Player.Nyr.currentEntityState != (int)Playerstates.DANCE)
+                {
+                    Player.Nyr.currentEntityState = (int)Playerstates.DANCE;
+                    Player.Nyr.nextEntityState = (int)Playerstates.DANCE;
+                    Player.Nyr.currentFrame = 0;
+                }
+            }
+            else
+            {
+                Player.Nyr.inactivityTime = 0;
             }
 
             lastPressedKeys = newPressedKeys;
@@ -487,21 +607,42 @@ namespace Valkyrie_Nyr
             }
         }
 
+        //Saves the Game
+        public void SaveGame()
+        {
+            StreamWriter output = File.CreateText("SaveGame.txt");
+            
+            for(int i = 0; i < 4; i++)
+            {
+                output.WriteLine((Level.soulsRescued[i] ? "T" : "F"));
+                output.WriteLine((Level.armorEnhanced[i] ? "T" : "F"));
+                output.WriteLine("");
+            }
+            output.WriteLine(Player.Nyr.money.ToString());
+
+            output.Close();
+        }
+
         //the typical render method
         public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Draw(levelBGSprite, new Rectangle(positionBGSprite.ToPoint(), new Point(width, height)), Color.White);
 
+            foreach (GameObject element in gameObjects)
+            {
+                element.Draw(gameTime, spriteBatch);
+            }
             //Draw all GameObjects such as Enemys
             foreach (Enemy element in enemyObjects)
             {
                 element.EntityRender(gameTime, spriteBatch);
             }
-            foreach (GameObject element in gameObjects)
-            {
-                element.Draw(gameTime, spriteBatch);
-            }
             Player.Nyr.EntityRender(gameTime, spriteBatch);
+
+            if(textboxText.Length > 0)
+            {
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+            }
         }
     }
 }

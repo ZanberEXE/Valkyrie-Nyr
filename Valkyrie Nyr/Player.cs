@@ -15,13 +15,19 @@ namespace Valkyrie_Nyr
 
         public float speed;
         public float jumpHeight;
+        public float inactivityTime = 0;
         public int slide;
         public bool inHub;
         public bool interact;
         public bool inJump;
         public bool onIce;
+        public bool isCrouching;
         public bool inConversation;
         public NSC conversationPartner;
+        public int money;
+        public int maxHealth;
+
+        public int fAttackCheck;
 
         // Feature bools
         public bool hasHeadband = true;
@@ -46,7 +52,7 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10, 2, 18),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 63, 625),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 50, 500),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
@@ -57,10 +63,10 @@ namespace Valkyrie_Nyr
             health = hp;
             damage = dmg;
 
-            attackBox.X = 100;
-            attackBox.Y = 80;
-            attackBox.Width = attackBoxWidth;
-            attackBox.Height = attackBoxHeight;
+            attackBox.X = 0;
+            attackBox.Y = 0;
+            attackBox.Width = _attackBoxWidth;
+            attackBox.Height = _attackBoxHeight;
 
             hurtBox.X = (int)position.X;
             hurtBox.Y = (int)position.Y;
@@ -69,7 +75,7 @@ namespace Valkyrie_Nyr
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2000, 100, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 30, 140, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -97,8 +103,6 @@ namespace Valkyrie_Nyr
                 case "nsc":
                     if (interact)
                     {
-                        
-                        //if anyone triggers that breakpoint, please inform me!
                         ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
                     }
                     else
@@ -108,8 +112,41 @@ namespace Valkyrie_Nyr
                     break;
             }
         }
-        
+        public void Attack()
+        {
+           
+            attackBox.X = (int)position.X;
+            attackBox.Y = (int)position.Y;
+            if (entityFacing == 1)
+            {
+                attackBox.Location += new Point(width / 2, height / 2);
+            }
+            else
+            {
+                attackBox.Location += new Point(width / 2 - attackBox.Width, height / 2);
+            }
 
+            
+            
+            for (int i = 0; i < Level.Current.enemyObjects.Count; i++)
+            {
+                
+                Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
+                if (CollisionAABB(attackBox, hurtbox))
+                {
+                    DamageEnemies(Level.Current.enemyObjects[i]);
+                }
+            }
+        }
+        public void DamageEnemies(Enemy victim)
+        {
+            victim.health -= damage - victim.armor;
+
+            if (victim.health <= 0)
+            {
+                Level.Current.enemyObjects.Remove(victim);
+            }
+        }
         private void collect(string item)
         {
             switch (item)

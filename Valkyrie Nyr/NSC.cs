@@ -53,10 +53,7 @@ namespace Valkyrie_Nyr
             oldGameTime = newGameTime.TotalGameTime.TotalSeconds;
             if (currentSpeech + 1 >= dialogues[dialogueState].speeches.Length)
             {
-                if (dialogueState + 1 < dialogues.Length)
-                {
-                    dialogueState++;
-                }
+                
                 endConversation();
             }
             else
@@ -67,9 +64,52 @@ namespace Valkyrie_Nyr
 
         public void endConversation()
         {
+            switch (this.name)
+            {
+                case "inaSoul":
+                    if (!Level.armorEnhanced[(int)BossElements.FIRE])
+                    {
+                        Level.armorEnhanced[(int)BossElements.FIRE] = true;
+                    }
+                    break;
+                case "yinyinSoul":
+                    if (!Level.armorEnhanced[(int)BossElements.ICE])
+                    {
+                        Level.armorEnhanced[(int)BossElements.ICE] = true;
+                    }
+                    break;
+                case "aiyeSoul":
+                    if (!Level.armorEnhanced[(int)BossElements.EARTH])
+                    {
+                        Level.armorEnhanced[(int)BossElements.EARTH] = true;
+                    }
+                    break;
+                case "monomonoSoul":
+                    if (!Level.armorEnhanced[(int)BossElements.BOLT])
+                    {
+                        Level.armorEnhanced[(int)BossElements.BOLT] = true;
+                    }
+                    break;
+                case "Statue":
+                    Level.Current.SaveGame();
+                    break;
+                case "drWhich":
+                    //TODO:Anpassen
+                    if(Player.Nyr.money > 500)
+                    {
+                        Player.Nyr.money -= 500;
+                        Player.Nyr.health += 100;
+                    }
+                    break;
+            }
+            if (dialogueState + 1 < dialogues.Length)
+            {
+                dialogueState++;
+            }
             currentSpeech = 0;
             States.CurrentGameState = GameStates.PLAYING;
             Player.Nyr.conversationPartner = null;
+
         }
 
         public void renderConversation(SpriteBatch spriteBatch)
@@ -81,7 +121,7 @@ namespace Valkyrie_Nyr
                 if (allFiles[i] == Game1.Ressources.RootDirectory + "\\ConversationSprites\\" + currentSpokesman + ".xnb")
                 {
                     Texture2D spokemanTexture = Game1.Ressources.Load<Texture2D>("ConversationSprites/" + currentSpokesman);
-                    spriteBatch.Draw(spokemanTexture, new Rectangle((currentSpokesman == "Nyr") ? 200 : Game1.WindowSize.X - 200 - spokemanTexture.Width, 100, spokemanTexture.Width, spokemanTexture.Height), Color.White);
+                    spriteBatch.Draw(spokemanTexture, new Rectangle((currentSpokesman == "Nyr") ? 200 : Game1.WindowSize.X - spokemanTexture.Width, 0, spokemanTexture.Width, spokemanTexture.Height), Color.White);
                 }
             }
             spriteBatch.Draw(Game1.pxl, new Rectangle(0, 600, Game1.WindowSize.X, Game1.WindowSize.Y - 600), Color.Black * 0.7f);
