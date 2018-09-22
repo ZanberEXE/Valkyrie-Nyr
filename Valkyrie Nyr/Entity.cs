@@ -199,8 +199,17 @@ namespace Valkyrie_Nyr
             {
                 hurtBox.Y = (int)position.Y + 630;
                 hurtBox.Height = height - 630;
-
-                attackBox.Y = (int)position.Y + 650;
+                if (entityFacing == -1)
+                {
+                    attackBox.Y = (int)position.Y + 650;
+                    attackBox.X = (int)position.X - 30;
+                }
+                if (entityFacing == 1)
+                {
+                    attackBox.Y = (int)position.Y + 650;
+                    attackBox.X = (int)position.X + 30;
+                }
+                
             }
 
 
