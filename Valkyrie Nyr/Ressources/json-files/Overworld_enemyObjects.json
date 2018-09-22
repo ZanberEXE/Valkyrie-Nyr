@@ -5,13 +5,16 @@
     "mass": 0,
     "height": 40,
     "width": 40,
-    "position": "800, 3700",
+    "position": "2500, 3770",
     "health": 5,
-    "damage": 10000,
+    "damage": 200,
     "entityFacing": 1,
-    "aggroRange": 500,
-    "attackRange": 50,
+    "aggroRange": 800,
+    "attackRange": 70,
     "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": true,
     "animationPrefabs": [
       {
         "path": "smallEnemies/Banshee/BansheeIdle",
@@ -37,74 +40,67 @@
         "Rows": 5,
         "maxFrames": 43
       }
-    ],
-    "hitbox": {
-      "name": "BansheeHitbox",
-      "triggerType": "hitbox",
-      "mass": 0,
-      "height": 300,
-      "width": 300,
-      "position": "-120, -150"
-    }
+    ]
   },
   {
-    "name": "Ina",
+    "name": "Aiye",
     "triggerType": "",
-    "mass": 4,
-    "height": 120,
-    "width": 70,
+    "mass": 20,
+    "height": 220,
+    "width": 100,
     "position": "800, 3000",
-    "health": 900,
-    "damage": 30,
+    "health": 1500,
+    "damage": 50,
     "entityFacing": 1,
-    "aggroRange": 0,
+    "aggroRange": 100,
     "attackRange": 0,
     "speed": 200,
+    "attackBoxHeight": 80,
+    "attackBoxWidth": 40,
+    "animationFlip": true,
     "animationPrefabs": [
       {
-        "path": "Bosses/Ina/InaIdle",
+        "path": "Bosses/Aiye/AiyeIdle",
         "Columns": 10,
-        "Rows": 4,
-        "maxFrames": 37
+        "Rows": 25,
+        "maxFrames": 250
       },
       {
-        "path": "Bosses/Ina/InaMove",
-        "Columns": 10,
-        "Rows": 7,
-        "maxFrames": 62
-      },
-      {
-        "path": "Bosses/Ina/InaAttack",
-        "Columns": 10,
-        "Rows": 5,
-        "maxFrames": 50
-      },
-      {
-        "path": "Bosses/Ina/InaFireball",
+        "path": "Bosses/Aiye/AiyeMove",
         "Columns": 10,
         "Rows": 10,
         "maxFrames": 93
       },
       {
-        "path": "Bosses/Ina/InaMeteorShower",
+        "path": "Bosses/Aiye/AiyeJumpAttack",
         "Columns": 10,
-        "Rows": 20,
-        "maxFrames": 197
+        "Rows": 10,
+        "maxFrames": 100
       },
       {
-        "path": "Bosses/Ina/InaExplosion",
+        "path": "Bosses/Aiye/AiyeEarthProjectile",
         "Columns": 10,
-        "Rows": 19,
-        "maxFrames": 187
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "Bosses/Aiye/AiyeCreateWall",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
+        "path": "Bosses/Aiye/AiyeAttack",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 31
+      },
+      {
+        "path": "Bosses/Aiye/AiyeJump",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
       }
-    ],
-    "hitbox": {
-      "name": "InaHitbox",
-      "triggerType": "hitbox",
-      "mass": 0,
-      "height": 20,
-      "width": 20,
-      "position": "0, 0"
-    }
+    ]
   }
 ]

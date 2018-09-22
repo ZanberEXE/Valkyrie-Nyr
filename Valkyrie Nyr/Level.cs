@@ -8,11 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Valkyrie_Nyr
 {
     class Level
     {
+        //my shit
+        public SoundEffect jump, attack, thud;
+
+
         public string textboxText = "";
         public Enemy ryn;
 
@@ -124,6 +130,8 @@ namespace Valkyrie_Nyr
             {
                 gameObjects.Add(element);
                 element.Initialize();
+                //element.hurtBox.Location += startPosition;
+                //element.attackBox.Location += startPosition;
             }
             foreach (NSC element in nscObjects)
             {
@@ -144,6 +152,13 @@ namespace Valkyrie_Nyr
 
             Camera.Main.position = Vector2.Zero;
 
+            States.CurrentPlayerState = Playerstates.IDLE;
+
+
+            //sound test
+            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
+            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
+            thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
             Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
             Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
             Player.Nyr.currentFrame = 0;
@@ -252,6 +267,10 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
+
+                                
+                                attack.CreateInstance().Play();
+                                
                             }
                         }
                         break;
@@ -295,13 +314,15 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.Attack(Player.Nyr.entityFacing);
                                 atkCooldown = 60;
+
+                                jump.CreateInstance().Play();
                             }
                         }break;
                     case Keys.LeftControl:
                         if (Player.Nyr.hasHeadband && hasDashed == false)
                         {
                             
-                            Player.Nyr.makeInvulnerable(20);
+                            Player.Nyr.MakeInvulnerable();
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
                             hasDashed = true;
@@ -433,7 +454,7 @@ namespace Valkyrie_Nyr
             }
             return moveValue;
         }
-
+        
         //move all Objects in this Level
         public void moveGameObjects(Vector2 moveValue)
         {
@@ -446,7 +467,12 @@ namespace Valkyrie_Nyr
                 }
 
                 gameObject.position -= moveValue;
+                
                 gameObject.startPosition -= moveValue;
+            }
+            foreach (Enemy element in enemyObjects)
+            {
+                element.tempPosition -= moveValue;
             }
         }
 
