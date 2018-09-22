@@ -156,7 +156,7 @@ namespace Valkyrie_Nyr
             return newPosition;
         }
 
-        public void Draw(GameTime gametime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gametime, SpriteBatch spriteBatch)
         {
             if(sprite == null)
             {

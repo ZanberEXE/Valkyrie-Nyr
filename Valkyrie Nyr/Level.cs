@@ -25,6 +25,7 @@ namespace Valkyrie_Nyr
         //public List<Entity> entityObjects;
         public List<Enemy> enemyObjects;
         public List<NSC> nscObjects;
+        public List<Projectile> projectileObjects;
 
         public int height;
         public int width;
@@ -78,59 +79,52 @@ namespace Valkyrie_Nyr
                     Player.Nyr.inHub = true;
                     nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
                     //delete souls in Hub, if not rescued yet
-                    for (int i = 0; i < nscObjects.Count;)
+                    for (int i = 0; i < nscObjects.Count; i++)
                     {
-                        if (nscObjects[i].name == "inaSoul"){
-                            if (!Level.soulsRescued[0])
+                        if (nscObjects[i].name == "inaSoul")
+                        {
+                            if (!Level.soulsRescued[(int)BossElements.FIRE])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.FIRE])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "yinyinSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int) BossElements.ICE])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.ICE])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "aiyeSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.EARTH])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.EARTH])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "monomonoSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.BOLT])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.BOLT])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
-                        }
-                        else
-                        {
-                            i++;
-                        }
+                        }  
                     }
                     Player.Nyr.inJump = false;
                     break;
@@ -165,6 +159,7 @@ namespace Valkyrie_Nyr
             
             //entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
             enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
+            projectileObjects = new List<Projectile>();
 
             foreach (Enemy element in enemyObjects)
             {
@@ -218,6 +213,7 @@ namespace Valkyrie_Nyr
             //jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
             //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
             //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
+            
         }
 
         //get input and update the elements inside the level
@@ -506,6 +502,11 @@ namespace Valkyrie_Nyr
 
             lastPressedKeys = newPressedKeys;
 
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                projectileObjects[i].Update(gameTime);
+            }
+
         }
 
         //theoretical move and seeing what happens
@@ -575,6 +576,10 @@ namespace Valkyrie_Nyr
             {
                 element.tempPosition -= moveValue;
             }
+            foreach (Projectile element in projectileObjects)
+            {
+                element.position -= moveValue;
+            }
         }
 
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
@@ -638,10 +643,16 @@ namespace Valkyrie_Nyr
             foreach (Enemy element in enemyObjects)
             {
                 element.EntityRender(gameTime, spriteBatch);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
             }
             Player.Nyr.EntityRender(gameTime, spriteBatch);
 
-            if(textboxText.Length > 0)
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                projectileObjects[i].Draw(gameTime, spriteBatch);
+            }
+
+            if (textboxText.Length > 0)
             {
                 spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
             }
