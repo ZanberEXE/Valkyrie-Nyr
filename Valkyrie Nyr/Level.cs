@@ -13,7 +13,6 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
-        public Enemy ryn;
 
         public List<GameObject> gameObjects;
         //public List<Entity> entityObjects;
@@ -96,6 +95,8 @@ namespace Valkyrie_Nyr
             {
                 gameObjects.Add(element);
                 element.Initialize();
+                //element.hurtBox.Location += startPosition;
+                //element.attackBox.Location += startPosition;
             }
             foreach (NSC element in nscObjects)
             {
@@ -271,7 +272,7 @@ namespace Valkyrie_Nyr
                         if (Player.Nyr.hasHeadband && hasDashed == false)
                         {
                             
-                            Player.Nyr.makeInvulnerable(20);
+                            Player.Nyr.MakeInvulnerable();
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
                             hasDashed = true;
@@ -402,7 +403,7 @@ namespace Valkyrie_Nyr
             }
             return moveValue;
         }
-
+        
         //move all Objects in this Level
         public void moveGameObjects(Vector2 moveValue)
         {
@@ -415,7 +416,12 @@ namespace Valkyrie_Nyr
                 }
 
                 gameObject.position -= moveValue;
+                
                 gameObject.startPosition -= moveValue;
+            }
+            foreach (Enemy element in enemyObjects)
+            {
+                element.tempPosition -= moveValue;
             }
         }
 

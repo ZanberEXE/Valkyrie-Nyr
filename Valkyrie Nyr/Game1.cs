@@ -230,7 +230,7 @@ namespace Valkyrie_Nyr
             {
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                    //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                 }
             }
 

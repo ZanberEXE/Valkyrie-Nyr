@@ -281,13 +281,13 @@
       "width": 500,
       "position": "2000, 3400",
   },
-  {
+  /*{
       "name": "ice",
       "triggerType": "area",
       "height": 200,
       "width": 2000,
       "position": "500, 3700"
-  },
+  },*/
   {
       "name": "lava",
       "triggerType": "area",

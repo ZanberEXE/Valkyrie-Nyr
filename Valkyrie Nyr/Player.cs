@@ -30,10 +30,9 @@ namespace Valkyrie_Nyr
         public bool hasBoots = false;
         public bool hasBracer = false;
 
-        private bool isInvulnerable { get; set; }
-        private int invulnerableTimer;
+        
 
-        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg) : base(name, triggerType, mass, height, width, position, hp, dmg)
+        public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
             speed = 700;
             jumpHeight = 15;
@@ -58,11 +57,20 @@ namespace Valkyrie_Nyr
             onIce = false;
             health = hp;
             damage = dmg;
-            hitbox = new GameObject(name, "hitbox", 0, 20, 100, new Vector2(100, 80));
+
+            attackBox.X = 100;
+            attackBox.Y = 80;
+            attackBox.Width = attackBoxWidth;
+            attackBox.Height = attackBoxHeight;
+
+            hurtBox.X = (int)position.X;
+            hurtBox.Y = (int)position.Y;
+            hurtBox.Width = width;
+            hurtBox.Height = height;
         }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2000); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2000, 100, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -92,12 +100,7 @@ namespace Valkyrie_Nyr
                     break;
             }
         }
-        //TODO: Invulnerability erzeugen
-        public void makeInvulnerable(int timer)
-        {
-            isInvulnerable = true;
-            invulnerableTimer = timer;
-        }
+        
 
         private void collect(string item)
         {
