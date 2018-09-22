@@ -110,7 +110,14 @@ namespace Valkyrie_Nyr
                 case "BlitzLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-500, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(-13000, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
+                    break;
+                    //TODO: evtl lötschn
+                case "ErdLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-500 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
@@ -148,9 +155,9 @@ namespace Valkyrie_Nyr
             positionBGSprite = new Vector2(startPosition.X, startPosition.Y);
             
 
-            Camera.Main.levelBounds = new Rectangle(startPosition, new Point(width, height));
+            Camera.Main.levelBounds = new Rectangle(Vector2.Zero.ToPoint(), new Point(width, height));
 
-            Camera.Main.position = Vector2.Zero;
+            Camera.Main.position = startPosition.ToVector2() * -1;
 
             States.CurrentPlayerState = Playerstates.IDLE;
 
@@ -312,7 +319,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                                Player.Nyr.Attack(Player.Nyr.entityFacing);
+                                Player.Nyr.fAttackCheck = 20;
                                 atkCooldown = 60;
 
                                 jump.CreateInstance().Play();

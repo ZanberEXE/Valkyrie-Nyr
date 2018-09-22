@@ -119,7 +119,7 @@ namespace Valkyrie_Nyr
                 switch (element)
                 {
                     case Keys.D1:
-                        Level.Current.loadLevel("Overworld");
+                        Level.Current.loadLevel("BlitzLevel");
                         States.CurrentGameState = GameStates.PLAYING;
                         MediaPlayer.Play(playingSong);
                         return;

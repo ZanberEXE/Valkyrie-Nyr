@@ -63,6 +63,7 @@ namespace Valkyrie_Nyr
 
         public int health;
         public int damage;
+        public int armor;
 
         public int currentEntityState = 0;
         public int nextEntityState = 0;
@@ -127,64 +128,7 @@ namespace Valkyrie_Nyr
 
             return false;
         }
-        public void Attack(int lookPos)
-        {
-            Rectangle victimHurtbox;
-
-            if (this.name == "Nyr")
-            {
-                GameObject newAttackBox = new GameObject("", "", 0, attackBox.Height, attackBox.Width, attackBox.Location.ToVector2());
-                Enemy[] hittedEnemies = newAttackBox.Collision<Enemy>(Level.Current.enemyObjects.ToArray(), newAttackBox.position);
-                if (hittedEnemies.Length > 0)
-                {
-                    victimHurtbox = hittedEnemies[0].hurtBox;
-                }
-                
-            }
-            else
-            {
-                victimHurtbox = Player.Nyr.hurtBox;
-            }
-
-            // turns the hitbox to the left of the character
-            if (lookPos == -1 && attackBox.X > 0)
-            {
-                attackBox.X = attackBox.X * -1;
-            }
-            // turn the hitbos to the right of the character
-            if (lookPos == 1 && attackBox.X < 0)
-            {
-                attackBox.X = attackBox.X * -1;
-            }
-
-
-            /*
-            GameObject[] hittetObjects = Collision<Enemy>(Level.Current.gameObjects.ToArray(), hitbox.position + this.position);
-            List<Entity> hittetEntitys = new List<Entity>();
-            if (hittetObjects.Length == 0)
-            {
-                return;
-            }
-            foreach(GameObject element in hittetObjects)
-            {
-                for (int i = 0; i < Level.Current.enemyObjects.Count(); i++)
-                {
-                    if(Level.Current.enemyObjects[i].Equals(element))
-                    {
-                        hittetEntitys.Add(Level.Current.enemyObjects[i]);
-                    }
-                }
-            }
-            foreach(Enemy element in hittetEntitys)
-            {
-                element.health -= this.damage;
-                if(element.health <= 0)
-                {
-                    Level.Current.enemyObjects.Remove(element);
-                    Level.Current.gameObjects.Remove(element);
-                }
-            }*/
-        }
+       
         public void MakeInvulnerable()
         {
             isInvulnerable = true;
@@ -213,9 +157,12 @@ namespace Valkyrie_Nyr
 
             hurtBox.X = (int)position.X;
             hurtBox.Y = (int)position.Y;
-
-            attackBox.X = (int)position.X;
-            attackBox.Y = (int)position.Y;
+            if (name != "Nyr")
+            {
+                attackBox.X = (int)position.X;
+                attackBox.Y = (int)position.Y;
+            }
+            
 
             if (name == "Banshee")
             {
@@ -247,10 +194,14 @@ namespace Valkyrie_Nyr
                     attackBox.Y = (int)position.Y + 100;
                     attackBox.X = (int)position.X + 90;
                 }
-                
-                
             }
+            if (name == "Monomono")
+            {
+                hurtBox.Y = (int)position.Y + 630;
+                hurtBox.Height = height - 630;
 
+                attackBox.Y = (int)position.Y + 650;
+            }
 
 
 
@@ -270,15 +221,28 @@ namespace Valkyrie_Nyr
                     currentEntityState = nextEntityState;
                 }
             }
-           
+            
             if (health <= 0)
             {
+
                 if (name == "Nyr")
                 {
                     Player.Nyr.gameOver();
                 }
+                else
+                {
+                    
+                }
             }
-          
+            if (name == "Nyr")
+            {
+                if (Player.Nyr.fAttackCheck == 13)
+                {
+                    Player.Nyr.Attack();
+                }
+                Player.Nyr.fAttackCheck--;
+            }
+                
         }
 
         public void EntityRender(GameTime gametime, SpriteBatch spriteBatch)

@@ -78,16 +78,16 @@
         "maxFrames": 100
       },
       {
-        "path": "Bosses/Aiye/AiyeEarthProjectile",
+        "path": "Bosses/Aiye/AiyeCreateEarthProjectile",
         "Columns": 10,
         "Rows": 5,
         "maxFrames": 50
       },
       {
-        "path": "Bosses/Aiye/AiyeCreateWall",
+        "path": "Bosses/Aiye/AiyeWarp",
         "Columns": 10,
-        "Rows": 13,
-        "maxFrames": 125
+        "Rows": 19,
+        "maxFrames": 187
       },
       {
         "path": "Bosses/Aiye/AiyeAttack",
@@ -96,11 +96,13 @@
         "maxFrames": 31
       },
       {
-        "path": "Bosses/Aiye/AiyeJump",
+        "path": "Bosses/Aiye/AiyeCreateWall",
         "Columns": 10,
-        "Rows": 7,
-        "maxFrames": 62
+        "Rows": 13,
+        "maxFrames": 125
       }
+
+
     ]
   }
 ]
