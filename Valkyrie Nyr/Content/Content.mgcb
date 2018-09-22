@@ -680,36 +680,6 @@
 /processorParam:TextureFormat=Color
 /build:cloud.png
 
-#begin music/Test.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:music/Test.mp3
-
-#begin sfx/sfx_thud.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sfx/sfx_thud.wav
-
-#begin sfx/sfx_collide.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sfx/sfx_collide.wav
-
-#begin sfx/sfx_jump.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:sfx/sfx_jump.wav
-
-#begin music/Test2.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:music/Test2.mp3
-
 #begin inaSoul.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -841,4 +811,76 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Bossstage.png
+
+#begin sfx/sfx_attack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_attack.wav
+
+#begin sfx/sfx_collect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_collect.wav
+
+#begin sfx/sfx_collected.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_collected.wav
+
+#begin sfx/sfx_getHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_getHit.wav
+
+#begin sfx/sfx_hit2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_hit2.wav
+
+#begin sfx/sfx_hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_hurt.wav
+
+#begin sfx/sfx_jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_jump.wav
+
+#begin sfx/sfx_warning.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/sfx_warning.wav
+
+#begin music/bgm_menuV2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/bgm_menuV2.mp3
+
+#begin music/bgm_bossV2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/bgm_bossV2.mp3
+
+#begin music/bgm_hubV2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/bgm_hubV2.mp3
+
+#begin music/bgm_levelV2.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:music/bgm_levelV2.mp3
 

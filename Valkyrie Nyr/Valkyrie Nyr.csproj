@@ -57,7 +57,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Sound.cs" />
     <Compile Include="States.cs" />
     <Compile Include="Trigger.cs" />
   </ItemGroup>

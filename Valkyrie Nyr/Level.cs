@@ -16,9 +16,9 @@ namespace Valkyrie_Nyr
     class Level
     {
         //my shit
-        public SoundEffect jump, attack, thud;
+        public SoundEffect attack, collect, hurt, jump, warning;
 
-
+        public string textboxText = "";
         public Enemy ryn;
 
         public List<GameObject> gameObjects;
@@ -124,18 +124,25 @@ namespace Valkyrie_Nyr
 
             Camera.Main.position = Vector2.Zero;
 
+            States.CurrentPlayerState = Playerstates.IDLE;
+
+
+            //sound test
+            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
+            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
+
+            //soundeffects: attack, collect, hurt, jump, warning
+            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_attack");
+            collect = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collect");
+            hurt = Game1.Ressources.Load<SoundEffect>("sfx/sfx_hurt");
+            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
+            //warning = Game1.Ressources.Load<SoundEffect>("sfx/sfx_warning");
+
             Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
             Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
             Player.Nyr.currentFrame = 0;
 
 
-            States.CurrentPlayerState = Playerstates.IDLE;
-
-
-            //sound test
-            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
         }
 
         //get input and update the elements inside the level
@@ -296,6 +303,8 @@ namespace Valkyrie_Nyr
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
                             hasDashed = true;
+
+                            attack.CreateInstance().Play();
                         }
                         break;
                     
@@ -374,6 +383,7 @@ namespace Valkyrie_Nyr
             }
 
             lastPressedKeys = newPressedKeys;
+
         }
 
         //theoretical move and seeing what happens

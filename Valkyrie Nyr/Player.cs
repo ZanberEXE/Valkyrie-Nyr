@@ -10,7 +10,6 @@ namespace Valkyrie_Nyr
 
     class Player : Entity
     {
-
         private static Player nyr;
        
 

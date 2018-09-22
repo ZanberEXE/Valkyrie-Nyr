@@ -12,7 +12,7 @@ namespace Valkyrie_Nyr
 
     enum GameStates { MAINMENU, PLAYING, EXIT, OPTIONS, CREDITS, PAUSE, LOSE, SPLASHSCREEN, CONVERSATION }
 
-    enum BGMStates { MENU, PLAYING, BOSS, DEAD }
+    enum BGMStates { MENU, LEVEL, BOSS, HUB }
 
     //just saves the States, so they are accessable from everywhere
     class States
