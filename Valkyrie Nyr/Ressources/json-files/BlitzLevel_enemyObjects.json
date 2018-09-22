@@ -9,7 +9,7 @@
     "health": 1100,
     "damage": 40,
     "entityFacing": 1,
-    "aggroRange": 500,
+    "aggroRange": 1500,
     "attackRange": 0,
     "speed": 1000,
     "attackBoxHeight": 160,
@@ -41,10 +41,28 @@
         "maxFrames": 62
       },
       {
+        "path": "Bosses/Monomono/MonoTurnToBall",
+        "Columns": 10,
+        "Rows": 11,
+        "maxFrames": 106
+      },
+      {
+        "path": "Bosses/Monomono/MonoProjectile",
+        "Columns": 10,
+        "Rows": 13,
+        "maxFrames": 125
+      },
+      {
         "path": "Bosses/Monomono/MonoBlitzball",
-        "Columns": 20,
-        "Rows": 32,
-        "maxFrames": 625
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "Bosses/Monomono/MonoTurnNormal",
+        "Columns": 10,
+        "Rows": 11,
+        "maxFrames": 106
       }
     ]
   }

@@ -637,18 +637,6 @@
 /processorParam:TextureFormat=Color
 /build:Bosses/Ina/InaExplosion.png
 
-#begin Bosses/Monomono/MonoBlitzball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Bosses/Monomono/MonoBlitzball.png
-
 #begin smallEnemies/Banshee/BansheeExplode.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -956,7 +944,7 @@
 /processorParam:Quality=Best
 /build:music/bgm_levelV2.mp3
 
-#begin Projectiles/Fireball.png
+#begin Bosses/Monomono/MonoBlitzball.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -966,5 +954,65 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Projectiles/Fireball.png
+/build:Bosses/Monomono/MonoBlitzball.png
+
+#begin Bosses/Monomono/MonoTurnNormal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Bosses/Monomono/MonoTurnNormal.png
+
+#begin Bosses/Monomono/MonoTurnToBall.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Bosses/Monomono/MonoTurnToBall.png
+
+#begin Effekts/MapEffekt/EarthSpikeDelayW200H200.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Effekts/MapEffekt/EarthSpikeDelayW200H200.png
+
+#begin Effekts/BossEffekt/EarthSpikeW200H200.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Effekts/BossEffekt/EarthSpikeW200H200.png
+
+#begin Effekts/BossEffekt/YinyinSpikesW400H200.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Effekts/BossEffekt/YinyinSpikesW400H200.png
 
