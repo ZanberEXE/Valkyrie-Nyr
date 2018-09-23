@@ -74,7 +74,7 @@ namespace Valkyrie_Nyr
 
             hurtBox.X = (int)position.X;
             hurtBox.Y = (int)position.Y;
-            hurtBox.Width = width;
+            hurtBox.Width = width / 2;
             hurtBox.Height = height;
     }
 
@@ -98,6 +98,16 @@ namespace Valkyrie_Nyr
                     if (interact)
                     {
                         loader(activatedTrigger.name);
+                    }
+                    else
+                    {
+                        Level.Current.textboxText = "Press \"F\" to interact";
+                    }
+                    break;
+                case "totem":
+                    if (interact)
+                    {
+                        totem(activatedTrigger.name);
                     }
                     else
                     {
@@ -276,6 +286,14 @@ namespace Valkyrie_Nyr
                     States.CurrentBGMState = BGMStates.HUB;
                     break;
             }
+        }
+        private void totem(GameObject activatedTrigger)
+        {
+
+
+
+            Level.Current.gameObjects.Remove(activatedTrigger);
+
         }
 
         //this method is called, if the Player dies/falls out of the world

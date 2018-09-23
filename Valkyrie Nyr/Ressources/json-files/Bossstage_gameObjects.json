@@ -790,37 +790,37 @@
   },
   {
       "name": "OverworldLoader",
-	  "triggerType": "loader",
+	    "triggerType": "loader",
       "height": 300,
       "width": 100,
-      "position": "450, 9300",
+      "position": "450, 9300"
   },
   {
       "name": "Totem Feuer",
-	  "triggerType": "totem",
+	    "triggerType": "totem",
       "height": 203,
       "width": 97,
-      "position": "28300, 6340",
+      "position": "28300, 6340"
   },
   {
       "name": "Totem Eis",
-	  "triggerType": "totem",
+	    "triggerType": "totem",
       "height": 203,
       "width": 97,
-      "position": "21940, 6250",
+      "position": "21940, 6250"
   },
   {
       "name": "Totem Erde ",
-	  "triggerType": "totem",
+	    "triggerType": "totem",
       "height": 203,
       "width": 97,
-      "position": "19000, 9500",
+      "position": "19000, 9500"
   },
   {
       "name": "Totem Blitz",
-	  "triggerType": "totem",
+	    "triggerType": "totem",
       "height": 203,
       "width": 97,
-      "position": "29800, 7280",
+      "position": "29800, 7280"
   }
 ]

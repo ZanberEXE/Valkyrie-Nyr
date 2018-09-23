@@ -60,7 +60,7 @@ namespace Valkyrie_Nyr
             //check if moving platform has hit max
             if ((position.X - startPosition.X > moving.X && moving.X > 0) || (position.X - startPosition.X < moving.X && moving.X < 0) || (position.Y - startPosition.Y > moving.Y && moving.Y > 0) || (position.Y - startPosition.Y < moving.Y && moving.Y < 0))
             {
-                if (name == "AiyeWall2")
+                if (name == "AiyeWall2" || name == "AiyeWall")
                 {
                     Level.Current.gameObjects.Remove(this);
                     return Vector2.Zero;

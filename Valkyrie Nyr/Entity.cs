@@ -154,9 +154,36 @@ namespace Valkyrie_Nyr
                 isInvulnerable = false;
             }
             
+            
+            
+            if (name == "Nyr" && Player.Nyr.isCrouching)
+            {
+                hurtBox.Y = (int)position.Y + (height /2);
+                hurtBox.Height = height /2;
+            }
+            else
+            {
+                hurtBox.Height = height;
+                hurtBox.Y = (int)position.Y;
+            }
 
-            hurtBox.X = (int)position.X;
-            hurtBox.Y = (int)position.Y;
+            if (name == "Nyr" && Player.Nyr.isCrouching == false)
+            {
+                hurtBox.Height = height - 20;
+                hurtBox.Y = (int)position.Y + 20;
+            }
+
+            if (name == "Nyr")
+            {
+                hurtBox.X = (int)position.X + width / 4;
+            }
+            else
+            {
+                hurtBox.X = (int)position.X;
+            }
+
+            //hurtBox.Y = (int)position.Y;
+
             if (name != "Nyr")
             {
                 attackBox.X = (int)position.X;

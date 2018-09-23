@@ -17,7 +17,7 @@ namespace Valkyrie_Nyr
     {
         public string name;
         public string textboxText = "";
-        public Enemy ryn;
+        //public Enemy ryn;
 
         public List<GameObject> gameObjects;
         //public List<Entity> entityObjects;
@@ -504,7 +504,6 @@ namespace Valkyrie_Nyr
 
                 }
             }
-            //TODO: Höhe beibehalten 
             if (dashtimer >= 0)
             {
                 if (dashtimer >= 20)
@@ -706,7 +705,8 @@ namespace Valkyrie_Nyr
             }
             foreach (Enemy element in enemyObjects)
             {
-                element.tempPosition -= moveValue;
+                element.heightReset -= moveValue.Y;
+                //element.tempPosition -= moveValue;
             }
             foreach (Projectile element in projectileObjects)
             {

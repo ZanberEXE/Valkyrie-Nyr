@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Antagonist.cs" />
     <Compile Include="SFX.cs" />
     <Compile Include="States.cs" />
     <Compile Include="Trigger.cs" />
