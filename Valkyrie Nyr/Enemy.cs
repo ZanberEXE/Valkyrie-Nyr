@@ -1311,15 +1311,6 @@ namespace Valkyrie_Nyr
 
         }
 
-        void HurtNyr(int _damage)
-        {
-            if (Player.Nyr.isInvulnerable == false)
-            {
-                Player.Nyr.health -= _damage;
-                Player.Nyr.MakeInvulnerable();
-            }
-            
-        }
 
         public void SpawnLoot()
         {
