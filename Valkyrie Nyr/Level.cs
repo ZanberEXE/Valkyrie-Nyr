@@ -66,6 +66,7 @@ namespace Valkyrie_Nyr
 
             nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
 
+
             switch (levelName)
             {
                 case "Bossstage":
@@ -252,6 +253,8 @@ namespace Valkyrie_Nyr
 
             lastPressedKeys = Keyboard.GetState().GetPressedKeys();
 
+            Antagonist.Ryn.Reset();
+            
 
         }
 
@@ -564,6 +567,9 @@ namespace Valkyrie_Nyr
 
                 }
             }
+       
+
+            Antagonist.Ryn.Update(gameTime);
 
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
@@ -692,6 +698,7 @@ namespace Valkyrie_Nyr
         //move all Objects in this Level
         public void moveGameObjects(Vector2 moveValue)
         {
+            Antagonist.Ryn.position -= moveValue;
             positionBGSprite -= moveValue;
             foreach (GameObject gameObject in gameObjects)
             {
@@ -809,6 +816,7 @@ namespace Valkyrie_Nyr
                 spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
             }
             Player.Nyr.EntityRender(gameTime, spriteBatch);
+            Antagonist.Ryn.EntityRender(gameTime, spriteBatch);
 
             for (int i = 0; i < projectileObjects.Count; i++)
             {

@@ -113,6 +113,14 @@ namespace Valkyrie_Nyr
                 {
                     if(name == "IceShot")
                     {
+                        if(hittedWalls[i].name == "AiyeWall")
+                        {
+                            CreateCrystal(hittedWalls[i].moving.X);
+                        }
+                        else if(hittedWalls[i].name == "AiyeWall2")
+                        {
+                            return true;
+                        }
                         CreateCrystal();
                     }
                     return true;
@@ -128,6 +136,14 @@ namespace Valkyrie_Nyr
             Level.Current.gameObjects.Add(bakedCrystal);
             bakedCrystal.init();
             bakedCrystal.name = "ground";
+        }
+        private void CreateCrystal(float moving)
+        {
+            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", "", 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", "", 0, 85, 150, position - new Vector2(180, 40));
+            Level.Current.gameObjects.Add(bakedCrystal);
+            bakedCrystal.init();
+            bakedCrystal.name = "AiyeWall";
+            bakedCrystal.moving.X = (moving < 0) ? -2500 : 2500;
         }
 
         private bool OutOfworld()

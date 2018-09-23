@@ -16,6 +16,12 @@ namespace Valkyrie_Nyr
     {
         public string[] spokesman;
         public string[] speeches;
+
+        public Conversation(string[] _spokesman, string[] _speeches)
+        {
+            spokesman = _spokesman;
+            speeches = _speeches;
+        }
     }
 
     class NSC : GameObject
@@ -33,7 +39,7 @@ namespace Valkyrie_Nyr
 
         public void startConversation(GameTime newGameTime)
         {
-            if(dialogueState > dialogues.Length)
+            if (dialogueState > dialogues.Length)
             {
                 dialogueState--;
             }
@@ -41,6 +47,17 @@ namespace Valkyrie_Nyr
             States.CurrentGameState = GameStates.CONVERSATION;
             currentSpeech = 0;
             oldGameTime = newGameTime.TotalGameTime.TotalSeconds;
+        }
+        public void startConversation()
+        {
+            if (dialogueState > dialogues.Length)
+            {
+                dialogueState--;
+            }
+            Player.Nyr.conversationPartner = this;
+            States.CurrentGameState = GameStates.CONVERSATION;
+            currentSpeech = 0;
+            oldGameTime = 0;
         }
 
         public void continueConversation(GameTime newGameTime)

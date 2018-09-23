@@ -79,7 +79,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 1000, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 300, 140, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -104,14 +104,37 @@ namespace Valkyrie_Nyr
                         Level.Current.textboxText = "Press \"F\" to interact";
                     }
                     break;
-                case "nsc":
+                case "totem":
                     if (interact)
                     {
-                        ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
+                        totem(activatedTrigger);
                     }
                     else
                     {
                         Level.Current.textboxText = "Press \"F\" to interact";
+                    }
+                    break;
+                case "nsc":
+                    if (interact)
+                    {
+                        ((NSC)Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
+                    }
+                    else
+                    {
+                        Level.Current.textboxText = "Press \"F\" to interact";
+                    }
+                    break;
+                case "ryn":
+                    if (Antagonist.Ryn.health <= 0)
+                    {
+                        if (interact)
+                        {
+                            Antagonist.Ryn.Kill();
+                        }
+                        else
+                        {
+                            Level.Current.textboxText = "Press \"F\" to interact";
+                        }
                     }
                     break;
             }
@@ -276,6 +299,14 @@ namespace Valkyrie_Nyr
                     States.CurrentBGMState = BGMStates.HUB;
                     break;
             }
+        }
+        private void totem(GameObject activatedTrigger)
+        {
+
+            Antagonist.Ryn.health -= 5000;
+
+            Level.Current.gameObjects.Remove(activatedTrigger);
+
         }
 
         //this method is called, if the Player dies/falls out of the world

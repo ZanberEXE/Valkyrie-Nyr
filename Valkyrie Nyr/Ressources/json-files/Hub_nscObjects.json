@@ -24,9 +24,8 @@
 						"Nyr",
 						"Statue",
 						"Statue",
-						"Statue",
-						"Nyr",
-						"Statue",
+            "Nyr",
+            "Statue",
 						"Nyr",
 						"Nyr",
 						"Statue",
@@ -152,7 +151,7 @@
 						"Anyways, take this, you'll need it.",
 						"-Armor enhanced with Ina's power-",
 						"This is...!",
-						"When you press [Key], you'll create a huge fire blast around you.",
+						"When you press [Q], you'll melt the ice around you.",
 						"Thank you. You really are kind...",
 						"Huh?! Argh, people like you make no sense. Now go already!",
 						"...?"
@@ -213,7 +212,7 @@
 						"Hehe. That I cannot promise. But for now, at the very least, I can give you this. I'll be watching your splendid show.",
 						"-Gauntlet enhanced with Yinyin's power-" ,
 						"Thank you!",
-						"You can shoot ice spikes by using [Key]. Make sure to use it well."
+						"You can shoot ice spikes by using [E]. Make sure to use it well."
 					]
 			},
 			{	
@@ -290,7 +289,7 @@
 						"Ignored huh... well anyway. Step closer, I got a little gift for you!" ,
 						"-Boots enhanced with Aiye's power-",
 						"Oh, thank you!",
-						"These shoes will help ya.",
+						"These shoes will help ya breaking through thin ground. Just make sure to land hard using [S]",
 						"Now that we've come this far. How about we relax from all this fighting and go out som-"
 					]
 			},
@@ -364,7 +363,7 @@
 						"Why- Wait, don't come so close!",
 						"There. Be thankful.",
 						"This is...",
-						"I enhanced your headband with my power. You should be able to dash on ground and in the air with this! You can dash by using [Key].",
+						"I enhanced your headband with my power. You should be able to dash on ground and in the air with this! You can dash by using [SHIFT].",
 						"Is this safe...?",
 						"... It will work perfectly fine! I calculated everything correctly.",
 						"Thank you. I'll make sure to use it well..."
