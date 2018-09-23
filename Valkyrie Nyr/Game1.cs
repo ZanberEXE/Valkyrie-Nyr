@@ -23,6 +23,7 @@ namespace Valkyrie_Nyr
         //white 1x1 texture
         public static Texture2D pxl;
 
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -83,7 +84,7 @@ namespace Valkyrie_Nyr
         void mMainMenu(GameTime gameTime)
         {
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-            {
+            { 
                 switch (element)
                 {
                     case Keys.D1:
@@ -98,18 +99,27 @@ namespace Valkyrie_Nyr
                         {
                             Level.Current.nscObjects[0].startConversation(gameTime);
                         }
-                        return;
+                        break;
                     case Keys.D2:
                         States.CurrentGameState = GameStates.OPTIONS;
-                        return;
+                        break;
                     case Keys.D3:
                         States.CurrentGameState = GameStates.CREDITS;
-                        return;
+                        break;
                     case Keys.D4:
                         States.CurrentGameState = GameStates.EXIT;
-                        return;
+                        break;
                 }
             }
+            //annoying credit stuff
+            //if (Keyboard.GetState().IsKeyUp(Keys.D3))
+            //{
+            //    if(Keyboard.GetState().IsKeyDown(Keys.D3))
+            //    {
+            //        States.CurrentGameState = GameStates.CREDITS;
+            //    }
+            //}
+
         }
 
         void mOptions()
@@ -130,20 +140,18 @@ namespace Valkyrie_Nyr
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) == true)
             {
                 States.CurrentGameState = GameStates.MAINMENU;
-                return;
             }
         }
 
         void mPause()
         {
+            MediaPlayer.Pause();
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
-                MediaPlayer.Pause();
-
                 switch (element)
                 {
                     case Keys.D1:
-                        States.CurrentGameState = GameStates.OPTIONS;
+                        //States.CurrentGameState = GameStates.OPTIONS;
                         break;
                     case Keys.D2:
                         States.CurrentGameState = GameStates.PLAYING;
@@ -154,6 +162,7 @@ namespace Valkyrie_Nyr
                         break;
                 }
             }
+
         }
 
         void mLose()
@@ -173,12 +182,14 @@ namespace Valkyrie_Nyr
         }
 
 
-
         protected override void Update(GameTime gameTime)
         {
 
             //TODO:delete
             //TODO:Lose Screen when dead and respawn?
+
+            //key test
+
 
             //adjust BGM Volume
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
@@ -272,6 +283,7 @@ namespace Valkyrie_Nyr
 
             randomTime = gameTime;
             base.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)

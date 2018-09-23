@@ -79,7 +79,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 1000, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 300, 140, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
