@@ -238,16 +238,12 @@ namespace Valkyrie_Nyr
                 {
                     Player.Nyr.gameOver();
                 }
-                else
-                {
-                    
-                }
             }
             if (name == "Nyr")
             {
                 if (Player.Nyr.fAttackCheck == 13)
                 {
-                    Player.Nyr.Attack();
+                    Player.Nyr.Attack(gameTime);
                 }
                 Player.Nyr.fAttackCheck--;
             }

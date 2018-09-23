@@ -11,7 +11,7 @@ namespace Valkyrie_Nyr
     class Projectile : GameObject
     {
 
-        float currentFrame;
+        public float currentFrame;
         Vector2 aim;
         int damage;
         Texture2D spritesheet;
@@ -23,6 +23,7 @@ namespace Valkyrie_Nyr
         int framesPerRow;
         int framesPerSecond;
         public Vector2 attackBoxOffset;
+        public Vector2 attackBoxStartOffset;
 
         public Projectile(string name, int height, int width, Vector2 position, Vector2 _aim, int _speed, bool _pierce, Rectangle _attackBox, bool _hasAnimation, int _maxFrames, int _framesPerRow, int _damage):base(name, "", 0, height, width, position)
         {
@@ -36,6 +37,7 @@ namespace Valkyrie_Nyr
             hasAnimation = _hasAnimation;
             framesPerSecond = 40;
             attackBoxOffset = _attackBox.Location.ToVector2();
+            attackBoxStartOffset = _attackBox.Location.ToVector2();
 
 
             string pathToSpriteSheet = Game1.Ressources.RootDirectory + "\\Projectiles\\" + name + ".xnb";
@@ -72,12 +74,15 @@ namespace Valkyrie_Nyr
             //check if Nyr is hitted
             if(Player.Nyr.CollisionAABB(Player.Nyr.hurtBox, attackbox))
             {
-                HurtNyr();
-
-                if (!pierce)
+                if (name != "IceShot")
                 {
-                    Destroy();
-                    return;
+                    HurtNyr();
+
+                    if (!pierce)
+                    {
+                        Destroy();
+                        return;
+                    }
                 }
             }
 
@@ -89,6 +94,7 @@ namespace Valkyrie_Nyr
             if (currentFrame >= maxFrames)
             {
                 currentFrame = 0;
+                attackBoxOffset = attackBoxStartOffset;
             }
             else
             {
@@ -105,11 +111,23 @@ namespace Valkyrie_Nyr
             {
                 if(hittedWalls[i].triggerType == null)
                 {
+                    if(name == "IceShot")
+                    {
+                        CreateCrystal();
+                    }
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private void CreateCrystal()
+        {
+            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", "", 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", "", 0, 85, 150, position - new Vector2(180, 40));
+            Level.Current.gameObjects.Add(bakedCrystal);
+            bakedCrystal.init();
+            bakedCrystal.name = "ground";
         }
 
         private bool OutOfworld()

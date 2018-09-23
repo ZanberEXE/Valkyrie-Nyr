@@ -13,6 +13,28 @@
 					[
 						"You look pretty weak. Don't try to run away, okay?"
 					]
+			},
+			{	
+				"spokesman":
+					[
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye",
+						"Nyr",
+						"Aiye"
+					],
+				"speeches":
+					[
+						"Damn, you beat me! Maybe I should have run away, hahaha!",
+						"But you didn't, you chose to fight me to the end." ,
+						"Yeah... thanks a bunch. A pretty lady like you doesn't happen to have a free party slot?",
+						"Sure." ,
+						"Huh?" ,
+						"I would love to have someone like you in my army. Won't you join me?",
+						"Hahaha... to think I'd be needed again... Alright young lady, I'll join your force!"
+					]
 			}
 		]
   }

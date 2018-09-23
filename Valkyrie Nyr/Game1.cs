@@ -133,16 +133,24 @@ namespace Valkyrie_Nyr
         }
 
         //TODO: proper content
-        void mMainMenu()
+        void mMainMenu(GameTime gameTime)
         {
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
                 switch (element)
                 {
                     case Keys.D1:
+                        //LoadSaveGame();
+                        //Level.Current.loadLevel("FeuerLevel");
+                        //States.CurrentGameState = GameStates.PLAYING;
+                        //Release Start
                         LoadSaveGame();
-                        Level.Current.loadLevel("FeuerLevel");
+                        Level.Current.loadLevel("Hub");
                         States.CurrentGameState = GameStates.PLAYING;
+                        if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
+                        {
+                            Level.Current.nscObjects[0].startConversation(gameTime);
+                        }
                         MediaPlayer.Play(levelSong);
                         return;
                     case Keys.D2:
@@ -241,7 +249,7 @@ namespace Valkyrie_Nyr
             switch (States.CurrentGameState)
             {
                 case GameStates.MAINMENU:
-                    mMainMenu();
+                    mMainMenu(gameTime);
                     break;
 
                 case GameStates.PLAYING:
@@ -313,7 +321,7 @@ namespace Valkyrie_Nyr
             {
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                    //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                 }
             }
 

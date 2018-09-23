@@ -20,6 +20,7 @@ namespace Valkyrie_Nyr
         public bool inHub;
         public bool interact;
         public bool inJump;
+        public bool inStomp;
         public bool onIce;
         public bool isCrouching;
         public bool inConversation;
@@ -78,7 +79,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 30, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 1000, 140, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -115,8 +116,25 @@ namespace Valkyrie_Nyr
                     break;
             }
         }
+
+        public void CastFireAOE()
+        {
+            Rectangle fireAOE = new Rectangle((int) position.X - 100, (int) position.Y - 70, 200 + width, 70 + height);
+            for (int i = 0; i < Level.Current.gameObjects.Count; i++)
+            {
+                GameObject element = Level.Current.gameObjects[i];
+
+                if(element.name == "ice")
+                {
+                    if(CollisionAABB(fireAOE, new Rectangle((int)element.position.X, (int)element.position.Y, element.width, element.height)))
+                    {
+                        element.name = "ground";
+                    }
+                }
+            }
+        }
         
-        public void Attack()
+        public void Attack(GameTime gameTime)
         {
            
             attackBox.X = (int)position.X;
@@ -138,18 +156,41 @@ namespace Valkyrie_Nyr
                 Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
                 if (CollisionAABB(attackBox, hurtbox))
                 {
-                    DamageEnemies(Level.Current.enemyObjects[i]);
+                    DamageEnemies(Level.Current.enemyObjects[i], gameTime);
                 }
             }
         }
-        public void DamageEnemies(Enemy victim)
+        public void DamageEnemies(Enemy victim, GameTime gameTime)
         {
             victim.health -= damage - victim.armor;
 
             if (victim.health <= 0)
             {
-                Level.Current.enemyObjects.Remove(victim);
-                victim.SpawnLoot();
+                if (victim.name == "Ina" || victim.name == "Yinyin" || victim.name == "Aiye" || victim.name == "Monomono")
+                {
+                    Level.Current.nscObjects[0].startConversation(gameTime);
+                    switch (victim.name)
+                    {
+                        case "Ina":
+                            Level.soulsRescued[0] = true;
+                            break;
+                        case "Yinyin":
+                            Level.soulsRescued[1] = true;
+                            break;
+                        case "Aiye":
+                            Level.soulsRescued[2] = true;
+                            break;
+                        case "Monomono":
+                            Level.soulsRescued[3] = true;
+                            break;
+                    }
+                    Level.Current.loadLevel("Hub");
+                }
+                else
+                {
+                    Level.Current.enemyObjects.Remove(victim);
+                    victim.SpawnLoot();
+                }
             }
         }
         private void collect(string item)
