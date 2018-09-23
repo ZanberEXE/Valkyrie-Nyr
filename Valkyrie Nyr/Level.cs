@@ -680,11 +680,14 @@ namespace Valkyrie_Nyr
             for (int i = 0; i < projectileObjects.Count; i++)
             {
                 projectileObjects[i].Draw(gameTime, spriteBatch);
+                spriteBatch.Draw(Game1.pxl, new Rectangle((int)projectileObjects[i].position.X, (int)projectileObjects[i].position.Y, projectileObjects[i].width, projectileObjects[i].height), Color.LightGreen * 0.5f);
+                spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
             }
 
             if (textboxText.Length > 0)
             {
                 spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+
             }
             Interface.Draw(spriteBatch);
             if (drawMap)

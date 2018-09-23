@@ -144,7 +144,7 @@ namespace Valkyrie_Nyr
             }
             else
             {
-                spriteBatch.Draw(spritesheet, new Rectangle(position.ToPoint(), new Point(width, height)), new Rectangle(0, 0, width, height), Color.White, (float)System.Math.Atan2(-aim.X, aim.Y), new Vector2(width / 2, height / 2), SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(spritesheet, position, new Rectangle(0,0,spritesheet.Width,spritesheet.Height), Color.White, (float)System.Math.Atan2(-aim.X, aim.Y), new Vector2(width / 2, height / 2),new Vector2(width / spritesheet.Width, height / spritesheet.Height), SpriteEffects.None, 0.0f);
             }
         }
     }

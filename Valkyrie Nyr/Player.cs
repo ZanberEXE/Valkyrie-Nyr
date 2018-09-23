@@ -63,6 +63,7 @@ namespace Valkyrie_Nyr
             slide = 0;
             onIce = false;
             health = hp;
+            maxHealth = hp;
             damage = dmg;
 
             attackBox.X = 0;
@@ -233,6 +234,7 @@ namespace Valkyrie_Nyr
         public void gameOver()
         {
             Level.Current.loadLevel("Hub");
+            health = maxHealth;
         }
 
         public void activateTrigger(GameTime gameTime)

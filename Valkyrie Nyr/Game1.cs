@@ -15,7 +15,7 @@ namespace Valkyrie_Nyr
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-
+        public static GameTime randomTime;
         public static ContentManager Ressources;
         public static SpriteBatch Renderer;
         public static Point WindowSize;
@@ -44,6 +44,7 @@ namespace Valkyrie_Nyr
             //Now you can load content from everywhere
             Ressources = Content;
 
+            
 
             IsMouseVisible = true;
 
@@ -140,7 +141,7 @@ namespace Valkyrie_Nyr
                 {
                     case Keys.D1:
                         LoadSaveGame();
-                        Level.Current.loadLevel("Overworld");
+                        Level.Current.loadLevel("FeuerLevel");
                         States.CurrentGameState = GameStates.PLAYING;
                         MediaPlayer.Play(levelSong);
                         return;
@@ -270,8 +271,8 @@ namespace Valkyrie_Nyr
 
 
             }
-            
-         
+
+            randomTime = gameTime;
             base.Update(gameTime);
         }
 
