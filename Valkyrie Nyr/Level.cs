@@ -15,6 +15,7 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
+        public string name;
         public string textboxText = "";
         public Enemy ryn;
 
