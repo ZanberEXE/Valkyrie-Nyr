@@ -17,6 +17,8 @@ namespace Valkyrie_Nyr
         int defaultAttackRange;
         public int attackRange;
         public int speed;
+        //TODO: DEBUG Höhe resetten
+        public float heightReset;
 
         int stateTimer;
         int aiyeWalking = 56;
@@ -230,7 +232,7 @@ namespace Valkyrie_Nyr
                 }
                 if (beginFight)
                 {
-                   // Level.Current.nscObjects[0].startConversation(gameTime);
+                    Level.Current.nscObjects[0].startConversation(gameTime);
                     stateTimer = 50;
                     defaultHurtBox = hurtBox;
                     defaultAttackBox = attackBox;
@@ -238,6 +240,8 @@ namespace Valkyrie_Nyr
                     fightStarted = true;
 
                     States.CurrentBGMState = BGMStates.BOSS;
+                    // TODO: Höhe resetten
+                    //heightReset = position.Y + Camera.Main.position.Y;
                 }
 
 
@@ -250,6 +254,8 @@ namespace Valkyrie_Nyr
                     if (currentEntityState == (int)Bossstates.IDLE)
                     {
                         aiyeDoIt = false;
+
+                        // TODO: Höhe resetten //position.Y = heightReset - Camera.Main.position.Y;
 
                         hurtBox.Width = defaultHurtBox.Width;
                         hurtBox.Height = defaultHurtBox.Height;
@@ -721,7 +727,6 @@ namespace Valkyrie_Nyr
                         {
                             if (stateTimer <= 55 && stateTimer >= 1)
                             {
-                                // TODO: Evtl vergrößern
                                 if (entityFacing == 1)
                                 {
                                     attackBox.X = (int)position.X - 260;
@@ -1181,7 +1186,7 @@ namespace Valkyrie_Nyr
                     aiyePlattform = new List<GameObject>();
                     earthWall = new GameObject("AiyeWall", null , 20, 244 * 3,47, new Vector2(+100, +80) + position);
                     earthWall.init();
-                    earthWall.moving = new Vector2(2500, 0);
+                    earthWall.moving = new Vector2(2600, 0);
                     Level.Current.gameObjects.Add(earthWall);
                 }
                 if (effektTimer <= 580 && effektTimer >= 100)

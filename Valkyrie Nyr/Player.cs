@@ -73,7 +73,7 @@ namespace Valkyrie_Nyr
 
             hurtBox.X = (int)position.X;
             hurtBox.Y = (int)position.Y;
-            hurtBox.Width = width;
+            hurtBox.Width = width / 2;
             hurtBox.Height = height;
     }
 
