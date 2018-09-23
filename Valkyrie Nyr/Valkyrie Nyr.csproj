@@ -48,6 +48,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Music.cs" />
     <Compile Include="NSC.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Game1.cs" />
@@ -59,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SFX.cs" />
     <Compile Include="States.cs" />
     <Compile Include="Trigger.cs" />
   </ItemGroup>

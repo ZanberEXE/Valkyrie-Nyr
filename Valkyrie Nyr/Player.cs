@@ -249,24 +249,31 @@ namespace Valkyrie_Nyr
             {
                 case "BossstageLoader":
                     Level.Current.loadLevel("Bossstage");
+                    States.CurrentBGMState = BGMStates.LEVEL;
                     break;
                 case "ErdLevelLoader":
                     Level.Current.loadLevel("ErdLevel");
+                    States.CurrentBGMState = BGMStates.LEVEL;
                     break;
                 case "EisLevelLoader":
                     Level.Current.loadLevel("EisLevel");
+                    States.CurrentBGMState = BGMStates.LEVEL;
                     break;
                 case "FeuerLevelLoader":
                     Level.Current.loadLevel("FeuerLevel");
+                    States.CurrentBGMState = BGMStates.LEVEL;
                     break;
                 case "BlitzLevelLoader":
                     Level.Current.loadLevel("BlitzLevel");
+                    States.CurrentBGMState = BGMStates.LEVEL;
                     break;
                 case "OverworldLoader":
                     Level.Current.loadLevel("Overworld");
+                    States.CurrentBGMState = BGMStates.HUB;
                     break;
                 case "HubLoader":
                     Level.Current.loadLevel("Hub");
+                    States.CurrentBGMState = BGMStates.HUB;
                     break;
             }
         }

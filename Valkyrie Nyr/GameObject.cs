@@ -55,11 +55,16 @@ namespace Valkyrie_Nyr
 
         public Vector2 move(GameTime gameTime)
         {
-            Vector2 moveValue = moving * (float) ( 0.25 * gameTime.ElapsedGameTime.TotalSeconds);
+            Vector2 moveValue = moving * (float) ( ((name == "AiyeWall") ? 0.1 : 0.25) * gameTime.ElapsedGameTime.TotalSeconds);
 
             //check if moving platform has hit max
             if ((position.X - startPosition.X > moving.X && moving.X > 0) || (position.X - startPosition.X < moving.X && moving.X < 0) || (position.Y - startPosition.Y > moving.Y && moving.Y > 0) || (position.Y - startPosition.Y < moving.Y && moving.Y < 0))
             {
+                if (name == "AiyeWall2")
+                {
+                    Level.Current.gameObjects.Remove(this);
+                    return Vector2.Zero;
+                }
                 moving *= -1;
                 startPosition = position;
                 return Vector2.Zero;

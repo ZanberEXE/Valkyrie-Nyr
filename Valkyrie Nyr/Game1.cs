@@ -23,10 +23,6 @@ namespace Valkyrie_Nyr
         //white 1x1 texture
         public static Texture2D pxl;
 
-        //Sound
-        public Song menuSong, levelSong, bossSong, hubSong;
-        //public List<SoundEffect> sfx;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -47,11 +43,6 @@ namespace Valkyrie_Nyr
             
 
             IsMouseVisible = true;
-
-            //sound stuff
-            //sfx = new List<SoundEffect>();
-
-            
         }
 
         protected override void Initialize()
@@ -67,55 +58,11 @@ namespace Valkyrie_Nyr
 
             States.CurrentGameState = GameStates.MAINMENU;
 
-            //sound stuff
-            //States.CurrentBGMState = BGMStates.MENU;
-
-            
-
-            this.menuSong = Game1.Ressources.Load<Song>("music/bgm_menuV2");
-            //this.playingSong = Game1.Ressources.Load<Song>("music/bgm_level");
-            this.levelSong = Game1.Ressources.Load<Song>("music/bgm_levelV2");
-            this.bossSong = Game1.Ressources.Load<Song>("music/bgm_bossV2");
-            this.hubSong = Game1.Ressources.Load<Song>("music/bgm_hubV2");
-            MediaPlayer.Play(menuSong);
-            MediaPlayer.IsRepeating = true;
-
-            //sfx stuff
-            //sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide"));
-            //sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump"));
-            //sfx.Add(Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud"));
-
-            //sfx[0].Play();
-            //var instance = sfx[0].CreateInstance();
-            //instance.Play();
+            //Music.CurrentSong.loadSong("music/bgm_menuV2");
 
             base.Initialize();
         }
 
-        
-
-        //void testSFX()
-        //{
-        //    if (States.CurrentPlayerState == Playerstates.JUMP)
-        //    {
-        //        sfx[1].CreateInstance().Play();
-        //    }
-        //    foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-        //    {
-        //        switch (element)
-        //        {
-        //            case Keys.J:
-        //                sfx[0].CreateInstance().Play();
-        //                return;
-        //            case Keys.K:
-        //                sfx[1].CreateInstance().Play();
-        //                return;
-        //            case Keys.L:
-        //                sfx[2].CreateInstance().Play();
-        //                return;
-        //        }
-        //    }
-        //}
 
         void LoadSaveGame()
         {
@@ -192,6 +139,8 @@ namespace Valkyrie_Nyr
         {
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
             {
+                MediaPlayer.Pause();
+
                 switch (element)
                 {
                     case Keys.D1:
@@ -199,6 +148,7 @@ namespace Valkyrie_Nyr
                         break;
                     case Keys.D2:
                         States.CurrentGameState = GameStates.PLAYING;
+                        MediaPlayer.Resume();
                         break;
                     case Keys.D3:
                         States.CurrentGameState = GameStates.MAINMENU;
@@ -223,16 +173,58 @@ namespace Valkyrie_Nyr
             }
         }
 
+
+
         protected override void Update(GameTime gameTime)
         {
 
             //TODO:delete
             //TODO:Lose Screen when dead and respawn?
 
-            //testSFX();
-
-            //BGM();
-
+            //adjust BGM Volume
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                if (MediaPlayer.Volume < 1f)
+                {
+                    MediaPlayer.Volume += 0.1f;
+                } 
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                if(MediaPlayer.Volume > 0.2f)
+                {
+                    MediaPlayer.Volume -= 0.1f;
+                }
+            }
+            switch(States.CurrentBGMState)
+            {
+                case BGMStates.MENU:
+                    if (Music.CurrentSong.name != "music/bgm_menuV2")
+                    {
+                        Music.CurrentSong.loadSong("music/bgm_menuV2");
+                    }
+                    break;
+                case BGMStates.LEVEL:
+                    if (Music.CurrentSong.name != "music/bgm_levelV2")
+                    {
+                        Music.CurrentSong.loadSong("music/bgm_levelV2");
+                    }
+                    break;
+                case BGMStates.HUB:
+                    if (Music.CurrentSong.name != "music/bgm_hubV2")
+                    {
+                        Music.CurrentSong.loadSong("music/bgm_hubV2");
+                    }
+                    break;
+                case BGMStates.BOSS:
+                    if(Music.CurrentSong.name != "music/bgm_bossV2")
+                    {
+                        SFX.CurrentSFX.loadSFX("sfx/sfx_warning");
+                        Music.CurrentSong.loadSong("music/bgm_bossV2");
+                    }
+                    break;
+            }
+         
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && States.CurrentGameState == GameStates.PLAYING)
             {
                 States.CurrentGameState = GameStates.PAUSE;
@@ -276,7 +268,6 @@ namespace Valkyrie_Nyr
                 case GameStates.EXIT:
                     Exit();
                     break;
-
 
             }
 

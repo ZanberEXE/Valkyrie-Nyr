@@ -15,11 +15,7 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
-        //my shit
-        public SoundEffect attack, collect, hurt, jump, warning;
-
-        private string name;
-
+        public string name;
         public string textboxText = "";
         public Enemy ryn;
 
@@ -101,7 +97,7 @@ namespace Valkyrie_Nyr
                         }
                         else if (nscObjects[i].name == "yinyinSoul")
                         {
-                            if (!Level.soulsRescued[(int) BossElements.ICE])
+                            if (!Level.soulsRescued[(int)BossElements.ICE])
                             {
                                 nscObjects.RemoveAt(i);
                                 i--;
@@ -134,7 +130,7 @@ namespace Valkyrie_Nyr
                             {
                                 nscObjects[i].dialogueState++;
                             }
-                        }  
+                        } 
                     }
                     Player.Nyr.inJump = false;
                     Player.Nyr.health = Player.Nyr.maxHealth;
@@ -152,13 +148,19 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                     //TODO: evtl lötschn
-                case "FeuerLevel":
+                /*case "FeuerLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
+                    break;*/
+                case "ErdLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
                     startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
-                case "ErdLevel":
+                case "EisLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
                     startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
@@ -244,18 +246,6 @@ namespace Valkyrie_Nyr
 
             States.CurrentPlayerState = Playerstates.IDLE;
 
-
-            //sound test
-            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
-
-            //soundeffects: attack, collect, hurt, jump, warning
-            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_attack");
-            collect = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collect");
-            hurt = Game1.Ressources.Load<SoundEffect>("sfx/sfx_hurt");
-            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            //warning = Game1.Ressources.Load<SoundEffect>("sfx/sfx_warning");
-
             Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
             Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
             Player.Nyr.currentFrame = 0;
@@ -263,13 +253,6 @@ namespace Valkyrie_Nyr
             lastPressedKeys = Keyboard.GetState().GetPressedKeys();
 
 
-            //sound test
-            //jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
-
-            //new Projectile("Earthspike", 200, 200, new Vector2(500, Game1.WindowSize.Y - 200), Vector2.Zero, 0, true, new Rectangle(-25, 200, 50, 0), true, 187, 10, 100);
-            
         }
 
         private void UpdateTraps(GameTime gameTime)
@@ -339,21 +322,7 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            //Let all movingPlatforms move and if Nyr stands on it, then move her too
-            foreach (GameObject element in gameObjects)
-            {
-                if (element.moving != Vector2.Zero)
-                {
-                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
-                    {
-                        moveValue += element.move(gameTime);
-                    }
-                    else
-                    {
-                        element.move(gameTime);
-                    }
-                }
-            }
+            
 
             if (atkCooldown > 0)
             {
@@ -416,10 +385,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
-
-                                
-                                attack.CreateInstance().Play();
-                                
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_jump");
                             }
                         }
                         break;
@@ -531,8 +497,7 @@ namespace Valkyrie_Nyr
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
                             hasDashed = true;
-
-                            attack.CreateInstance().Play();
+                            SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                         }
                         break;
                     
@@ -564,6 +529,41 @@ namespace Valkyrie_Nyr
                 moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
             }
 
+            //Let all movingPlatforms move and if Nyr stands on it, then move her too
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                GameObject element = gameObjects[i];
+            
+                if (element.moving != Vector2.Zero)
+                {
+                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
+                    {
+                        if (element.name == "AiyeWall")
+                        {
+                            float plattFormMovement = element.move(gameTime).X;
+                            if ((plattFormMovement < 0 && moveValue.X > 0) || (plattFormMovement > 0 && moveValue.X < 0))
+                            {
+                                moveValue.X = plattFormMovement;
+                            }
+                            else
+                            {
+                                moveValue.X += plattFormMovement;
+                            }
+                            
+                        }
+                        else
+                        {
+                            moveValue += element.move(gameTime);
+                        }
+                       
+                    }
+                    else
+                    {
+                        element.move(gameTime);
+                    }
+
+                }
+            }
 
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
@@ -653,8 +653,7 @@ namespace Valkyrie_Nyr
                 {
                     continue;
                 }
-
-
+               
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedLeft = true;

@@ -144,10 +144,15 @@ namespace Valkyrie_Nyr
 
         private void HurtNyr()
         {
-            Player.Nyr.health -= damage - Player.Nyr.armor;
+            if (Player.Nyr.isInvulnerable == false)
+            {
+                Player.Nyr.health -= damage - Player.Nyr.armor;
+                Player.Nyr.MakeInvulnerable();
+            }
+           
         }
 
-        private void Destroy()
+        public void Destroy()
         {
             Level.Current.projectileObjects.Remove(this);
         }
