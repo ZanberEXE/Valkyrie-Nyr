@@ -69,7 +69,7 @@ namespace Valkyrie_Nyr
             {
                 Player.Nyr.health -= _damage;
                 Player.Nyr.MakeInvulnerable();
-                
+                SFX.CurrentSFX.loadSFX("sfx/sfx_hurt");
             }
             
         }
@@ -230,7 +230,7 @@ namespace Valkyrie_Nyr
                 }
                 if (beginFight)
                 {
-                   // Level.Current.nscObjects[0].startConversation(gameTime);
+                    Level.Current.nscObjects[0].startConversation(gameTime);
                     stateTimer = 50;
                     defaultHurtBox = hurtBox;
                     defaultAttackBox = attackBox;
@@ -439,7 +439,7 @@ namespace Valkyrie_Nyr
                             }
                             if (name != "Yinyin" && name != "Ina" && name != "Aiye")
                             {
-                                //waitAttack = true;
+                                waitAttack = true;
                             }
                             
                         }
@@ -1222,13 +1222,13 @@ namespace Valkyrie_Nyr
                             omgItsABox.Location = Level.Current.gameObjects[i].position.ToPoint();
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
+                            Level.Current.gameObjects.RemoveAt(i);
 
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {
                                 Player.Nyr.gameOver();
                             }
-
-                            Level.Current.gameObjects.RemoveAt(i);
+                            
                         }
                     }
                 }
@@ -1288,12 +1288,14 @@ namespace Valkyrie_Nyr
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
 
+                            Level.Current.gameObjects.RemoveAt(i);
+
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {
                                 Player.Nyr.gameOver();
                             }
 
-                            Level.Current.gameObjects.RemoveAt(i);
+                            
                         }
                     }
                 }

@@ -18,12 +18,22 @@
 				"spokesman":
 					[
 						"Yinyin",
-						"Nyr"
+            "Nyr",
+            "Yinyin",
+            "Nyr",
+            "Yinyin",
+            "Nyr",
+            "Yinyin"
 					],
 				"speeches":
 					[
 						"Thank you for freeing me and watching my performance until the very end." ,
-						"Your moves were amazing. Although I'd like to see them in a situation where you're not trying to kill me." 
+            "Your moves were amazing. Although I'd like to see them in a situation where you're not trying to kill me.",
+            "A performance has got to be entertaining, no?",
+            "That was a little too engaging for me... Still, I hope that this won't be your last performance.",
+            "What do you mean?",
+            "Your moves were stunning. I would love to see more of them.",
+            "I see. If that is the case, then I shall continue to perform for you."
 					]
 			}
 		]
