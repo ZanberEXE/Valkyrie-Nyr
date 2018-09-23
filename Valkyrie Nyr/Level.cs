@@ -481,8 +481,9 @@ namespace Valkyrie_Nyr
                     case Keys.Q:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE])
+                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 50)
                             {
+                                Player.Nyr.mana -= 50;
                                 atkCooldown = 60;
                                 Player.Nyr.CastFireAOE();
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
@@ -490,9 +491,9 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.LeftControl:
-                        if (Level.armorEnhanced[(int)BossElements.BOLT] && hasDashed == false)
+                        if (Level.armorEnhanced[(int)BossElements.BOLT] && hasDashed == false && Player.Nyr.mana >= 30)
                         {
-                            
+                            Player.Nyr.mana -= 30;
                             Player.Nyr.MakeInvulnerable();
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
