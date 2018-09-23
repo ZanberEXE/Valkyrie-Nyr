@@ -46,6 +46,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Interface.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="NSC.cs" />
     <Compile Include="Player.cs" />
@@ -132,10 +133,16 @@
     <None Include="Ressources\json-files\BlitzLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\BlitzLevel_nscObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\Bossstage_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Bossstage_gameObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\Bossstage_nscObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\EisLevel_enemyObjects.json">
@@ -144,16 +151,25 @@
     <None Include="Ressources\json-files\EisLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\EisLevel_nscObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\ErdLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\ErdLevel_gameObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\ErdLevel_nscObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\FeuerLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\FeuerLevel_gameObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\FeuerLevel_nscObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Hub_enemyObjects.json">
@@ -172,6 +188,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\json-files\Overworld_gameObjects.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Ressources\json-files\Overworld_nscObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Ressources\Level\overworld.json" />

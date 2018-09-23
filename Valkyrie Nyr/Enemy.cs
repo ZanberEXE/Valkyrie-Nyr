@@ -200,6 +200,7 @@ namespace Valkyrie_Nyr
                 }
                 if (beginFight)
                 {
+                    Level.Current.nscObjects[0].startConversation(gameTime);
                     stateTimer = 50;
                     defaultHurtBox = hurtBox;
                     defaultAttackBox = attackBox;
@@ -833,7 +834,41 @@ namespace Valkyrie_Nyr
             }
             
         }
-       
+
+        public void SpawnLoot()
+        {
+            bool[] allowSpawn = new bool[4] { true, true, Player.Nyr.health < Player.Nyr.maxHealth, Player.Nyr.mana < Player.Nyr.maxMana };
+            
+            int chosenLoot;
+
+            GameObject spawnedLoot = null;
+
+            do
+            {
+                chosenLoot = GenerateNumber(allowSpawn.Length);
+            }
+            while (!(allowSpawn[chosenLoot]));
+
+            switch (chosenLoot)
+            {
+                case 0:
+                case 1:
+                    spawnedLoot = new GameObject("Coin", "collectable", 5, 25, 25, position - new Vector2(10, 0));
+                    break;
+                case 2:
+                    spawnedLoot = new GameObject("HPFlower", "collectable", 5, 64, 64, position - new Vector2(10,0));
+                    break;
+                case 3:
+                    spawnedLoot = new GameObject("MPFlower", "collectable", 5, 64, 64, position - new Vector2(10, 0));
+                    break;
+            }
+            if(spawnedLoot != null)
+            {
+                spawnedLoot.init();
+                Level.Current.gameObjects.Add(spawnedLoot);
+            }
+        }
+
         private int GenerateNumber(int maxNumber)
         {
             Random rnd = new Random();

@@ -637,6 +637,18 @@
 /processorParam:TextureFormat=Color
 /build:Bosses/Ina/InaExplosion.png
 
+#begin Bosses/Monomono/MonoBlitzball.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Bosses/Monomono/MonoBlitzball.png
+
 #begin smallEnemies/Banshee/BansheeExplode.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -944,7 +956,7 @@
 /processorParam:Quality=Best
 /build:music/bgm_levelV2.mp3
 
-#begin Bosses/Monomono/MonoBlitzball.png
+#begin Projectiles/Fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -954,9 +966,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Bosses/Monomono/MonoBlitzball.png
+/build:Projectiles/Fireball.png
 
-#begin Bosses/Monomono/MonoTurnNormal.png
+#begin UI/hp.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -966,9 +978,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Bosses/Monomono/MonoTurnNormal.png
+/build:UI/hp.png
 
-#begin Bosses/Monomono/MonoTurnToBall.png
+#begin UI/money.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -978,9 +990,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Bosses/Monomono/MonoTurnToBall.png
+/build:UI/money.png
 
-#begin Effekts/MapEffekt/EarthSpikeDelayW200H200.png
+#begin UI/stats.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -990,9 +1002,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Effekts/MapEffekt/EarthSpikeDelayW200H200.png
+/build:UI/stats.png
 
-#begin Effekts/BossEffekt/EarthSpikeW200H200.png
+#begin UI/mp.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1002,9 +1014,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Effekts/BossEffekt/EarthSpikeW200H200.png
+/build:UI/mp.png
 
-#begin Effekts/BossEffekt/YinyinSpikesW400H200.png
+#begin HPFlower.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1014,5 +1026,29 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Effekts/BossEffekt/YinyinSpikesW400H200.png
+/build:HPFlower.png
+
+#begin Coin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Coin.png
+
+#begin MPFlower.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MPFlower.png
 

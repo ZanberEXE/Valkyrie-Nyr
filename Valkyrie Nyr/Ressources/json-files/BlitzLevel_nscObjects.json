@@ -1,0 +1,19 @@
+[
+  {
+	"name": "invisbleMonomono",
+    "triggerType": "invisbleNSC",
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Monomono"
+					],
+				"speeches":
+					[
+						"Hehehehehe. No one will stop me this time!"
+					]
+			}
+		]
+  }
+]

@@ -55,24 +55,6 @@
   },
   {
       "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "12900, 4350",
-  },
-  {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "13700, 4550",
-  },
-  {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "12300, 4550",
-  },
-  {
-      "name": "platform",
       "height": 50,
       "width": 300,
       "position": "11400, 3000",

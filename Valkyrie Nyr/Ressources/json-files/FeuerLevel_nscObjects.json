@@ -1,0 +1,19 @@
+[
+  {
+	"name": "invisbleIna",
+    "triggerType": "invisbleNSC",
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Ina"
+					],
+				"speeches":
+					[
+						"Another one of those selfish humans, huh!? I shall see to it that you too feel my pain!"
+					]
+			}
+		]
+  }
+]

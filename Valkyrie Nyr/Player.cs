@@ -25,7 +25,9 @@ namespace Valkyrie_Nyr
         public bool inConversation;
         public NSC conversationPartner;
         public int money;
-        public int maxHealth;
+        public int maxHealth = 3000;
+        public int maxMana = 500;
+        public int mana = 500;
 
         public int fAttackCheck;
 
@@ -72,7 +74,7 @@ namespace Valkyrie_Nyr
             hurtBox.Y = (int)position.Y;
             hurtBox.Width = width;
             hurtBox.Height = height;
-        }
+    }
 
         //get Nyr from everywhere
         public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 30, 140, 20, false); } return nyr; } }
@@ -112,6 +114,7 @@ namespace Valkyrie_Nyr
                     break;
             }
         }
+        
         public void Attack()
         {
            
@@ -145,14 +148,35 @@ namespace Valkyrie_Nyr
             if (victim.health <= 0)
             {
                 Level.Current.enemyObjects.Remove(victim);
+                victim.SpawnLoot();
             }
         }
         private void collect(string item)
         {
             switch (item)
             {
-                case "health":
-                    this.health += 10;
+                case "Coin":
+                    money += 100;
+                    break;
+                case "HPFlower":
+                    if (health + 1000 <= maxHealth)
+                    {
+                        health += 1000;
+                    }
+                    else
+                    {
+                        health = maxHealth;
+                    }
+                    break;
+                case "MPFlower":
+                    if (health + 100 <= maxHealth)
+                    {
+                        health += 100;
+                    }
+                    else
+                    {
+                        health = maxHealth;
+                    }
                     break;
             }
         }

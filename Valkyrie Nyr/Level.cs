@@ -18,6 +18,8 @@ namespace Valkyrie_Nyr
         //my shit
         public SoundEffect attack, collect, hurt, jump, warning;
 
+        private string name;
+
         public string textboxText = "";
         public Enemy ryn;
 
@@ -34,6 +36,7 @@ namespace Valkyrie_Nyr
 
         int dashtimer;
         bool hasDashed = false;
+        bool drawMap = false;
         Vector2 tempposition;
 
         public Vector2 positionBGSprite;
@@ -41,6 +44,7 @@ namespace Valkyrie_Nyr
         private static Level currentLevel;
 
         Texture2D levelBGSprite;
+        Texture2D map;
 
         Keys[] lastPressedKeys;
 
@@ -57,11 +61,14 @@ namespace Valkyrie_Nyr
         public void loadLevel(string levelName)
         {
             //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
+            //map = Game1.Ressources.Load<Texture2D>("Map");
+            Interface.Start();
+            name = levelName;
 
             Point startPosition;
             Player.Nyr.inHub = false;
 
-            nscObjects = new List<NSC>();
+            nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
 
             switch (levelName)
             {
@@ -77,7 +84,6 @@ namespace Valkyrie_Nyr
                     startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y - 50));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
-                    nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
                     //delete souls in Hub, if not rescued yet
                     for (int i = 0; i < nscObjects.Count; i++)
                     {
@@ -127,6 +133,7 @@ namespace Valkyrie_Nyr
                         }  
                     }
                     Player.Nyr.inJump = false;
+                    Player.Nyr.health = Player.Nyr.maxHealth;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
@@ -386,6 +393,12 @@ namespace Valkyrie_Nyr
                             Player.Nyr.interact = true;
                         }
                         break;
+                    case Keys.M:
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
+                        {
+                            drawMap = !drawMap;
+                        }
+                        break;
                     case Keys.LeftShift:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
@@ -636,6 +649,17 @@ namespace Valkyrie_Nyr
             output.Close();
         }
 
+        private void DrawMap(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(map, new Rectangle(0, 0, map.Width, map.Height), Color.Black * 0.7f);
+
+            switch (name)
+            {
+                case "Hub":
+                    break;
+            }
+        }
+
         //the typical render method
         public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -661,6 +685,11 @@ namespace Valkyrie_Nyr
             if (textboxText.Length > 0)
             {
                 spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+            }
+            Interface.Draw(spriteBatch);
+            if (drawMap)
+            {
+                DrawMap(spriteBatch);
             }
         }
     }
