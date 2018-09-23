@@ -18,6 +18,7 @@ namespace Valkyrie_Nyr
 
         int stateTimer;
         int aiyeWalking = 56;
+        bool aiyeDoIt = false;
         bool bossWalked = false;
 
         bool repairAnimation = false;
@@ -25,6 +26,14 @@ namespace Valkyrie_Nyr
         public Vector2 tempPosition;
         bool animationStart = false;
         bool animationEnd = false;
+
+        int effektTimer;
+        bool yinyinSpikes = false;
+        bool monomonoLightning = false;
+        bool aiyeSpikes = false;
+        bool aiyeProjektiles = false;
+        bool aiyeWallToRight = false;
+        bool aiyeWallToLeft = false;
 
         bool beginFight = false;
         bool fightStarted = false;
@@ -34,8 +43,14 @@ namespace Valkyrie_Nyr
         int nextAttack;
         int bufferValue;
 
+        Projectile[] tempEffekt = new Projectile[6]; 
+
         Rectangle defaultHurtBox;
         Rectangle defaultAttackBox;
+
+        GameObject earthWall;
+
+        List<GameObject> aiyePlattform = new List<GameObject>();
 
         public Enemy(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _aggroRange, int _attackRange, int _speed, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
@@ -201,18 +216,25 @@ namespace Valkyrie_Nyr
                 }
                 if (beginFight)
                 {
-                    Level.Current.nscObjects[0].startConversation(gameTime);
+                   // Level.Current.nscObjects[0].startConversation(gameTime);
                     stateTimer = 50;
                     defaultHurtBox = hurtBox;
                     defaultAttackBox = attackBox;
                     beginFight = false;
                     fightStarted = true;
                 }
+
+
+
+
+
                 if (fightStarted)
                 {
 
                     if (currentEntityState == (int)Bossstates.IDLE)
                     {
+                        aiyeDoIt = false;
+
                         hurtBox.Width = defaultHurtBox.Width;
                         hurtBox.Height = defaultHurtBox.Height;
                         attackBox.Width = defaultAttackBox.Width;
@@ -298,28 +320,24 @@ namespace Valkyrie_Nyr
                                 if (nextAttack == 0)
                                 {
                                     nextEntityState = (int)Bossstates.ATTACK1;
-                                    bossWalked = true;
                                 }
                                 if (nextAttack == 1)
                                 {
                                     nextEntityState = (int)Bossstates.ATTACK2;
-                                    bossWalked = true;
                                 }
                                 if (nextAttack == 2)
                                 {
                                     nextEntityState = (int)Bossstates.ATTACK3;
-                                    bossWalked = true;
                                 }
                                 if (nextAttack == 3)
                                 {
                                     nextEntityState = (int)Bossstates.ATTACK2;
-                                    stateTimer = 50;
                                 }
                             }
                             if (name == "Monomono")
                             {
                                 {
-                                    nextAttack = GenerateNumber(4);
+                                    nextAttack =  GenerateNumber(4);
 
                                     if (nextAttack == 0)
                                     {
@@ -376,7 +394,7 @@ namespace Valkyrie_Nyr
                                 aiyeWalking++;
                                 if (nextEntityState == (int)Bossstates.ATTACK1)
                                 {
-                                    stateTimer = 110;
+                                    stateTimer = 111;
                                 }
                                 if (nextEntityState == (int)Bossstates.ATTACK2)
                                 {
@@ -402,9 +420,9 @@ namespace Valkyrie_Nyr
 
                                 }
                             }
-                            if (name != "Yinyin" && name != "Ina")
+                            if (name != "Yinyin" && name != "Ina" && name != "Aiye")
                             {
-                                waitAttack = true;
+                                //waitAttack = true;
                             }
                             
                         }
@@ -414,7 +432,12 @@ namespace Valkyrie_Nyr
                     }
                     if (currentEntityState == (int)Bossstates.ATTACK1)
                     {
-                        bossWalked = false;
+                        if (name != "Aiye")
+                        {
+                            bossWalked = false;
+                        }
+                        
+
                         if (name == "Ina")      // FireBall
                         {
                             if (Player.Nyr.position.X + 40 < position.X)
@@ -429,11 +452,11 @@ namespace Valkyrie_Nyr
                             {
                                 if (entityFacing == 1)
                                 {
-                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(1, 0), 800, false, new Rectangle(-25, -15, 60, 30), false, 0, 0, damage * 2);
+                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(1, 0), 800, false, new Rectangle(-110, -0, 60 * 2, 30 * 2), false, 0, 0, damage * 2);
                                 }
                                 else
                                 {
-                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(-1, 0), 800, false, new Rectangle(-35, -15, 60, 30), false, 0, 0, damage * 2);
+                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(-1, 0), 800, false, new Rectangle(-10, -60, 60 * 2, 30 * 2), false, 0, 0, damage * 2);
                                 }
                                 Player.Nyr.position.Y -= 10;
                             }
@@ -457,10 +480,17 @@ namespace Valkyrie_Nyr
 
 
                             }
-                            if (stateTimer == 15)
+                            if (stateTimer == 20)
                             {
-                                Player.Nyr.position.Y -= 10;
-                                //TODO: Create IceSpit
+                                if (entityFacing == 1)
+                                {
+                                    new Projectile("IceArrow", 30 * 2, 10 * 2, new Vector2(position.X + 350, position.Y - 90), new Vector2(1, 0), 1200, false, new Rectangle(-350, 0, 30 * 2, 10 * 2), false, 0, 0, damage * 2);
+                                    
+                                }
+                                else
+                                {
+                                    new Projectile("IceArrow", 30 * 2, 10 * 2, new Vector2(position.X - 320, position.Y - 90), new Vector2(-1, 0), 1200, false, new Rectangle(+280, -10, 30 * 2, 10 * 2), false, 0, 0, damage * 2);
+                                }
                             }
                             if (stateTimer <= 1)
                             {
@@ -470,42 +500,55 @@ namespace Valkyrie_Nyr
                         }
                         if (name == "Aiye")         // Jump Attack                                    
                         {
+                            if (aiyeDoIt == false && stateTimer == 110)
+                            {
+                                aiyeDoIt = true;
+                                bossWalked = false;
+                            }
                             aiyeWalking = 56;
-                            if (stateTimer <= 75 && stateTimer >= 35)
+                            if (aiyeDoIt)
                             {
-                                if (Player.Nyr.position.X < position.X)
+                                if (stateTimer <= 75 && stateTimer >= 35)
                                 {
-                                    entityFacing = -1;
-                                    position.X -= nextPosition.X * entityFacing * -3;
+                                    if (Player.Nyr.position.X < position.X)
+                                    {
+                                        entityFacing = -1;
+                                        position.X -= nextPosition.X * entityFacing * -3;
 
-                                }
-                                if (Player.Nyr.position.X > position.X)
-                                {
-                                    entityFacing = 1;
-                                    position.X -= nextPosition.X * entityFacing * -3;
+                                    }
+                                    if (Player.Nyr.position.X > position.X)
+                                    {
+                                        entityFacing = 1;
+                                        position.X -= nextPosition.X * entityFacing * -3;
 
+                                    }
+                                    if (stateTimer >= 60)
+                                    {
+                                        position.Y -= 10;
+                                    }
+                                    if (stateTimer <= 50)
+                                    {
+                                        position.Y += 10;
+                                    }
                                 }
-                                if (stateTimer >= 60)
+
+
+                                if (stateTimer == 50)
                                 {
-                                    position.Y -= 10;
+                                    aiyeSpikes = true;
+                                    effektTimer = 150;
                                 }
-                                if (stateTimer <= 50)
+                                if (stateTimer == 40)
                                 {
-                                    position.Y += 10;
+                                    tempPosition = position;
+                                }
+                                if (stateTimer <= 20)
+                                {
+                                    nextEntityState = (int)Bossstates.IDLE;
+                                    stateTimer = 19;
                                 }
                             }
-
-
-                            if (stateTimer == 34)
-                            {
-                                //TODO: Create Earth Spikes
-                                attackBox.Width += 500000;
-                            }
-                            if (stateTimer <= 10)
-                            {
-                                nextEntityState = (int)Bossstates.IDLE;
-                                stateTimer = 19;
-                            }
+                            
                         }
                         if (name == "Monomono")
                         {
@@ -517,10 +560,17 @@ namespace Valkyrie_Nyr
                             {
                                 entityFacing = 1;
                             }
-                            if (stateTimer == 42 || stateTimer == 13)
+                            if (stateTimer == 42 || stateTimer == 12)
                             {
-                                Player.Nyr.position.Y -= 10;
-                                //TODO: create Blitzball
+
+                                if (entityFacing == 1)
+                                {
+                                    new Projectile("Blitzball2", 60 * 2, 60 * 2, new Vector2(position.X + 20, position.Y + 650), new Vector2(1, 0), 800, false, new Rectangle(-40, -0, 50, 50), false, 0, 0, damage * 2);
+                                }
+                                else
+                                {
+                                    new Projectile("blitzball2", 60 * 2, 62 *2, new Vector2(position.X - 20, position.Y + 710), new Vector2(-1, 0), 800, false, new Rectangle(-5, -50, 50, 50), false, 0, 0, damage * 2);
+                                }
                             }
                             if (stateTimer <= 1)
                             {
@@ -605,8 +655,9 @@ namespace Valkyrie_Nyr
                             }
                             if (stateTimer == 35)
                             {
-                                //TODO: Create Ice Spikes
-                                attackBox.Width += 500000;
+                                yinyinSpikes = true;
+                                effektTimer = 100;
+                                 
                             }
                             if (stateTimer <= 1)
                             {
@@ -621,26 +672,27 @@ namespace Valkyrie_Nyr
                             bossWalked = false;
                             if (stateTimer == 20)
                             {
-                                //TODO: Create Earthprojectiel
-                                attackBox.Width += 500000;
+                                aiyeProjektiles = true;
+                                effektTimer = 400;
                             }
                             if (stateTimer <= 10)
                             {
                                 nextEntityState = (int)Bossstates.WALK;
-                                stateTimer = 600;
+                                stateTimer = 400;
                             }
 
                         }
                         if (name == "Monomono")
                         {
-                            if (stateTimer == 80 || stateTimer == 15)
+                            if (stateTimer == 15)
                             {
-                                // TODO: Create Lightning
-                                Player.Nyr.position.Y -= 10;
+                                monomonoLightning = true;
+                                effektTimer = 160;
                             }
                             if (stateTimer <= 10)
                             {
                                 nextEntityState = (int)Bossstates.IDLE;
+                                stateTimer = 160;
                             }
                         }
                         waitAttack = false;
@@ -687,7 +739,7 @@ namespace Valkyrie_Nyr
                             bossWalked = false;
                             if (stateTimer == 50)
                             {
-                                if (Player.Nyr.position.X + Camera.Main.position.X <= 13624 && Player.Nyr.position.X + Camera.Main.position.X >= 12250)
+                                if (Player.Nyr.position.X + Camera.Main.position.X <= 15000 && Player.Nyr.position.X + Camera.Main.position.X >= 12250)
                                 {
                                     position.X = 14800 - Camera.Main.position.X;
                                     entityFacing = -1;
@@ -731,8 +783,17 @@ namespace Valkyrie_Nyr
                             hurtBox.Y += 600;
                             if (stateTimer == 35)
                             {
-                                //TODO: Create Wallstuff
-                                attackBox.Width += 500000;
+                                if (entityFacing == -1)
+                                {
+                                    aiyeWallToLeft = true;
+                                    effektTimer = 600;
+                                }
+                                if (entityFacing == 1)
+                                {
+                                    aiyeWallToRight = true;
+                                    effektTimer = 600;
+                                }
+                                
                             }
                             if (stateTimer <= 1)
                             {
@@ -797,7 +858,6 @@ namespace Valkyrie_Nyr
                         }
                     }
                 }
-
                 if (repairAnimation)
                 {
 
@@ -831,13 +891,406 @@ namespace Valkyrie_Nyr
                     animationEnd = false;
                     animationStart = false;
                 }
-
                 stateTimer--;
+            }
+
+
+            ///// ANIMATIONSEFFEKTE!!!!!! //////
+
+            if (yinyinSpikes)
+            {
+                if (effektTimer == 99)
+                {
+                    tempEffekt[0] = new Projectile("YinyinSpikesW400H200", 200, 400, new Vector2(position.X + 30, position.Y + 30), new Vector2(0, 0), 800, true, new Rectangle(-185,-40, 350, 40), true, 50, 10, damage * 3);
+
+                }
+                if (effektTimer <= 60 && tempEffekt[0] != null)
+                {
+                    tempEffekt[0].attackbox.Width -= 2;
+                    tempEffekt[0].attackBoxOffset.X += 1;
+                }
+                if (effektTimer <= 24 && tempEffekt[0] != null)
+                {
+                    yinyinSpikes = false;
+                    tempEffekt[0].Destroy();
+                    tempEffekt[0] = null;
+                }
+            }
+            if (monomonoLightning)
+            {
+                if (effektTimer == 120)
+                {
+                    tempEffekt[0] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X + 200, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+                    tempEffekt[1] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X - 200, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+
+                }
+                if (effektTimer == 80)
+                {
+                    tempEffekt[2] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X + 400, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+                    tempEffekt[3] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X - 400, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+
+                }
+                if (effektTimer == 40)
+                {
+                    tempEffekt[4] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X + 600, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+                    tempEffekt[5] = new Projectile("LightningW200H800v2", 800, 200, new Vector2(position.X - 600, position.Y + 400), new Vector2(0, 0), 800, true, new Rectangle(-20, -800, 80, 1200), true, 12, 10, damage * 3);
+
+                }
+                if (effektTimer <= 100 && tempEffekt[0] != null && tempEffekt[1] != null)
+                {
+                    
+                    tempEffekt[0].Destroy();
+                    tempEffekt[1].Destroy();
+                    tempEffekt[0] = null;
+                    tempEffekt[1] = null;
+                }
+                if (effektTimer <= 60 && tempEffekt[2] != null && tempEffekt[3] != null)
+                {
+
+                    tempEffekt[2].Destroy();
+                    tempEffekt[3].Destroy();
+                    tempEffekt[2] = null;
+                    tempEffekt[3] = null;
+                }
+                if (effektTimer <= 20 && tempEffekt[4] != null && tempEffekt[5] != null)
+                {
+
+                    tempEffekt[4].Destroy();
+                    tempEffekt[5].Destroy();
+                    tempEffekt[4] = null;
+                    tempEffekt[5] = null;
+                }
+                if (effektTimer == 10)
+                {
+                    monomonoLightning = false;
+                }
+            }
+            if (aiyeSpikes)
+            {
+                if (effektTimer == 140)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 200, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                   
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 100, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 135)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 250, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 150, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 130)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 300, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 200, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 125)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 350, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 250, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 120)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 400, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 300, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 115)
+                {
+                    if (entityFacing == 1)
+                    {
+                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 450, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+
+                    if (entityFacing == -1)
+                    {
+                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 350, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                    }
+                }
+                if (effektTimer == 100)
+                {
+                    tempEffekt[0].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer == 95)
+                {
+                    tempEffekt[1].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer == 90)
+                {
+                    tempEffekt[2].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer == 85)
+                {
+                    tempEffekt[3].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer == 80)
+                {
+                    tempEffekt[4].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer == 75)
+                {
+                    tempEffekt[5].attackBoxOffset.Y = 0;
+                }
+                if (effektTimer <= 70 && tempEffekt[0] != null)
+                {
+
+                    tempEffekt[0].Destroy();
+                    tempEffekt[0] = null;
+                }
+                if (effektTimer <= 65 && tempEffekt[1] != null)
+                {
+
+                    tempEffekt[1].Destroy();
+                    tempEffekt[1] = null;
+                }
+                if (effektTimer <= 60 && tempEffekt[2] != null)
+                {
+
+                    tempEffekt[2].Destroy();
+                    tempEffekt[2] = null;
+                }
+                if (effektTimer <= 55 && tempEffekt[3] != null)
+                {
+
+                    tempEffekt[3].Destroy();
+                    tempEffekt[3] = null;
+                }
+                if (effektTimer <= 50 && tempEffekt[4] != null)
+                {
+
+                    tempEffekt[4].Destroy();
+                    tempEffekt[4] = null;
+                }
+                if (effektTimer <= 45 && tempEffekt[5] != null)
+                {
+
+                    tempEffekt[5].Destroy();
+                    tempEffekt[5] = null;
+                }
+                if (effektTimer <= 1)
+                {
+                    aiyeSpikes = false;
+                }
+            }
+            if (aiyeProjektiles)
+            {
+                if (effektTimer == 400)
+                {
+                    tempEffekt[0] = new Projectile("AiyeEarthProjectile", 500, 400, new Vector2(tempPosition.X, tempPosition.Y), new Vector2(0, 0), 800, true, new Rectangle(-150, -90, 300, 200), true, 50, 10, damage * 2);
+                }
+                if (effektTimer <= 399 && effektTimer >= 100)
+                {
+
+                    tempEffekt[0].position.X = position.X + 50;
+                    tempEffekt[0].position.Y = position.Y + 90;
+                }
+                if (effektTimer == 99)
+                {
+                    tempEffekt[0].Destroy();
+                    tempEffekt[0] = null;
+                    int tempNumber = GenerateNumber(3);
+                    if (tempNumber == 0)
+                    {
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, 1), 800, false, new Rectangle(-10, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, 1), 800, false, new Rectangle(-20, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, -1), 800, false, new Rectangle(-15, -10, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, -1), 800, false, new Rectangle(-15, -20, 30, 30), false, 0, 0, damage * 2);
+                    }
+                    else if (tempNumber == 1)
+                    {
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, 0), 800, false, new Rectangle(-10, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, 0), 800, false, new Rectangle(-20, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(0, 1), 800, false, new Rectangle(-10, -10, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(0, -1), 800, false, new Rectangle(-15, -20, 30, 30), false, 0, 0, damage * 2);
+                    }
+                    else
+                    {
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, 1), 800, false, new Rectangle(-10, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, 1), 800, false, new Rectangle(-20, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, -1), 800, false, new Rectangle(-15, -10, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, -1), 800, false, new Rectangle(-15, -20, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(1, 0), 800, false, new Rectangle(-10, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(-1, 0), 800, false, new Rectangle(-20, -15, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(0, 1), 800, false, new Rectangle(-10, -10, 30, 30), false, 0, 0, damage * 2);
+                        new Projectile("AiyeErdProjektil", 33, 35, new Vector2(position.X, position.Y + 100), new Vector2(0, -1), 800, false, new Rectangle(-15, -20, 30, 30), false, 0, 0, damage * 2);
+                    }
+                }
+                if (effektTimer <= 1)
+                {
+                    aiyeProjektiles = false;
+                }
             }
 
 
 
 
+
+            if (aiyeWallToRight)
+            {
+                if (effektTimer == 599)
+                {
+                    aiyePlattform = new List<GameObject>();
+                    earthWall = new GameObject("AiyeWall", null , 20, 244 * 3,47, new Vector2(+100, +80) + position);
+                    earthWall.init();
+                    earthWall.moving = new Vector2(2500, 0);
+                    Level.Current.gameObjects.Add(earthWall);
+                }
+                if (effektTimer <= 580 && effektTimer >= 100)
+                {
+                    for (int i = 0; i < aiyePlattform.Count; i++)
+                    {
+                        if ((aiyePlattform[i].moving.X <= 0 && earthWall.moving.X > 0) || (aiyePlattform[i].moving.X >= 0 && earthWall.moving.X < 0))
+                        {
+                            Level.Current.gameObjects.Remove(aiyePlattform[i]);
+                            aiyePlattform.RemoveAt(i);
+                        }
+                    }
+                    if (effektTimer % 50 == 0)
+                    {
+                        GameObject newPlattform = new GameObject("AiyeWall2", null, 0, 30, 100, new Vector2(earthWall.position.X, GenerateNumber(100, 700) + earthWall.position.Y));
+                        newPlattform.init();
+                        newPlattform.name = "platform";
+                        newPlattform.moving = new Vector2(2050, 0);
+                        aiyePlattform.Add(newPlattform);
+                        Level.Current.gameObjects.Add(newPlattform);
+                    }
+                    
+                }
+                if (effektTimer == 2)
+                {
+                    Rectangle omgItsABox = new Rectangle();
+                    for (int i = 0; i < aiyePlattform.Count; i++)
+                    {
+
+                        Level.Current.gameObjects.Remove(aiyePlattform[i]);
+
+
+                    }
+                    for (int i = 0; i < Level.Current.gameObjects.Count; i++)
+                    {
+                        if (Level.Current.gameObjects[i].name == "AiyeWall")
+                        {
+                            omgItsABox.Location = Level.Current.gameObjects[i].position.ToPoint();
+                            omgItsABox.Width = Level.Current.gameObjects[i].width;
+                            omgItsABox.Height = Level.Current.gameObjects[i].height;
+
+                            if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
+                            {
+                                Player.Nyr.gameOver();
+                            }
+
+                            Level.Current.gameObjects.RemoveAt(i);
+                        }
+                    }
+                }
+                if (effektTimer <= 1)
+                {
+                    aiyePlattform = new List<GameObject>();
+                    aiyeWallToRight = false;
+                }
+            }
+
+            if (aiyeWallToLeft)
+            {
+                if (effektTimer == 599)
+                {
+                    aiyePlattform = new List<GameObject>();
+                    earthWall = new GameObject("AiyeWall", null, 20, 244 * 3, 47, new Vector2(-100, +80) + position);
+                    earthWall.init();
+                    earthWall.moving = new Vector2(-2500, 0);
+                    Level.Current.gameObjects.Add(earthWall);
+
+                }
+                if (effektTimer <= 580 && effektTimer >= 100)
+                {
+                    for (int i = 0; i < aiyePlattform.Count; i++)
+                    {
+                        if ((aiyePlattform[i].moving.X <= 0 && earthWall.moving.X > 0) || (aiyePlattform[i].moving.X >= 0 && earthWall.moving.X < 0))
+                        {
+                            Level.Current.gameObjects.Remove(aiyePlattform[i]);
+                            aiyePlattform.RemoveAt(i);
+                        }
+                    }
+                    if (effektTimer % 50 == 0)
+                    {
+                        GameObject newPlattform = new GameObject("AiyeWall2", null, 0, 30, 100, new Vector2(earthWall.position.X, GenerateNumber(100, 700) + earthWall.position.Y));
+                        newPlattform.init();
+                        newPlattform.name = "platform";
+                        newPlattform.moving = new Vector2(-2000, 0);
+                        aiyePlattform.Add(newPlattform);
+                        Level.Current.gameObjects.Add(newPlattform);
+                    }
+                }
+                if (effektTimer == 10)
+                {
+                    Rectangle omgItsABox = new Rectangle();
+                    for (int i = 0; i < aiyePlattform.Count; i++)
+                    {
+                        
+                         Level.Current.gameObjects.Remove(aiyePlattform[i]);
+                        
+                        
+                    }
+                    for (int i = 0; i < Level.Current.gameObjects.Count; i++)
+                    {
+                        if (Level.Current.gameObjects[i].name == "AiyeWall")
+                        {
+                            omgItsABox.Location = Level.Current.gameObjects[i].position.ToPoint();
+                            omgItsABox.Width = Level.Current.gameObjects[i].width;
+                            omgItsABox.Height = Level.Current.gameObjects[i].height;
+
+                            if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
+                            {
+                                Player.Nyr.gameOver();
+                            }
+
+                            Level.Current.gameObjects.RemoveAt(i);
+                        }
+                    }
+                }
+                if (effektTimer <= 1)
+                {
+                    aiyePlattform = new List<GameObject>();
+                    aiyeWallToLeft = false;
+                }
+            }
+
+            if (effektTimer >= 0)
+            {
+                effektTimer--;
+            }
 
         }
 

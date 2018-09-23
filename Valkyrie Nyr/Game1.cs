@@ -141,7 +141,7 @@ namespace Valkyrie_Nyr
                 {
                     case Keys.D1:
                         LoadSaveGame();
-                        Level.Current.loadLevel("FeuerLevel");
+                        Level.Current.loadLevel("ErdLevel");
                         States.CurrentGameState = GameStates.PLAYING;
                         MediaPlayer.Play(levelSong);
                         return;

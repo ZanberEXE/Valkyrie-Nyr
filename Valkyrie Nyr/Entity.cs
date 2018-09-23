@@ -132,7 +132,7 @@ namespace Valkyrie_Nyr
         public void MakeInvulnerable()
         {
             isInvulnerable = true;
-            invulnerableTimer = 20;
+            invulnerableTimer = 50;
         }
         public void MakeInvulnerable(int timer)
         {

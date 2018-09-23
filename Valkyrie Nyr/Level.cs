@@ -148,13 +148,19 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                     //TODO: evtl lötschn
-                case "FeuerLevel":
+                /*case "FeuerLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
+                    break;*/
+                case "ErdLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
                     startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
-                case "ErdLevel":
+                case "EisLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
                     startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
@@ -259,21 +265,7 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            //Let all movingPlatforms move and if Nyr stands on it, then move her too
-            foreach (GameObject element in gameObjects)
-            {
-                if (element.moving != Vector2.Zero)
-                {
-                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
-                    {
-                        moveValue += element.move(gameTime);
-                    }
-                    else
-                    {
-                        element.move(gameTime);
-                    }
-                }
-            }
+            
 
             if (atkCooldown > 0)
             {
@@ -453,10 +445,45 @@ namespace Valkyrie_Nyr
             {
                 moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
             }
+
+            //Let all movingPlatforms move and if Nyr stands on it, then move her too
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                GameObject element = gameObjects[i];
             
+                if (element.moving != Vector2.Zero)
+                {
+                    if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
+                    {
+                        if (element.name == "AiyeWall")
+                        {
+                            float plattFormMovement = element.move(gameTime).X;
+                            if ((plattFormMovement < 0 && moveValue.X > 0) || (plattFormMovement > 0 && moveValue.X < 0))
+                            {
+                                moveValue.X = plattFormMovement;
+                            }
+                            else
+                            {
+                                moveValue.X += plattFormMovement;
+                            }
+                            
+                        }
+                        else
+                        {
+                            moveValue += element.move(gameTime);
+                        }
+                       
+                    }
+                    else
+                    {
+                        element.move(gameTime);
+                    }
+
+                }
+            }
 
             //let em move, after all collisions have manipulated the movement
-            Vector2 newMoveValue = checkCollision(moveValue);
+            Vector2 newMoveValue = checkCollision(moveValue, gameTime);
 
             if (newMoveValue != Vector2.Zero)
             {
@@ -529,7 +556,7 @@ namespace Valkyrie_Nyr
         }
 
         //theoretical move and seeing what happens
-        public Vector2 checkCollision(Vector2 moveValue)
+        public Vector2 checkCollision(Vector2 moveValue, GameTime gameTime)
         {
             Vector2 newPos = Player.Nyr.position + moveValue;
 
@@ -546,7 +573,7 @@ namespace Valkyrie_Nyr
                 {
                     continue;
                 }
-
+               
                 if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
                 {
                     collidedLeft = true;
