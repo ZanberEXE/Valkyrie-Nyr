@@ -102,6 +102,7 @@ namespace Valkyrie_Nyr
                         return;
                 }
             }
+
         }
 
         void mOptions()

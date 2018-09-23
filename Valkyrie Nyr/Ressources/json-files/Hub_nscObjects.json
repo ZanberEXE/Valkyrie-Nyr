@@ -18,6 +18,7 @@
 						"Nyr",
 						"Statue",
 						"Statue",
+						"Statue",
 						"Nyr",
 						"Statue",
 						"Nyr",
@@ -62,16 +63,37 @@
 						"Dr Which",
 						"Nyr",
 						"Dr Which",
-						"Nyr",
-						"Dr Which"
+            "Nyr",
+            "",
+            "Nyr",
+            "Dr Which",
+            "Nyr",
+            "Dr Which",
+            "",
+            "Nyr",
+            "Dr Which",
+            "Nyr",
+            "Dr Which",
+            ""
 					],
 				"speeches":
 					[
-						"Do you like to die less often?", 
-						"Well, that would be great I guess." ,
-						"Then i shall raise your health.",
-						"Thanks~",
-						"Now hand me the fee of 500g."						
+            "Oh? If it isn't Nyr, it's been too long. Come here now, I've baked some cookies!",
+            "...",
+            "As quite as ever, still going on your journey to become a Valkyrie?",
+            "Yes, I am.",
+            "-The cookie was of unknown flavour-",
+            "Could you tell me how you made these cookies...?",
+            "Say, I've been working on something all on my lonesome for a while now that would be just perfect for you.",
+            "...I don't think I'm in need for that.",
+            "Now, now, don't be so shy... Here, think of this as something to remember me by, with any luck, it should make you stronger than ever before.",
+            "-Your HP was increased... maybe-",
+            "...But I never asked f-",
+            "Haah, now if only I had something to remember you by, so I wouldn't feel so anxious whenever you left...",
+            "I already gave you something the last time...",
+            "These gil coins? You shouldn't have... just for me? I'll be sure to treasure them. Yes. Now let go of those coins dear...",
+            "-Gil given to Dr Which... maybe-"
+
 					]
 			}
 		]
