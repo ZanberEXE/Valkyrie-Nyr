@@ -455,8 +455,8 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.fAttackCheck = 20;
                                 atkCooldown = 60;
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
-                                jump.CreateInstance().Play();
                             }
                         }
                         break;
@@ -474,7 +474,7 @@ namespace Valkyrie_Nyr
                                 {
                                     new Projectile("IceShot", 30, 10, Player.Nyr.position + new Vector2(Player.Nyr.width, 40), new Vector2(1, 0), 2400, false, new Rectangle(-10, 0, 25, 10), false, 0, 0, 0);
                                 }
-                                jump.CreateInstance().Play();
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                             }
                         }
                         break;
@@ -485,7 +485,7 @@ namespace Valkyrie_Nyr
                             {
                                 atkCooldown = 60;
                                 Player.Nyr.CastFireAOE();
-                                jump.CreateInstance().Play();
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                             }
                         }
                         break;

@@ -98,7 +98,6 @@ namespace Valkyrie_Nyr
                         {
                             Level.Current.nscObjects[0].startConversation(gameTime);
                         }
-                        MediaPlayer.Play(levelSong);
                         return;
                     case Keys.D2:
                         States.CurrentGameState = GameStates.OPTIONS;
