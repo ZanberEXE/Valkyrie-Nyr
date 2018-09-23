@@ -98,7 +98,8 @@ namespace Valkyrie_Nyr
                     if(Player.Nyr.money > 500)
                     {
                         Player.Nyr.money -= 500;
-                        Player.Nyr.health += 100;
+                        Player.Nyr.health += 1000;
+                        Player.Nyr.maxHealth += 1000;
                     }
                     break;
             }

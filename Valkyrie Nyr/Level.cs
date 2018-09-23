@@ -22,6 +22,7 @@ namespace Valkyrie_Nyr
         //public List<Entity> entityObjects;
         public List<Enemy> enemyObjects;
         public List<NSC> nscObjects;
+        public List<Projectile> projectileObjects;
 
         public int height;
         public int width;
@@ -30,6 +31,7 @@ namespace Valkyrie_Nyr
 
         int dashtimer;
         bool hasDashed = false;
+        bool drawMap = false;
         Vector2 tempposition;
 
         public Vector2 positionBGSprite;
@@ -37,6 +39,7 @@ namespace Valkyrie_Nyr
         private static Level currentLevel;
 
         Texture2D levelBGSprite;
+        Texture2D map;
 
         Keys[] lastPressedKeys;
 
@@ -54,11 +57,14 @@ namespace Valkyrie_Nyr
         public void loadLevel(string levelName)
         {
             //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
+            //map = Game1.Ressources.Load<Texture2D>("Map");
+            Interface.Start();
+            name = levelName;
 
             Point startPosition;
             Player.Nyr.inHub = false;
 
-            nscObjects = new List<NSC>();
+            nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
 
             switch (levelName)
             {
@@ -74,11 +80,11 @@ namespace Valkyrie_Nyr
                     startPosition = new Point(-(width - Game1.WindowSize.X), -(height - Game1.WindowSize.Y - 50));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X - Player.Nyr.width, Game1.WindowSize.Y - Player.Nyr.height);
                     Player.Nyr.inHub = true;
-                    nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
                     //delete souls in Hub, if not rescued yet
                     for (int i = 0; i < nscObjects.Count; i++)
                     {
-                        if (nscObjects[i].name == "inaSoul"){
+                        if (nscObjects[i].name == "inaSoul")
+                        {
                             if (!Level.soulsRescued[(int)BossElements.FIRE])
                             {
                                 nscObjects.RemoveAt(i);
@@ -123,6 +129,7 @@ namespace Valkyrie_Nyr
                         } 
                     }
                     Player.Nyr.inJump = false;
+                    Player.Nyr.health = Player.Nyr.maxHealth;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
@@ -137,10 +144,16 @@ namespace Valkyrie_Nyr
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                     //TODO: evtl lötschn
+                case "FeuerLevel":
+                    width = 3750 * Camera.Main.zoom;
+                    height = 1250 * Camera.Main.zoom;
+                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
+                    break;
                 case "ErdLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-500 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
@@ -155,6 +168,7 @@ namespace Valkyrie_Nyr
             
             //entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
             enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
+            projectileObjects = new List<Projectile>();
 
             foreach (Enemy element in enemyObjects)
             {
@@ -354,6 +368,12 @@ namespace Valkyrie_Nyr
                             Player.Nyr.interact = true;
                         }
                         break;
+                    case Keys.M:
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
+                        {
+                            drawMap = !drawMap;
+                        }
+                        break;
                     case Keys.LeftShift:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
@@ -474,6 +494,11 @@ namespace Valkyrie_Nyr
 
             lastPressedKeys = newPressedKeys;
 
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                projectileObjects[i].Update(gameTime);
+            }
+
         }
 
         //theoretical move and seeing what happens
@@ -543,6 +568,10 @@ namespace Valkyrie_Nyr
             {
                 element.tempPosition -= moveValue;
             }
+            foreach (Projectile element in projectileObjects)
+            {
+                element.position -= moveValue;
+            }
         }
 
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
@@ -593,6 +622,17 @@ namespace Valkyrie_Nyr
             output.Close();
         }
 
+        private void DrawMap(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(map, new Rectangle(0, 0, map.Width, map.Height), Color.Black * 0.7f);
+
+            switch (name)
+            {
+                case "Hub":
+                    break;
+            }
+        }
+
         //the typical render method
         public void render(SpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -606,12 +646,26 @@ namespace Valkyrie_Nyr
             foreach (Enemy element in enemyObjects)
             {
                 element.EntityRender(gameTime, spriteBatch);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
             }
             Player.Nyr.EntityRender(gameTime, spriteBatch);
 
-            if(textboxText.Length > 0)
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                projectileObjects[i].Draw(gameTime, spriteBatch);
+                spriteBatch.Draw(Game1.pxl, new Rectangle((int)projectileObjects[i].position.X, (int)projectileObjects[i].position.Y, projectileObjects[i].width, projectileObjects[i].height), Color.LightGreen * 0.5f);
+                spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
+            }
+
+            if (textboxText.Length > 0)
             {
                 spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+
+            }
+            Interface.Draw(spriteBatch);
+            if (drawMap)
+            {
+                DrawMap(spriteBatch);
             }
         }
     }

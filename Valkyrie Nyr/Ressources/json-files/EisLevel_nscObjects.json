@@ -1,0 +1,19 @@
+[
+  {
+	"name": "invisbleYinyin",
+    "triggerType": "invisbleNSC",
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Yinyin"
+					],
+				"speeches":
+					[
+						"Won't you watch my final performance?"
+					]
+			}
+		]
+  }
+]

@@ -199,8 +199,17 @@ namespace Valkyrie_Nyr
             {
                 hurtBox.Y = (int)position.Y + 630;
                 hurtBox.Height = height - 630;
-
-                attackBox.Y = (int)position.Y + 650;
+                if (entityFacing == -1)
+                {
+                    attackBox.Y = (int)position.Y + 650;
+                    attackBox.X = (int)position.X - 30;
+                }
+                if (entityFacing == 1)
+                {
+                    attackBox.Y = (int)position.Y + 650;
+                    attackBox.X = (int)position.X + 30;
+                }
+                
             }
 
 
@@ -282,6 +291,8 @@ namespace Valkyrie_Nyr
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
             //draw hitbox
             //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+         
+            
             spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
             spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
         }

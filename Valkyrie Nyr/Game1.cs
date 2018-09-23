@@ -15,6 +15,7 @@ namespace Valkyrie_Nyr
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public static GameTime randomTime;
         public static ContentManager Ressources;
         public static SpriteBatch Renderer;
         public static Point WindowSize;
@@ -39,6 +40,7 @@ namespace Valkyrie_Nyr
             //Now you can load content from everywhere
             Ressources = Content;
 
+            
 
             IsMouseVisible = true;
         }
@@ -259,8 +261,8 @@ namespace Valkyrie_Nyr
                     break;
 
             }
-            
-         
+
+            randomTime = gameTime;
             base.Update(gameTime);
         }
 
@@ -301,7 +303,7 @@ namespace Valkyrie_Nyr
             {
                 foreach (GameObject collider in Level.Current.gameObjects)
                 {
-                    //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                    spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                 }
             }
 

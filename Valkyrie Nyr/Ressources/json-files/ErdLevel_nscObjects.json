@@ -1,0 +1,19 @@
+[
+  {
+	"name": "invisbleAiye",
+    "triggerType": "invisbleNSC",
+	"dialogues": 
+		[
+			{	
+				"spokesman":
+					[
+						"Aiye"
+					],
+				"speeches":
+					[
+						"You look pretty weak. Don't try to run away, okay?"
+					]
+			}
+		]
+  }
+]
