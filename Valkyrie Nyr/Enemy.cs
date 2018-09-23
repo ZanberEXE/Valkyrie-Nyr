@@ -193,6 +193,7 @@ namespace Valkyrie_Nyr
             //BOSS ENEMIES
             if (name == "Ina" || name == "Yinyin" || name == "Aiye" || name == "Monomono")
             {
+                
                 if (NyrBy(aggroRange))
                 {
                     beginFight = true;
@@ -258,7 +259,7 @@ namespace Valkyrie_Nyr
                             if (name == "Ina")
                             {
                                 nextAttack = GenerateNumber(4);
-
+                                
                                 if (nextAttack == 0)
                                 {
                                     nextEntityState = (int)Bossstates.ATTACK1;
@@ -400,7 +401,7 @@ namespace Valkyrie_Nyr
 
                                 }
                             }
-                            if (name != "Yinyin")
+                            if (name != "Yinyin" && name != "Ina")
                             {
                                 waitAttack = true;
                             }
@@ -425,7 +426,15 @@ namespace Valkyrie_Nyr
                             }
                             if (stateTimer == 10)
                             {
-                                Player.Nyr.position.Y -= 10;                            //TODO: create Fireball
+                                if (entityFacing == 1)
+                                {
+                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(1, 0), 800, false, new Rectangle(-25, -15, 60, 30), false, 0, 0, damage * 2);
+                                }
+                                else
+                                {
+                                    new Projectile("Fireball", 65 * 2, 26 * 2, new Vector2(position.X + 20, position.Y + 40), new Vector2(-1, 0), 800, false, new Rectangle(-35, -15, 60, 30), false, 0, 0, damage * 2);
+                                }
+                                Player.Nyr.position.Y -= 10;
                             }
                             if (stateTimer <= 1)
                             {
@@ -534,7 +543,14 @@ namespace Valkyrie_Nyr
 
                             if (stateTimer <= 320 && stateTimer >= 2)
                             {
-                                //TODO: create Meteore
+                                if (stateTimer % 10 == 0)
+                                {
+                                    int randomNumber = GenerateNumber(12000, 15000) - (int)Camera.Main.position.X;
+                                    float randomFlightRotationNumber = GenerateNumber(-2, 3, randomNumber) / 10f;
+                                    
+                                    new Projectile("Fireball", 65 * 3, 26 * 3, new Vector2(randomNumber, -position.Y - Camera.Main.position.Y + 4000), new Vector2(randomFlightRotationNumber, 1), 600, false, new Rectangle(-110 - (int)(randomFlightRotationNumber * 200) , -180, 60, 70), false, 0, 0, damage * 2);
+                                }
+
                                 if (entityFacing == 1)
                                 {
                                     attackBox.X = (int)position.X - 70;
@@ -840,12 +856,24 @@ namespace Valkyrie_Nyr
             int randomNumber = rnd.Next(0, maxNumber);
             return randomNumber;    
         }
-        private int GenerateNumber( int minNumber, int maxNumber)
+        private int GenerateNumber(int minNumber, int maxNumber)
         {
             Random rnd = new Random();
             int randomNumber = rnd.Next(minNumber, maxNumber);
             return randomNumber;
         }
+        private int GenerateNumber(int minNumber, int maxNumber, int seed)
+        {
+            Random rnd = new Random(seed);
+            int randomNumber = rnd.Next(minNumber, maxNumber);
+            return randomNumber;
+        }
+        /* private double GenerateNumber(double minNumber, double maxNumber)
+         {
+             Random rnd = new Random();
+             double randomNumber = rnd.NextDouble();
+             return randomNumber;
+         }*/
 
         private bool NyrBy(int senseRadius)
         {
