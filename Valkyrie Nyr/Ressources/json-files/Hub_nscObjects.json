@@ -141,7 +141,7 @@
 					[
 						"This place is way too dark! I know, how about I light it all up?",
 						"I think everything will burn down instead...",
-						"Just a little is fine, isn't it?",
+						"I'll be careful, they'll only only be small, that would be fine right?",
 						"Don't!",
 						"...!",
 						"Ah, sorry. I just remembered something...",
@@ -207,14 +207,14 @@
 				"speeches":
 					[
 						"I see you're practicing again." ,
-						"I always have to keep myself in shape, even when my body shouldn't change as a dead woman." ,
+						"I always have to keep myself in shape, even with the touch of undeath." ,
 						"What was that move you just did now?" ,
 						"A chaines turn." ,
 						"I see the quick steps look really beautiful." ,
 						"Thank you. If you are interested, I could teach you a few moves. How about the dying swan?" ,
 						"N-no thank you... I don't think I would look even half as graceful as you when I try..." ,
 						"You would be just as captivating though. Comedy is also an art form, you know?" ,
-						"Well, I'm busy fighting monster..." ,
+						"Well, I'm busy fighting monsters..." ,
 						"Fighting and dancing are quite similar." ,
 						"Yeah, for example that kick you threw at me." ,
 						"That was a grand jete leap." ,
@@ -222,7 +222,7 @@
 						"I can gladly show you a flying kick." ,
 						"Uh-",
 						"What's this?" ,
-						"A reverence. A display of respect as thanks for before." ,
+						"A reverence. A display of respect as a thank you for before." ,
 						"I see. Thank you as well, though I will still decline your offer." 
 					]
 			}
@@ -284,15 +284,15 @@
 						"..." ,
 						"Hey don't be so cold now, you might get something good out of this!" ,
 						"..." ,
-						"Everyone here has something they regret when they were alive." ,
+						"Everyone here has regrets from when they were alive." ,
 						"A regret?" ,
-						"Something you really wanted but simply couldn't obtain." ,
+						"Something that you never achieved, or a mistake from the past, something that was never set right." ,
 						"...I guess, I can understand that." ,
-						"I for one would love to obtain the sight of the hot and cold beauties, hahaha!" ,
+						"I for one would love a palace full of beauties, hahaha! Like an elgant icy woman or just a really hot one!" ,
 						"*sighs*" ,
-						"What's with that disappoint face!? You can't tell me you don't want to see it. Well in your case you might be more ec-static to see a man with torn clothes?" ,
-						"I don't have a particular interest in that way. But if they're like you, then I'd love to meet them as well." ,
-						"I see. But do not worry my heart will always stay true to you! So, about our next date, how about going to the top of the tower. I think we can see the night sky..." ,
+						"What's with that disappoint face!? You can't tell me you don't want to see it. Or perhaps you might be more ec-static to see a man with torn clothes?" ,
+						"I don't have any particular interest in such things. But if they're like you, then I'd love to meet them as well." ,
+						"I see. But do not worry, my heart will always stay true to you! So, about our next date, how about going to the top of the tower. I think we can see the night sky..." ,
 						"..." 
 					]
 			}
@@ -357,15 +357,15 @@
 					[
 						"Isn't it amazing, how all of us are so different?" ,
 						"Isn't that natural?" ,
-						"It's not only our personalities. Think about it! All of us are have a vastly different history. Things that have occurred in my time must not necessarily happen in your past nor future." ,
+						"It's not only our personalities. Think about it! All of us are have a vastly different pasts. Things that occurred in my time may or may not necessarily happen in your past nor future. Although, they do say history repeats itself." ,
 						"I never noticed that..." ,
-						"Furthermore, there are even some beings in this realm that could never exist in the world we know." ,
-						"The stories of dragon, the use of magic and places and culture I've never heard of in my living time..." ,
-						"Correct! Alchemy, magic, creatures that we have imagined but proven to not exist. They exist here as well as in their previous world." ,
+						"Furthermore, there are even some beings in this realm that could never exist in the world we knew." ,
+						"The stories of dragon, the use of magic and such places and cultures that didn't exist in time..." ,
+						"Correct! Alchemy, magic, creatures that we have imagined but proven to not exist. They exist here as well, as in their previous world." ,
 						"This place is full of mysteries..." ,
-						"I'm most interested in that goddess. How far can her power reach and what purpose does she truly serve? It is also unsettling seeing the tears of blood running down her face. What reason could have led to that?" ,
+						"I am most interested in that goddess. How far does her power reach, and what is her true purpose? It is also unsettling seeing the tears of blood running down her face. What reason could have led to that?" ,
 						"I see, you're having a lot of fun.",
-						"Yes, I won't be bored for a long time if ever! On that note, there's something I would like you to try. This was made with the help of alchemy. It should greatly increase your power though I do not know what other effects it might have. You just need to drink this whole purple bottle." ,
+						"Yes, I won't be bored for a long time, if ever! On that note, there's something I would like you to try. This was made with the help of alchemy. It should greatly increase your power, though I do not know what other effects it might have. You just need to drink this. Do it for Science!" ,
 						"...",
 						"How strange. Where did she go?" 
 					]
