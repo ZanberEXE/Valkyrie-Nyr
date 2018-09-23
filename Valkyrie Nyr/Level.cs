@@ -15,9 +15,6 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
-        //my shit
-        public SoundEffect attack, collect, hurt, jump, warning;
-
         public string textboxText = "";
         public Enemy ryn;
 
@@ -45,6 +42,7 @@ namespace Valkyrie_Nyr
 
         //get current Level from everywhere
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
+
 
         //
         //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
@@ -78,59 +76,51 @@ namespace Valkyrie_Nyr
                     Player.Nyr.inHub = true;
                     nscObjects = JsonConvert.DeserializeObject<List<NSC>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_nscObjects.json"));
                     //delete souls in Hub, if not rescued yet
-                    for (int i = 0; i < nscObjects.Count;)
+                    for (int i = 0; i < nscObjects.Count; i++)
                     {
                         if (nscObjects[i].name == "inaSoul"){
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.FIRE])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.FIRE])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "yinyinSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.ICE])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.ICE])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "aiyeSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.EARTH])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.EARTH])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
                         }
                         else if (nscObjects[i].name == "monomonoSoul")
                         {
-                            if (!Level.soulsRescued[0])
+                            if (!Level.soulsRescued[(int)BossElements.BOLT])
                             {
                                 nscObjects.RemoveAt(i);
                             }
-                            else if (Level.armorEnhanced[0])
+                            else if (Level.armorEnhanced[(int)BossElements.BOLT])
                             {
                                 nscObjects[i].dialogueState++;
-                                i++;
                             }
-                        }
-                        else
-                        {
-                            i++;
-                        }
+                        } 
                     }
                     Player.Nyr.inJump = false;
                     break;
@@ -194,18 +184,6 @@ namespace Valkyrie_Nyr
 
             States.CurrentPlayerState = Playerstates.IDLE;
 
-
-            //sound test
-            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
-
-            //soundeffects: attack, collect, hurt, jump, warning
-            attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_attack");
-            collect = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collect");
-            hurt = Game1.Ressources.Load<SoundEffect>("sfx/sfx_hurt");
-            jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            //warning = Game1.Ressources.Load<SoundEffect>("sfx/sfx_warning");
-
             Player.Nyr.currentEntityState = (int)Playerstates.IDLE;
             Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
             Player.Nyr.currentFrame = 0;
@@ -213,11 +191,6 @@ namespace Valkyrie_Nyr
 
             States.CurrentPlayerState = Playerstates.IDLE;
 
-
-            //sound test
-            //jump = Game1.Ressources.Load<SoundEffect>("sfx/sfx_jump");
-            //attack = Game1.Ressources.Load<SoundEffect>("sfx/sfx_collide");
-            //thud = Game1.Ressources.Load<SoundEffect>("sfx/sfx_thud");
         }
 
         //get input and update the elements inside the level
@@ -327,10 +300,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.inJump = true;
                                 Player.Nyr.onGround = false;
                                 moveValue.Y -= Player.Nyr.jumpHeight;
-
-                                
-                                attack.CreateInstance().Play();
-                                
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_jump");
                             }
                         }
                         break;
@@ -394,8 +364,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.fAttackCheck = 20;
                                 atkCooldown = 60;
-
-                                jump.CreateInstance().Play();
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                             }
                         }break;
                     case Keys.LeftControl:
@@ -406,8 +375,7 @@ namespace Valkyrie_Nyr
                             dashtimer = 30;
                             tempposition = Player.Nyr.position;
                             hasDashed = true;
-
-                            attack.CreateInstance().Play();
+                            SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                         }
                         break;
                     

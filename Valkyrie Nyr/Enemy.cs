@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Valkyrie_Nyr
 {
@@ -52,6 +54,7 @@ namespace Valkyrie_Nyr
             {
                 Player.Nyr.health -= _damage;
                 Player.Nyr.MakeInvulnerable();
+                
             }
             
         }
@@ -98,6 +101,7 @@ namespace Valkyrie_Nyr
                 {
                     beginFight = false;
                     fightStarted = true;
+                    
                 }
                 if (fightStarted)
                 {
@@ -215,6 +219,8 @@ namespace Valkyrie_Nyr
                     defaultAttackBox = attackBox;
                     beginFight = false;
                     fightStarted = true;
+
+                    States.CurrentBGMState = BGMStates.BOSS;
                 }
                 if (fightStarted)
                 {
