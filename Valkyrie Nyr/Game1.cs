@@ -28,9 +28,9 @@ namespace Valkyrie_Nyr
             graphics = new GraphicsDeviceManager(this);
 
             //set windowsize
-            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferHeight = 1080;
             graphics.PreferredBackBufferWidth = 1920;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             WindowSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 

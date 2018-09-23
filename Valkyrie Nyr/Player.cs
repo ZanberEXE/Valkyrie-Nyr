@@ -104,6 +104,16 @@ namespace Valkyrie_Nyr
                         Level.Current.textboxText = "Press \"F\" to interact";
                     }
                     break;
+                case "totem":
+                    if (interact)
+                    {
+                        totem(activatedTrigger.name);
+                    }
+                    else
+                    {
+                        Level.Current.textboxText = "Press \"F\" to interact";
+                    }
+                    break;
                 case "nsc":
                     if (interact)
                     {
@@ -276,6 +286,14 @@ namespace Valkyrie_Nyr
                     States.CurrentBGMState = BGMStates.HUB;
                     break;
             }
+        }
+        private void totem(GameObject activatedTrigger)
+        {
+
+
+
+            Level.Current.gameObjects.Remove(activatedTrigger);
+
         }
 
         //this method is called, if the Player dies/falls out of the world

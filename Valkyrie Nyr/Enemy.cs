@@ -1223,12 +1223,13 @@ namespace Valkyrie_Nyr
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
 
+                            Level.Current.gameObjects.RemoveAt(i);
+
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {
                                 Player.Nyr.gameOver();
                             }
 
-                            Level.Current.gameObjects.RemoveAt(i);
                         }
                     }
                 }
@@ -1287,13 +1288,13 @@ namespace Valkyrie_Nyr
                             omgItsABox.Location = Level.Current.gameObjects[i].position.ToPoint();
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
+                            
+                            Level.Current.gameObjects.RemoveAt(i);
 
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {
                                 Player.Nyr.gameOver();
                             }
-
-                            Level.Current.gameObjects.RemoveAt(i);
                         }
                     }
                 }
