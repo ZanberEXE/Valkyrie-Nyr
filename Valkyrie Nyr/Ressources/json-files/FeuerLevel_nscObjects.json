@@ -13,6 +13,18 @@
 					[
 						"Another one of those selfish humans, huh!? I shall see to it that you too feel my pain!"
 					]
+			},
+			{	
+				"spokesman":
+					[
+						"Nyr",
+						"Ina"
+					],
+				"speeches":
+					[
+						"I will take up the burden of your pain. Won't you join me?",
+						"First freeing me, and now this!? This time, it's up to me... Hmpf, you seem like you need the help. I'll join you. Thank you."
+					]
 			}
 		]
   }

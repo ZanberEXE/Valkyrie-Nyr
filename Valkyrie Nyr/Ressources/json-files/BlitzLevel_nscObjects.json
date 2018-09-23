@@ -13,6 +13,30 @@
 					[
 						"Hehehehehe. No one will stop me this time!"
 					]
+			},
+			{	
+				"spokesman":
+					[
+						"Monomono",
+						"Monomono",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr",
+						"Monomono",
+						"Nyr"
+					],
+				"speeches":
+					[
+						"I'm finally free. Trying out all the possibilities of my new form had started to become boring.",
+						"..." ,
+						"You, you are neither monster nor human.",
+						"I'm a Valkyrie.",
+						"A Valkyrie... those who lead the dead. I see! Interesting! I shall join you in whatever endeavour you have. To have had the strength to defeat me. You fill me with curiosity!" ,
+						"You-",
+						"Let us not waste any time!",
+						"..."
+					]
 			}
 		]
   }

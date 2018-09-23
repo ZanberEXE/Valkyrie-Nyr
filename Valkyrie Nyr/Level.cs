@@ -47,10 +47,9 @@ namespace Valkyrie_Nyr
         //get current Level from everywhere
         public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
 
-
         //
         //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
-        public static bool[] soulsRescued = new bool[] { true, true, true, true };
+        public static bool[] soulsRescued = new bool[] { false, false, false, false };
         //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
         public static bool[] armorEnhanced = new bool[] { false, false, false, false };
 
@@ -58,7 +57,7 @@ namespace Valkyrie_Nyr
         public void loadLevel(string levelName)
         {
             //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
-            //map = Game1.Ressources.Load<Texture2D>("Map");
+            map = Game1.Ressources.Load<Texture2D>("Map");
             Interface.Start();
             name = levelName;
 
@@ -89,6 +88,7 @@ namespace Valkyrie_Nyr
                             if (!Level.soulsRescued[(int)BossElements.FIRE])
                             {
                                 nscObjects.RemoveAt(i);
+                                i--;
                             }
                             else if (Level.armorEnhanced[(int)BossElements.FIRE])
                             {
@@ -100,6 +100,7 @@ namespace Valkyrie_Nyr
                             if (!Level.soulsRescued[(int)BossElements.ICE])
                             {
                                 nscObjects.RemoveAt(i);
+                                i--;
                             }
                             else if (Level.armorEnhanced[(int)BossElements.ICE])
                             {
@@ -111,6 +112,7 @@ namespace Valkyrie_Nyr
                             if (!Level.soulsRescued[(int)BossElements.EARTH])
                             {
                                 nscObjects.RemoveAt(i);
+                                i--;
                             }
                             else if (Level.armorEnhanced[(int)BossElements.EARTH])
                             {
@@ -122,6 +124,7 @@ namespace Valkyrie_Nyr
                             if (!Level.soulsRescued[(int)BossElements.BOLT])
                             {
                                 nscObjects.RemoveAt(i);
+                                i--;
                             }
                             else if (Level.armorEnhanced[(int)BossElements.BOLT])
                             {
@@ -177,10 +180,48 @@ namespace Valkyrie_Nyr
             enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
             projectileObjects = new List<Projectile>();
 
-            foreach (Enemy element in enemyObjects)
+            for ( int i = 0; i < enemyObjects.Count; i++) 
             {
+                Enemy element = enemyObjects[i];
                 gameObjects.Add(element);
                 element.Initialize();
+
+                //remove boss, if you already rescued it
+                switch(levelName)
+                {
+                    case "EisLevel":
+                        if (element.name == "Yinyin" && Level.soulsRescued[(int)BossElements.ICE])
+                        {
+                            enemyObjects.Remove(element);
+                            gameObjects.Remove(element);
+                            i--;
+                        }
+                        break;
+                    case "FeuerLevel":
+                        if (element.name == "Ina" && Level.soulsRescued[(int)BossElements.FIRE])
+                        {
+                            enemyObjects.Remove(element);
+                            gameObjects.Remove(element);
+                            i--;
+                        }
+                        break;
+                    case "ErdLevel":
+                        if (element.name == "Aiye" && Level.soulsRescued[(int)BossElements.EARTH])
+                        {
+                            enemyObjects.Remove(element);
+                            gameObjects.Remove(element);
+                            i--;
+                        }
+                        break;
+                    case "BlitzLevel":
+                        if (element.name == "Monomono" && Level.soulsRescued[(int)BossElements.BOLT])
+                        {
+                            enemyObjects.Remove(element);
+                            gameObjects.Remove(element);
+                            i--;
+                        }
+                        break;
+                }
                 //element.hurtBox.Location += startPosition;
                 //element.attackBox.Location += startPosition;
             }
@@ -209,23 +250,60 @@ namespace Valkyrie_Nyr
             Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
             Player.Nyr.currentFrame = 0;
 
+            lastPressedKeys = Keyboard.GetState().GetPressedKeys();
 
-            States.CurrentPlayerState = Playerstates.IDLE;
 
+        }
+
+        private void UpdateTraps(GameTime gameTime)
+        {
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                switch (projectileObjects[i].name)
+                {
+                    case "Earthspike":
+                        if (projectileObjects[i].currentFrame > 90 && projectileObjects[i].currentFrame <= 95)
+                        {
+                            projectileObjects[i].attackBoxOffset.Y = 150 - (projectileObjects[i].currentFrame - 90) * (150f / 5f) - 50;
+                            projectileObjects[i].attackbox.Height = (int)((projectileObjects[i].currentFrame - 90) * (150 / 5f));
+                        }
+                        else if (projectileObjects[i].currentFrame > 170 && projectileObjects[i].currentFrame <= 187)
+                        {
+                            projectileObjects[i].attackBoxOffset.Y = (projectileObjects[i].currentFrame - 170) * (150 / 17f) - 40;
+                            projectileObjects[i].attackbox.Height = (int)((187 - projectileObjects[i].currentFrame) * (150 / 17f));
+                        }
+                        else if (projectileObjects[i].currentFrame == 0)
+                        {
+                            projectileObjects[i].attackbox.Height = 0;
+                        }
+                        break;
+                }
+            }
         }
 
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
-        {   
+        {
+            for (int i = 0; i < projectileObjects.Count; i++)
+            {
+                projectileObjects[i].Update(gameTime);
+            }
+
+            UpdateTraps(gameTime);
+
             //Resetting Values
             Vector2 moveValue = Vector2.Zero;
             textboxText = "";
 
-            // Player.Nyr.Update(gameTime);
 
             //Let PLayer fall and save the moveValue in overall Movement
             if (!Player.Nyr.inHub)
             {
+                if (Player.Nyr.inStomp)
+                {
+                    moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+                    moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
+                }
                 moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
             }
 
@@ -348,7 +426,7 @@ namespace Valkyrie_Nyr
                         }
                         else if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Level.armorEnhanced[(int) BossElements.EARTH])
                         {
-                            //TODO: let Nyr fall
+                            Player.Nyr.inStomp = true;
                             //Player.Nyr.currentEntityState = (int)Playerstates.STOMP;
                             //Player.Nyr.currentFrame = 0;
                             //Player.Nyr.nextEntityState = (int)Playerstates.STOMP;
@@ -378,8 +456,39 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.fAttackCheck = 20;
                                 atkCooldown = 60;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+
                             }
-                        }break;
+                        }
+                        break;
+                    case Keys.E:
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
+                        {
+                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE])
+                            {
+                                atkCooldown = 60;
+                                if (Player.Nyr.entityFacing == -1)
+                                {
+                                    new Projectile("IceShot", 30, 10, Player.Nyr.position - new Vector2(35, -50), new Vector2(-1, 0), 2400, false, new Rectangle(-10, -10, 25, 10), false, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    new Projectile("IceShot", 30, 10, Player.Nyr.position + new Vector2(Player.Nyr.width, 40), new Vector2(1, 0), 2400, false, new Rectangle(-10, 0, 25, 10), false, 0, 0, 0);
+                                }
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+                            }
+                        }
+                        break;
+                    case Keys.Q:
+                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
+                        {
+                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE])
+                            {
+                                atkCooldown = 60;
+                                Player.Nyr.CastFireAOE();
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+                            }
+                        }
+                        break;
                     case Keys.LeftControl:
                         if (Level.armorEnhanced[(int)BossElements.BOLT] && hasDashed == false)
                         {
@@ -456,7 +565,7 @@ namespace Valkyrie_Nyr
             }
 
             //let em move, after all collisions have manipulated the movement
-            Vector2 newMoveValue = checkCollision(moveValue, gameTime);
+            Vector2 newMoveValue = checkCollision(moveValue);
 
             if (newMoveValue != Vector2.Zero)
             {
@@ -521,15 +630,11 @@ namespace Valkyrie_Nyr
 
             lastPressedKeys = newPressedKeys;
 
-            for (int i = 0; i < projectileObjects.Count; i++)
-            {
-                projectileObjects[i].Update(gameTime);
-            }
 
         }
 
         //theoretical move and seeing what happens
-        public Vector2 checkCollision(Vector2 moveValue, GameTime gameTime)
+        public Vector2 checkCollision(Vector2 moveValue)
         {
             Vector2 newPos = Player.Nyr.position + moveValue;
 
@@ -540,8 +645,9 @@ namespace Valkyrie_Nyr
             bool collidedTop = false;
             bool collidedBottom = false;
 
-            foreach (GameObject element in collidedObjects)
+            for(int i = 0; i < collidedObjects.Length; i++)
             {
+                GameObject element = collidedObjects[i];
                 if (element.triggerType != null)
                 {
                     continue;
@@ -562,7 +668,13 @@ namespace Valkyrie_Nyr
                 else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y > newPos.Y)
                 {
                     collidedBottom = true;
+                    if(Player.Nyr.inStomp && element.name == "breakableGround")
+                    {
+                        gameObjects.Remove(element);
+                        i--;
+                    }
                 }
+                Player.Nyr.inStomp = false;
             }
 
             if (collidedLeft || collidedRight)
@@ -652,11 +764,30 @@ namespace Valkyrie_Nyr
 
         private void DrawMap(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(map, new Rectangle(0, 0, map.Width, map.Height), Color.Black * 0.7f);
-
+            spriteBatch.Draw(map, new Rectangle(0, 0, map.Width, map.Height), Color.White * 0.8f);
+            Texture2D nyrLocationIcon = Game1.Ressources.Load<Texture2D>("NyrMapIcon");
             switch (name)
             {
                 case "Hub":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(310, 415, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "Overworld":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(820, 410, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "Bossstage":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(1335, 400, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "EisLevel":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(550, 140, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "BlitzLevel":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(1075, 130, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "FeuerLevel":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(565, 690, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
+                    break;
+                case "ErdLevel":
+                    spriteBatch.Draw(nyrLocationIcon, new Rectangle(1100, 680, nyrLocationIcon.Width, nyrLocationIcon.Height), Color.White * 0.8f);
                     break;
             }
         }
@@ -687,7 +818,7 @@ namespace Valkyrie_Nyr
 
             if (textboxText.Length > 0)
             {
-                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 50), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 200), Color.Black);
 
             }
             Interface.Draw(spriteBatch);
