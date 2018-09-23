@@ -1377,7 +1377,7 @@ namespace Valkyrie_Nyr
              return randomNumber;
          }*/
 
-        private bool NyrBy(int senseRadius)
+        protected bool NyrBy(int senseRadius)
         {
             if(Vector2.Distance(this.position, Player.Nyr.position) <= senseRadius)
             {

@@ -107,7 +107,7 @@ namespace Valkyrie_Nyr
                 case "totem":
                     if (interact)
                     {
-                        totem(activatedTrigger.name);
+                        totem(activatedTrigger);
                     }
                     else
                     {
@@ -117,11 +117,24 @@ namespace Valkyrie_Nyr
                 case "nsc":
                     if (interact)
                     {
-                        ((NSC) Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
+                        ((NSC)Convert.ChangeType(activatedTrigger, typeof(NSC)))?.startConversation(gameTime);
                     }
                     else
                     {
                         Level.Current.textboxText = "Press \"F\" to interact";
+                    }
+                    break;
+                case "ryn":
+                    if (Antagonist.Ryn.health <= 0)
+                    {
+                        if (interact)
+                        {
+                            Antagonist.Ryn.Kill();
+                        }
+                        else
+                        {
+                            Level.Current.textboxText = "Press \"F\" to interact";
+                        }
                     }
                     break;
             }
@@ -290,7 +303,7 @@ namespace Valkyrie_Nyr
         private void totem(GameObject activatedTrigger)
         {
 
-
+            Antagonist.Ryn.health -= 5000;
 
             Level.Current.gameObjects.Remove(activatedTrigger);
 
