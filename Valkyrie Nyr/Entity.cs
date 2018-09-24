@@ -79,8 +79,8 @@ namespace Valkyrie_Nyr
 
         public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position)
         {
-            
-            
+            health = hp;
+            damage = dmg;            
         }
             
         public void Initialize()
@@ -293,6 +293,11 @@ namespace Valkyrie_Nyr
             Rectangle sourceRectangle = new Rectangle(animWidth * column, animHeight * row, animWidth, animHeight);
             Rectangle destinationRectangle = new Rectangle((int)position.X - (animWidth / 2) + (width / 2), (int)position.Y - (animWidth / 2) + 32, animWidth, animHeight);
 
+            if (name == "Ryn")
+            {
+                destinationRectangle = new Rectangle((int)position.X, (int)position.Y, animWidth, animHeight);
+            }
+
             
             if (animationFlip)
             {
@@ -322,8 +327,8 @@ namespace Valkyrie_Nyr
             //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
          
             
-            spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
-            spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
         }
 
       

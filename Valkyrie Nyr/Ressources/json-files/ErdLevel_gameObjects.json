@@ -37,21 +37,27 @@
   },
   {
       "name": "ground",
-      "height": 650,
-      "width": 250,
+      "height": 100,
+      "width": 200,
       "position": "6350, 4150",
   },
   {
       "name": "ground",
-      "height": 400,
-      "width": 250,
+      "height": 100,
+      "width": 200,
       "position": "6000, 4400",
   },
   {
       "name": "ground",
-      "height": 250,
-      "width": 250,
+      "height": 50,
+      "width": 200,
       "position": "5650, 4550",
+  },
+  {
+      "name": "ground",
+      "height": 400,
+      "width": 5250,
+      "position": "7000, 4400",
   },
   {
       "name": "ground",
@@ -214,12 +220,6 @@
       "height": 200,
       "width": 2000,
       "position": "7000, 4200",
-  },
-  {
-      "name": "ground",
-      "height": 400,
-      "width": 7000,
-      "position": "5250, 4400",
   },
   {
       "name": "ground",

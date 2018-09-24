@@ -18,6 +18,13 @@
       "position": "5800, 9050",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 150,
+      "position": "5800, 9050",
+  },
+  {
       "name": "platform",
       "height": 50,
       "width": 650,
@@ -30,7 +37,21 @@
       "position": "28200, 6550",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 300,
+      "position": "28200, 6550",
+  },
+  {
       "name": "platform",
+      "height": 50,
+      "width": 300,
+      "position": "6050, 9200",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 300,
       "position": "6050, 9200",
@@ -48,7 +69,21 @@
       "position": "28200, 7000",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 100,
+      "position": "28200, 7000",
+  },
+  {
       "name": "platform",
+      "height": 50,
+      "width": 150,
+      "position": "6400, 9435",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 150,
       "position": "6400, 9435",
@@ -66,7 +101,21 @@
       "position": "28000, 6800",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 100,
+      "position": "28000, 6800",
+  },
+  {
       "name": "platform",
+      "height": 50,
+      "width": 150,
+      "position": "6375, 9750",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 150,
       "position": "6375, 9750",
@@ -84,7 +133,21 @@
       "position": "28000, 7250",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 100,
+      "position": "28000, 7250",
+  },
+  {
       "name": "platform",
+      "height": 50,
+      "width": 150,
+      "position": "6095, 9630",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 150,
       "position": "6095, 9630",
@@ -96,7 +159,21 @@
       "position": "28200, 7500",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 100,
+      "position": "28200, 7500",
+  },
+  {
       "name": "platform",
+      "height": 50,
+      "width": 150,
+      "position": "4350, 8925",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 150,
       "position": "4350, 8925",
@@ -114,6 +191,13 @@
       "position": "4130, 9195",
   },
   {
+      "name": "ice",
+      "triggerType": "area",
+      "height": 50,
+      "width": 150,
+      "position": "4130, 9195",
+  },
+  {
       "name": "platform",
       "height": 50,
       "width": 300,
@@ -121,6 +205,13 @@
   },
   {
       "name": "platform",
+      "height": 50,
+      "width": 150,
+      "position": "4155, 9530",
+  },
+  {
+      "name": "ice",
+      "triggerType": "area",
       "height": 50,
       "width": 150,
       "position": "4155, 9530",
@@ -789,36 +880,42 @@
       "position": "19000, 2950"
   },
   {
+      "name": "breakableGround",
+      "height": 50,
+      "width": 900,
+      "position": "20750, 8925"
+  },
+  {
       "name": "OverworldLoader",
-	    "triggerType": "loader",
+	  "triggerType": "loader",
       "height": 300,
       "width": 100,
       "position": "450, 9300"
   },
   {
       "name": "Totem Feuer",
-	    "triggerType": "totem",
+	  "triggerType": "totem",
       "height": 203,
       "width": 97,
       "position": "28300, 6340"
   },
   {
       "name": "Totem Eis",
-	    "triggerType": "totem",
+	  "triggerType": "totem",
       "height": 203,
       "width": 97,
       "position": "21940, 6250"
   },
   {
-      "name": "Totem Erde ",
-	    "triggerType": "totem",
+      "name": "Totem Erde",
+	  "triggerType": "totem",
       "height": 203,
       "width": 97,
       "position": "19000, 9500"
   },
   {
       "name": "Totem Blitz",
-	    "triggerType": "totem",
+	  "triggerType": "totem",
       "height": 203,
       "width": 97,
       "position": "29800, 7280"

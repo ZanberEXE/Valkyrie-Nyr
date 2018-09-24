@@ -78,6 +78,7 @@ namespace Valkyrie_Nyr
                 Level.armorEnhanced[i / 3] = (saveData[i + 1][0] == 'T');
             }
             Player.Nyr.money = System.Int32.Parse(saveData[12]);
+            Player.Nyr.maxHealth = System.Int32.Parse(saveData[14]);
         }
 
         //TODO: proper content
@@ -325,6 +326,7 @@ namespace Valkyrie_Nyr
                 {
                     //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                 }
+                //spriteBatch.Draw(pxl, new Rectangle((int)Antagonist.Ryn.position.X, (int)Antagonist.Ryn.position.Y, Antagonist.Ryn.width, Antagonist.Ryn.height), new Color(Color.LightGreen, 150));
             }
 
 
