@@ -41,8 +41,10 @@ namespace Valkyrie_Nyr
 
         bool beginFight = false;
         bool fightStarted = false;
+        bool enemyReady = false;
         bool hasAttacked = false;
         bool waitAttack = false;
+        bool startAttack = false;
 
         int nextAttack;
         int bufferValue;
@@ -133,20 +135,26 @@ namespace Valkyrie_Nyr
                     {
                         nextEntityState = (int)Enemystates.WALK;
                     }
-
                     if (currentEntityState == (int)Enemystates.WALK)
                     {
+                        enemyReady = true;
                         if (Player.Nyr.position.X + 40 < position.X)
                         {
                             entityFacing = 1;
-                            position.X -= nextPosition.X * entityFacing;
+                            if (name == "Banshee")
+                            {
+                                position.X -= nextPosition.X * entityFacing;
+                            }
+
 
                         }
                         if (Player.Nyr.position.X + 40 > position.X)
                         {
                             entityFacing = -1;
-                            position.X -= nextPosition.X * entityFacing;
-
+                            if (name == "Banshee")
+                            {
+                                position.X -= nextPosition.X * entityFacing;
+                            }
                         }
                         if (name == "Banshee")
                         {
@@ -163,59 +171,94 @@ namespace Valkyrie_Nyr
                         }
 
                     }
-                    if (NyrBy(attackRange))
+                    if (NyrBy(attackRange) && enemyReady && startAttack != true)
                     {
-
+                        startAttack = true;
+                        currentFrame = 0;
                         currentEntityState = (int)Enemystates.ATTACK;
-                        if (currentEntityState == (int)Enemystates.ATTACK)
-                        {
-                            if (name == "Banshee")
-                            {
-                                stateTimer = 80;
-                                defaultAttackRange = attackRange;
-                                attackRange = 0;
-                            }
-                        }
 
+                        if (name == "Banshee")
+                        {
+                            stateTimer = 80;
+                        }
+                        if (name == "Skeleton")
+                        {
+                            stateTimer = 60;
+                        }
                     }
                     if (currentEntityState == (int)Enemystates.ATTACK)
                     {
-                        if (name == "Banshee" && stateTimer <= 30 && stateTimer >= 2)
+                        if (name == "Skeleton")
                         {
-                            if (entityFacing == -1)
+                            if (Player.Nyr.position.X + 40 < position.X)
                             {
-                                attackBox.X = (int)position.X - 140;
+                                entityFacing = 1;
+                                
                             }
-                            if (entityFacing == 1)
+                            if (Player.Nyr.position.X + 40 > position.X)
                             {
-                                attackBox.X = (int)position.X - 180;
+                                entityFacing = -1;
                             }
-                            attackBox.Y = (int)position.Y - 120;
-                            attackBox.Width = 350;
-                            attackBox.Height = 300;
-                            if (CollisionAABB(attackBox, Player.Nyr.hurtBox))
+                            if (stateTimer == 0)
                             {
-                                HurtNyr(damage);
+                               
+                                if (entityFacing == 1)
+                                {
+                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y), new Vector2(-1, 0), 1200, false, new Rectangle(-30, -15, 58, 10), false, 0, 0, damage * 2);
+                                }
+                                if (entityFacing == -1)
+                                {
+                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), 1200, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage * 2);
+                                }
+                                
+                                startAttack = false;
+                            }
+                        }
+                        if (name == "Banshee")
+                        {
+                            defaultAttackRange = attackRange;
+                            attackRange = 0;
+
+                            if (stateTimer <= 30 && stateTimer >= 2)
+                            {
+                                if (entityFacing == -1)
+                                {
+                                    attackBox.X = (int)position.X - 140;
+                                }
+                                if (entityFacing == 1)
+                                {
+                                    attackBox.X = (int)position.X - 180;
+                                }
+                                attackBox.Y = (int)position.Y - 120;
+                                attackBox.Width = 350;
+                                attackBox.Height = 300;
+                                if (CollisionAABB(attackBox, Player.Nyr.hurtBox))
+                                {
+                                    HurtNyr(damage);
+                                }
+                            }
+
+                            if (stateTimer <= 1)
+                            {
+
+                                hasAttacked = true;
+
+                                //Banshee stuff
+                                position = new Vector2(20000, 20000);
+                                fightStarted = false;
+                                startAttack = false;
                             }
                         }
 
-                        if (name == "Banshee" && stateTimer <= 1)
-                        {
-
-                            hasAttacked = true;
-
-                            //Banshee stuff
-                            position = new Vector2(20000, 20000);
-                            fightStarted = false;
-                        }
                     }
                     if (hasAttacked == true)
                     {
                         attackRange = defaultAttackRange;
                     }
-                }
 
-                stateTimer--;
+
+                    stateTimer--;
+                }
             }
 
 
@@ -917,7 +960,7 @@ namespace Valkyrie_Nyr
             }
 
 
-            ///// ANIMATIONSEFFEKTE!!!!!! //////
+            // ANIMATIONSEFFEKTE
 
             if (yinyinSpikes)
             {
@@ -1371,12 +1414,6 @@ namespace Valkyrie_Nyr
             int randomNumber = rnd.Next(minNumber, maxNumber);
             return randomNumber;
         }
-        /* private double GenerateNumber(double minNumber, double maxNumber)
-         {
-             Random rnd = new Random();
-             double randomNumber = rnd.NextDouble();
-             return randomNumber;
-         }*/
 
         protected bool NyrBy(int senseRadius)
         {

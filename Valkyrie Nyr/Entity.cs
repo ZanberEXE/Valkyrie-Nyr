@@ -197,6 +197,12 @@ namespace Valkyrie_Nyr
                 attackBox.Y = (int)position.Y;
                 hurtBox.X += 20;
             }
+            if (name == "Skeleton")
+            {
+                hurtBox.Y -= height / 2;
+                hurtBox.Height = height + height / 2;
+            }
+
             if (name == "Yinyin")
             {
                 hurtBox.Y = (int)position.Y - 120;

@@ -31,6 +31,8 @@ namespace Valkyrie_Nyr
         int atkCooldown;
 
         int dashtimer;
+        int fireAoeTimer;
+
         bool hasDashed = false;
         bool drawMap = false;
         Vector2 tempposition;
@@ -42,6 +44,8 @@ namespace Valkyrie_Nyr
         Texture2D levelBGSprite;
         Texture2D map;
 
+        Projectile tempEffekt;
+
         Keys[] lastPressedKeys;
 
         //get current Level from everywhere
@@ -51,7 +55,7 @@ namespace Valkyrie_Nyr
         //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
         public static bool[] soulsRescued = new bool[] { false, false, false, false };
         //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
-        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
+        public static bool[] armorEnhanced = new bool[] { true, true, false, false };
 
         //loads the level
         public void loadLevel(string levelName)
@@ -427,8 +431,9 @@ namespace Valkyrie_Nyr
 
                             //TODO: set collider to crouch position
                         }
-                        else if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Level.armorEnhanced[(int) BossElements.EARTH])
+                        else if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Level.armorEnhanced[(int) BossElements.EARTH] && Player.Nyr.mana >= 40)
                         {
+                            Player.Nyr.mana -= 40;
                             Player.Nyr.inStomp = true;
                             //Player.Nyr.currentEntityState = (int)Playerstates.STOMP;
                             //Player.Nyr.currentFrame = 0;
@@ -466,8 +471,9 @@ namespace Valkyrie_Nyr
                     case Keys.E:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE])
+                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
                             {
+                                Player.Nyr.mana -= 30;
                                 atkCooldown = 60;
                                 if (Player.Nyr.entityFacing == -1)
                                 {
@@ -484,12 +490,14 @@ namespace Valkyrie_Nyr
                     case Keys.Q:
                         if (!newPressedKeys.SequenceEqual(lastPressedKeys))
                         {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 50)
+                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
                             {
-                                Player.Nyr.mana -= 50;
+                                Player.Nyr.mana -= 80;
                                 atkCooldown = 60;
                                 Player.Nyr.CastFireAOE();
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+                                fireAoeTimer = 40;
+                                Player.Nyr.MakeInvulnerable(40);
                             }
                         }
                         break;
@@ -527,7 +535,36 @@ namespace Valkyrie_Nyr
                 }
                 dashtimer--;
             }
-            if(Player.Nyr.slide > 0 && Player.Nyr.onIce)
+            if (fireAoeTimer >= 0)
+            {
+                if (fireAoeTimer == 39)
+                {
+                    tempEffekt = new Projectile("NyrFireAoe", 300, 300, new Vector2(Player.Nyr.position.X + Player.Nyr.width / 2, Player.Nyr.position.Y + Player.Nyr.height / 4), new Vector2(0, 0), 800, true, new Rectangle(-150, -90, 300, 200), true, 25, 10, Player.Nyr.damage * 2);
+                }
+                if (fireAoeTimer <= 49 && fireAoeTimer >= 2)
+                {
+                    for (int i = 0; i < Level.Current.enemyObjects.Count; i++)
+                    {
+                        
+                        Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
+                        
+                        /*if (Player.Nyr.CollisionAABB(hurtbox, tempEffekt.attackbox))
+                        {
+                            Level.currentLevel.enemyObjects[i].health -= 20;
+                        }*/
+                            
+                    }
+
+                }
+                
+                if (fireAoeTimer <= 1 && tempEffekt != null)
+                {
+                    tempEffekt.Destroy();
+                    tempEffekt = null;
+                }
+                fireAoeTimer--;
+            }
+            if (Player.Nyr.slide > 0 && Player.Nyr.onIce)
             {
                 moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
             }
