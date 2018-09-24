@@ -55,7 +55,7 @@ namespace Valkyrie_Nyr
         //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
         public static bool[] soulsRescued = new bool[] { false, false, false, false };
         //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
-        public static bool[] armorEnhanced = new bool[] { true, true, false, false };
+        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
 
         //loads the level
         public void loadLevel(string levelName)
@@ -149,7 +149,8 @@ namespace Valkyrie_Nyr
                 case "BlitzLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-13000, -(height - Game1.WindowSize.Y));
+                    //startPosition = new Point(-13000, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                     //TODO: evtl lötschn
@@ -168,7 +169,7 @@ namespace Valkyrie_Nyr
                 case "EisLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(0 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
