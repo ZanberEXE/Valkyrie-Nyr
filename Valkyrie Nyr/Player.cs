@@ -304,7 +304,7 @@ namespace Valkyrie_Nyr
         {
 
             Antagonist.Ryn.health -= 5000;
-
+            Antagonist.Ryn.HurtRyn();
             Level.Current.gameObjects.Remove(activatedTrigger);
 
         }
@@ -331,6 +331,9 @@ namespace Valkyrie_Nyr
                     trigger(element, gameTime);
                 }
             }
+
+            trigger(Antagonist.Ryn, gameTime);
+
             interact = false;
         }
 

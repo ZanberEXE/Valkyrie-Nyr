@@ -158,7 +158,7 @@ namespace Valkyrie_Nyr
                 case "ErdLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(-14000 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 case "EisLevel":
@@ -180,6 +180,32 @@ namespace Valkyrie_Nyr
             //entityObjects = JsonConvert.DeserializeObject<List<Entity>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_entityObjects.json"));
             enemyObjects = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\" + levelName + "_enemyObjects.json"));
             projectileObjects = new List<Projectile>();
+
+            switch (levelName)
+            {
+                case "ErdLevel":
+                    new Projectile("Earthspike", 200, 200, new Vector2(1500, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(2500, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(4000, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6800, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6600, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(5050, 3050 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9500, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10000, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11200, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10600, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    break;
+                case "FeuerLevel":
+                    new Projectile("Earthspike", 200, 200, new Vector2(1500, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(2500, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(2121, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(2720, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6600, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(7700, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(8800, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9900, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    break;
+            }
 
             for ( int i = 0; i < enemyObjects.Count; i++) 
             {
@@ -255,7 +281,6 @@ namespace Valkyrie_Nyr
 
             Antagonist.Ryn.Reset();
             
-
         }
 
         private void UpdateTraps(GameTime gameTime)
@@ -659,26 +684,26 @@ namespace Valkyrie_Nyr
                     continue;
                 }
                
-                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud"))
+                if (element.position.X + element.width > newPos.X && element.position.X + element.width < Player.Nyr.position.X && !(element.name == "platform" || element.name == "cloud" || element.name == "cloud2"))
                 {
                     collidedLeft = true;
                 }
-                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && !(element.name == "platform" || element.name == "cloud"))
+                else if (element.position.X < newPos.X + Player.Nyr.width && element.position.X > Player.Nyr.position.X + Player.Nyr.width && !(element.name == "platform" || element.name == "cloud" || element.name == "cloud2"))
                 {
                     collidedRight = true;
                 }
-                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && !(element.name == "platform" || element.name == "cloud"))
+                else if (element.position.Y + element.height >= newPos.Y && element.position.Y + element.height <= Player.Nyr.position.Y && !(element.name == "platform" || element.name == "cloud" || element.name == "cloud2"))
                 {
                     collidedTop = true;
                 }
                 else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y > newPos.Y)
                 {
-                    collidedBottom = true;
-                    if(Player.Nyr.inStomp && element.name == "breakableGround")
+                    if (Player.Nyr.inStomp && element.name == "breakableGround")
                     {
                         gameObjects.Remove(element);
-                        i--;
+                        continue;
                     }
+                    collidedBottom = true;
                 }
                 Player.Nyr.inStomp = false;
             }
@@ -701,7 +726,7 @@ namespace Valkyrie_Nyr
             positionBGSprite -= moveValue;
             foreach (GameObject gameObject in gameObjects)
             {
-                if(gameObject.name == "Nyr")
+                if(gameObject.name == "Nyr" || gameObject.name == "Earthspike")
                 {
                     continue;
                 }
@@ -765,6 +790,8 @@ namespace Valkyrie_Nyr
                 output.WriteLine("");
             }
             output.WriteLine(Player.Nyr.money.ToString());
+            output.WriteLine("");
+            output.WriteLine(Player.Nyr.maxHealth.ToString());
 
             output.Close();
         }
@@ -812,7 +839,7 @@ namespace Valkyrie_Nyr
             foreach (Enemy element in enemyObjects)
             {
                 element.EntityRender(gameTime, spriteBatch);
-                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X, element.hurtBox.Location.Y - 100), Color.Black);
             }
             Player.Nyr.EntityRender(gameTime, spriteBatch);
             Antagonist.Ryn.EntityRender(gameTime, spriteBatch);
@@ -820,8 +847,8 @@ namespace Valkyrie_Nyr
             for (int i = 0; i < projectileObjects.Count; i++)
             {
                 projectileObjects[i].Draw(gameTime, spriteBatch);
-                spriteBatch.Draw(Game1.pxl, new Rectangle((int)projectileObjects[i].position.X, (int)projectileObjects[i].position.Y, projectileObjects[i].width, projectileObjects[i].height), Color.LightGreen * 0.5f);
-                spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
+                //spriteBatch.Draw(Game1.pxl, new Rectangle((int)projectileObjects[i].position.X, (int)projectileObjects[i].position.Y, projectileObjects[i].width, projectileObjects[i].height), Color.LightGreen * 0.5f);
+                //spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
             }
 
             if (textboxText.Length > 0)

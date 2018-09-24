@@ -265,7 +265,7 @@
   },
   {
       "name": "ground",
-      "height": 50,
+      "height": 150,
       "width": 450,
       "position": "10850, 4700",
   },

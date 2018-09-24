@@ -17,9 +17,11 @@ namespace Valkyrie_Nyr
         int currentLocation = 0;
         Vector2[] locations;
 
+        Vector2[] sizeInAnim;
+
         NSC Dialogues;
 
-        public Antagonist() : base("Ryn", null, 7, 200, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
+        public Antagonist() : base("Ryn", "ryn", 7, 200, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
         {
             animTex = new animation[]
             {
@@ -31,6 +33,17 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynDying"), 10, 7, 62),
                 new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynIsDead"), 10, 2, 12)
             };
+
+            sizeInAnim = new Vector2[]
+             {
+                new Vector2(800, 2375) * 4,
+                new Vector2(3000, 2450) * 4,
+                new Vector2(2400, 1350) * 4,
+                new Vector2(3580, 670) * 4,
+                new Vector2(5450, 670) * 4,
+                new Vector2(6250, 2100) * 4,
+                new Vector2(6250, 2100) * 4
+             };
 
             Dialogues = new NSC(name, "none", mass, height, width, position, health, damage);
             Dialogues.dialogues = new Conversation[]
@@ -47,14 +60,15 @@ namespace Valkyrie_Nyr
 
             locations = new Vector2[]
             {
-                new Vector2(800, 2375) * 4,
-                new Vector2(3000, 2450) * 4,
-                new Vector2(2400, 1350) * 4,
-                new Vector2(3580, 670) * 4,
-                new Vector2(5450, 670) * 4,
-                new Vector2(6250, 2100) * 4,
-                new Vector2(6250, 2100) * 4
+                new Vector2(800, 2325) * 4,
+                new Vector2(3000, 2200) * 4,
+                new Vector2(2400, 1300) * 4,
+                new Vector2(3580, 620) * 4,
+                new Vector2(5450, 620) * 4,
+                new Vector2(6250, 2050) * 4,
+                new Vector2(6250, 2050) * 4
             };
+
             currentLocation = 0;
             position = locations[currentLocation] - Camera.Main.position;
 
@@ -76,12 +90,7 @@ namespace Valkyrie_Nyr
             base.EntityUpdate(gameTime);
 
             position = Fall(gameTime, Level.Current.gameObjects.ToArray());
-
-            if (moving != Vector2.Zero)
-            {
-                //move(gameTime);
-            }
-
+            
             if (NyrBy(aggroRange))
             {
                 SetNewPosition();
@@ -90,7 +99,16 @@ namespace Valkyrie_Nyr
 
         public void Kill()
         {
-            States.CurrentGameState = GameStates.EXIT;
+            currentEntityState = 5;
+            nextEntityState = 6;
+        }
+
+        public void HurtRyn()
+        {
+
+            return;
+            Dialogues.dialogueState = new Random().Next(Dialogues.dialogues.Length - 1);
+            Dialogues.startConversation();
         }
 
         public void SetNewPosition()
@@ -110,8 +128,16 @@ namespace Valkyrie_Nyr
 
         private void setNewAnim()
         {
-            currentEntityState = currentLocation;
-            nextEntityState = currentLocation;
+            if (currentLocation < 4)
+            {
+                currentEntityState = currentLocation;
+                nextEntityState = currentLocation;
+            }
+            else
+            {
+                currentEntityState = 4;
+                nextEntityState = 4;
+            }
         }
     }
 }

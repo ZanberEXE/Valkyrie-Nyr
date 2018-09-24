@@ -270,6 +270,12 @@
       "position": "15000, 0",
   },
   {
+      "name": "breakableGround",
+      "height": 50,
+      "width": 450,
+      "position": "7300, 3325",
+  },
+  {
       "name": "lava",
       "triggerType": "area",
       "height": 75,
