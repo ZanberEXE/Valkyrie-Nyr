@@ -31,6 +31,7 @@ namespace Valkyrie_Nyr
         public int mana = 500;
 
         public int fAttackCheck;
+        public bool inFireAoe = false;
 
         // Feature bools
         public bool hasHeadband = true;
@@ -79,7 +80,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 300, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 2, 140, 20, false); } return nyr; } }
         
 
         //put here stuff that happens if you collect something
@@ -180,6 +181,8 @@ namespace Valkyrie_Nyr
                 if (CollisionAABB(attackBox, hurtbox))
                 {
                     DamageEnemies(Level.Current.enemyObjects[i], gameTime);
+                    Level.Current.enemyObjects[i].enemyHit = true;
+                    Level.Current.enemyObjects[i].hitTimer = 10;
                 }
             }
         }

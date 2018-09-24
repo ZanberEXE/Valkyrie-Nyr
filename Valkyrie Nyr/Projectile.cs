@@ -13,7 +13,7 @@ namespace Valkyrie_Nyr
 
         public float currentFrame;
         Vector2 aim;
-        int damage;
+        public int damage;
         Texture2D spritesheet;
         int speed;
         bool pierce;

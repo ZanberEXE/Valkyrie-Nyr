@@ -49,6 +49,10 @@ namespace Valkyrie_Nyr
         int nextAttack;
         int bufferValue;
 
+
+        public bool enemyHit;
+        public int hitTimer;
+
         Projectile[] tempEffekt = new Projectile[6]; 
 
         Rectangle defaultHurtBox;
