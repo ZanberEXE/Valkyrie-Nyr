@@ -567,22 +567,40 @@ namespace Valkyrie_Nyr
                 {
                     tempEffekt = new Projectile("NyrFireAoe", 300, 300, new Vector2(Player.Nyr.position.X + Player.Nyr.width / 2, Player.Nyr.position.Y + Player.Nyr.height / 4), new Vector2(0, 0), 800, true, new Rectangle(-150, -90, 300, 200), true, 25, 10, Player.Nyr.damage * 2);
                 }
-                if (fireAoeTimer <= 49 && fireAoeTimer >= 2)
+                if (fireAoeTimer <= 49 && fireAoeTimer >= 2 && !Player.Nyr.inFireAoe)
                 {
                     for (int i = 0; i < Level.Current.enemyObjects.Count; i++)
                     {
                         
                         Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
-                        
-                        /*if (Player.Nyr.CollisionAABB(hurtbox, tempEffekt.attackbox))
+                        if (tempEffekt != null)
                         {
-                            Level.currentLevel.enemyObjects[i].health -= 20;
-                        }*/
+                            if (Player.Nyr.CollisionAABB(hurtbox, tempEffekt.attackbox))
+                            {
+                                Level.Current.enemyObjects[i].enemyHit = true;
+                                Level.Current.enemyObjects[i].hitTimer = 20;
+                                Player.Nyr.inFireAoe = true;
+                                Level.currentLevel.enemyObjects[i].health -= tempEffekt.damage;
+                                if (Level.currentLevel.enemyObjects[i].health <= 0)
+                                {
+                                    Level.Current.enemyObjects[i].SpawnLoot();
+                                    Level.Current.enemyObjects.RemoveAt(i);
+                                    i--;
+                                    
+
+                                }
+                            }
                             
+                        }
+                        
+
                     }
 
                 }
-                
+                if (fireAoeTimer == 2)
+                {
+                    Player.Nyr.inFireAoe = false;
+                }
                 if (fireAoeTimer <= 1 && tempEffekt != null)
                 {
                     tempEffekt.Destroy();
@@ -877,9 +895,28 @@ namespace Valkyrie_Nyr
             //Draw all GameObjects such as Enemys
             foreach (Enemy element in enemyObjects)
             {
-                element.EntityRender(gameTime, spriteBatch);
-                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X, element.hurtBox.Location.Y - 100), Color.Black);
+
+
+                if (!element.enemyHit)
+                {
+                    
+                    element.EntityRender(gameTime, spriteBatch);
+                }
+                if (element.hitTimer < 0 && element.hitTimer >= 20)
+                {
+                    if (element.enemyHit && element.hitTimer % 2 == 0)
+                    {
+                        element.EntityRender(gameTime, spriteBatch);
+                    }
+                }
+                if (element.hitTimer == 0)
+                {
+                    element.enemyHit = false;
+                }
+                element.hitTimer--;
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
             }
+            
             Player.Nyr.EntityRender(gameTime, spriteBatch);
             Antagonist.Ryn.EntityRender(gameTime, spriteBatch);
 

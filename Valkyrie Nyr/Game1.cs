@@ -102,7 +102,7 @@ namespace Valkyrie_Nyr
                         States.CurrentGameState = GameStates.OPTIONS;
                         break;
                     case Keys.D3:
-                        States.CurrentGameState = GameStates.CREDITS;
+                        //States.CurrentGameState = GameStates.CREDITS;
                         break;
                     case Keys.D4:
                         States.CurrentGameState = GameStates.EXIT;

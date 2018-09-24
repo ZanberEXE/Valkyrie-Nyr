@@ -31,6 +31,7 @@ namespace Valkyrie_Nyr
         public int mana = 500;
 
         public int fAttackCheck;
+        public bool inFireAoe = false;
 
         // Feature bools
         public bool hasHeadband = true;
@@ -180,6 +181,8 @@ namespace Valkyrie_Nyr
                 if (CollisionAABB(attackBox, hurtbox))
                 {
                     DamageEnemies(Level.Current.enemyObjects[i], gameTime);
+                    Level.Current.enemyObjects[i].enemyHit = true;
+                    Level.Current.enemyObjects[i].hitTimer = 10;
                 }
             }
         }
