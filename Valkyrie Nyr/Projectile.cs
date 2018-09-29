@@ -12,7 +12,7 @@ namespace Valkyrie_Nyr
     {
 
         public float currentFrame;
-        Vector2 aim;
+        public Vector2 aim;
         public int damage;
         Texture2D spritesheet;
         int speed;
@@ -25,8 +25,34 @@ namespace Valkyrie_Nyr
         public Vector2 attackBoxOffset;
         public Vector2 attackBoxStartOffset;
 
-        public Projectile(string name, int height, int width, Vector2 position, Vector2 _aim, int _speed, bool _pierce, Rectangle _attackBox, bool _hasAnimation, int _maxFrames, int _framesPerRow, int _damage):base(name, "", 0, height, width, position)
+        public Projectile(string name, int height, int width, Vector2 position, Vector2 _aim, int _speed, bool _pierce, Rectangle _attackBox, bool _hasAnimation, int _maxFrames, int _framesPerRow, int _damage) : base(name, "", 0, height, width, position)
         {
+            damage = _damage;
+            aim = _aim;
+            speed = _speed;
+            pierce = _pierce;
+            attackbox = _attackBox;
+            maxFrames = _maxFrames;
+            framesPerRow = _framesPerRow;
+            hasAnimation = _hasAnimation;
+            framesPerSecond = 40;
+            attackBoxOffset = _attackBox.Location.ToVector2();
+            attackBoxStartOffset = _attackBox.Location.ToVector2();
+
+
+            string pathToSpriteSheet = Game1.Ressources.RootDirectory + "\\Projectiles\\" + name + ".xnb";
+            if (File.Exists(pathToSpriteSheet))
+            {
+                spritesheet = Game1.Ressources.Load<Texture2D>("Projectiles/" + name);
+            }
+            currentFrame = 0;
+
+            Level.Current.projectileObjects.Add(this);
+        }
+
+        public Projectile(int _mass, string name, int height, int width, Vector2 position, Vector2 _aim, int _speed, bool _pierce, Rectangle _attackBox, bool _hasAnimation, int _maxFrames, int _framesPerRow, int _damage) : base(name, "", 0, height, width, position)
+        {
+            mass = _mass;
             damage = _damage;
             aim = _aim;
             speed = _speed;

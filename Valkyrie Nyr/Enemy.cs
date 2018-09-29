@@ -205,14 +205,15 @@ namespace Valkyrie_Nyr
                             }
                             if (stateTimer == 0)
                             {
+                                int arwspeed =(int)( Vector2.Distance(this.position, Player.Nyr.position) * 3 + 100);
                                
                                 if (entityFacing == 1)
                                 {
-                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y), new Vector2(-1, 0), 1200, false, new Rectangle(-30, -15, 58, 10), false, 0, 0, damage);
+                                    new Projectile(1, "BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y), new Vector2(-1, 0), arwspeed, false, new Rectangle(-30, -15, 58, 10), false, 0, 0, damage);
                                 }
                                 if (entityFacing == -1)
                                 {
-                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), 1200, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage);
+                                    new Projectile(1, "BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), arwspeed, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage);
                                 }
                                 
                                 startAttack = false;
@@ -1275,8 +1276,7 @@ namespace Valkyrie_Nyr
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
                             Level.Current.gameObjects.RemoveAt(i);
-
-                            Level.Current.gameObjects.RemoveAt(i);
+                            i--;
 
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {

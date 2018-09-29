@@ -46,6 +46,8 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameUI.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Music.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Valkyrie_Nyr
 {
-    enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DANCE, FALL, LAND, STOP, CROUCH, DEAD };
+    enum Playerstates { IDLE, WALK, JUMP, FIGHT, HIT, DANCE, FALL, LAND, STOP, CROUCH, DEAD, SLIP };
     enum Enemystates { IDLE, WALK, ATTACK, AGGRO }
     enum Bossstates { IDLE, WALK, ATTACK1, ATTACK2, ATTACK3, ATTACK4, Special1, Special2 }
 

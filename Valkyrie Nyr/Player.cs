@@ -17,6 +17,7 @@ namespace Valkyrie_Nyr
         public float jumpHeight;
         public float inactivityTime = 0;
         public int slide;
+        public int attackCooldown;
         public bool inHub;
         public bool interact;
         public bool inJump;
@@ -60,6 +61,8 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25)
             };
             slide = 0;
@@ -263,7 +266,7 @@ namespace Valkyrie_Nyr
 
         public float slideValue(GameTime gameTime)
         {
-            float slideAmount = speed * (float)gameTime.ElapsedGameTime.TotalSeconds * ((float)slide / 1000.0f);
+            float slideAmount = speed * (float)gameTime.ElapsedGameTime.TotalSeconds * ((float)slide / 1000f);
             slide -= gameTime.ElapsedGameTime.Milliseconds;
             return slideAmount;
         }

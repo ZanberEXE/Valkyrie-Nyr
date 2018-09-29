@@ -15,9 +15,17 @@ namespace Valkyrie_Nyr
 {
     class Level
     {
+        //get current Level from everywhere
+        public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
+
+        //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
+        public static bool[] soulsRescued = new bool[] { false, false, false, false };
+        //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
+        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
+
+
         public string name;
         public string textboxText = "";
-        //public Enemy ryn;
 
         public List<GameObject> gameObjects;
         //public List<Entity> entityObjects;
@@ -30,37 +38,32 @@ namespace Valkyrie_Nyr
 
         int atkCooldown;
 
-        int dashtimer;
-        int fireAoeTimer;
+        public int dashtimer;
+        public int fireAoeTimer;
 
-        bool hasDashed = false;
+        public bool hasDashed = false;
+        public bool anyKeyPressed = false;
         bool drawMap = false;
-        Vector2 tempposition;
+        public Vector2 tempposition;
 
         public Vector2 positionBGSprite;
+        public Vector2 moveValue;
 
         private static Level currentLevel;
 
         Texture2D levelBGSprite;
         Texture2D map;
 
-        Projectile tempEffekt;
+        public Projectile tempEffekt;
 
-        Keys[] lastPressedKeys;
+        public Keys[] lastPressedKeys;
+        public Keys[] newPressedKeys;
 
-        //get current Level from everywhere
-        public static Level Current { get { if (currentLevel == null) { currentLevel = new Level(); } return currentLevel; } }
-
-        //
-        //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
-        public static bool[] soulsRescued = new bool[] { false, false, false, false };
-        //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
-        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
+        
 
         //loads the level
         public void loadLevel(string levelName)
         {
-            //ryn = new Enemy("ryn", null, 5, 100, 60, new Vector2(300, 0), 300, 20);
             map = Game1.Ressources.Load<Texture2D>("Map");
             Interface.Start();
             name = levelName;
@@ -300,15 +303,20 @@ namespace Valkyrie_Nyr
                             projectileObjects[i].attackBoxOffset.Y = 150 - (projectileObjects[i].currentFrame - 90) * (150f / 5f) - 50;
                             projectileObjects[i].attackbox.Height = (int)((projectileObjects[i].currentFrame - 90) * (150 / 5f));
                         }
-                        else if (projectileObjects[i].currentFrame > 170 && projectileObjects[i].currentFrame <= 187)
+                        else
                         {
-                            projectileObjects[i].attackBoxOffset.Y = (projectileObjects[i].currentFrame - 170) * (150 / 17f) - 40;
-                            projectileObjects[i].attackbox.Height = (int)((187 - projectileObjects[i].currentFrame) * (150 / 17f));
-                        }
-                        else if (projectileObjects[i].currentFrame == 0)
-                        {
+                            projectileObjects[i].attackBoxOffset.Y = 110;
                             projectileObjects[i].attackbox.Height = 0;
                         }
+                        //else if (projectileObjects[i].currentFrame > 170 && projectileObjects[i].currentFrame <= 187)
+                        //{
+                        //    projectileObjects[i].attackBoxOffset.Y = (projectileObjects[i].currentFrame - 170) * (150 / 17f) - 40;
+                        //    projectileObjects[i].attackbox.Height = (int)((187 - projectileObjects[i].currentFrame) * (150 / 17f));
+                        //}
+                        //else if (projectileObjects[i].currentFrame == 0)
+                        //{
+                        //    projectileObjects[i].attackbox.Height = 0;
+                        //}
                         break;
                 }
             }
@@ -325,293 +333,14 @@ namespace Valkyrie_Nyr
             UpdateTraps(gameTime);
 
             //Resetting Values
-            Vector2 moveValue = Vector2.Zero;
+            moveValue = Vector2.Zero;
             textboxText = "";
+            anyKeyPressed = false;
 
+            //get input from keyboard or controller
+            Input.Handeler.Update(gameTime);
 
-            //Let PLayer fall and save the moveValue in overall Movement
-            if (!Player.Nyr.inHub)
-            {
-                if (Player.Nyr.inStomp)
-                {
-                    moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
-                    moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
-                }
-                moveValue += Player.Nyr.Fall(gameTime, gameObjects.ToArray()) - Player.Nyr.position;
-            }
-
-            if (Player.Nyr.inJump)
-            {
-                if (!Player.Nyr.onGround)
-                {
-                    moveValue.Y -= Player.Nyr.jumpHeight;
-                }
-                else
-                {
-                    Player.Nyr.inJump = false;
-                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
-                    Player.Nyr.currentFrame = 0;
-                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                }
-            }
-
-            
-
-            if (atkCooldown > 0)
-            {
-                atkCooldown--;
-            }
-
-            //get Input from Keyboard
-            bool anyKeyPressed = false;
-
-            Keys[] newPressedKeys = Keyboard.GetState().GetPressedKeys();
-
-            foreach (Keys element in newPressedKeys)
-            {
-                anyKeyPressed = true;
-
-                switch (element)
-                {
-                    case Keys.A:
-                        if (!Player.Nyr.isCrouching)
-                        {
-                            moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                            Player.Nyr.entityFacing = -1;
-                            if (Player.Nyr.onIce)
-                            {
-                                Player.Nyr.slide = 1000;
-                            }
-                            if (Player.Nyr.currentEntityState == (int)Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP || Player.Nyr.currentEntityState == (int)Playerstates.DANCE)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
-                            }
-                        }
-                        break;
-                    case Keys.D:
-                        if (!Player.Nyr.isCrouching)
-                        {
-                            moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-                            Player.Nyr.entityFacing = 1;
-                            if (Player.Nyr.onIce)
-                            {
-                                Player.Nyr.slide = 1000;
-                            }
-                            if (Player.Nyr.currentEntityState == (int)Playerstates.IDLE || Player.Nyr.currentEntityState == (int)Playerstates.STOP || Player.Nyr.currentEntityState == (int)Playerstates.DANCE)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
-                            }
-                        }
-                        break;
-                    case Keys.Space:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            if (Player.Nyr.onGround && !Player.Nyr.inJump && !Player.Nyr.inHub)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.JUMP;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.FALL;
-                                Player.Nyr.inJump = true;
-                                Player.Nyr.onGround = false;
-                                moveValue.Y -= Player.Nyr.jumpHeight;
-                                SFX.CurrentSFX.loadSFX("sfx/sfx_jump");
-                            }
-                        }
-                        break;
-                    case Keys.W:
-                        if (Player.Nyr.inHub)
-                        {
-                            moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (Player.Nyr.currentEntityState != (int) Playerstates.WALK)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
-                            }
-                        }
-                        break;
-                    case Keys.S:
-                        if (Player.Nyr.inHub)
-                        {
-                            moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                            if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.WALK;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.WALK;
-                            }
-                        }
-                        else if (Player.Nyr.onGround)
-                        {
-                            Player.Nyr.isCrouching = true;
-                            if (Player.Nyr.currentEntityState != (int)Playerstates.CROUCH)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.CROUCH;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.CROUCH;
-                            }
-
-                            //TODO: set collider to crouch position
-                        }
-                        else if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Level.armorEnhanced[(int) BossElements.EARTH] && Player.Nyr.mana >= 40)
-                        {
-                            Player.Nyr.mana -= 40;
-                            Player.Nyr.inStomp = true;
-                            //Player.Nyr.currentEntityState = (int)Playerstates.STOMP;
-                            //Player.Nyr.currentFrame = 0;
-                            //Player.Nyr.nextEntityState = (int)Playerstates.STOMP;
-
-                        }
-                        break;
-                    case Keys.F:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            Player.Nyr.interact = true;
-                        }
-                        break;
-                    case Keys.M:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            drawMap = !drawMap;
-                        }
-                        break;
-                    case Keys.LeftShift:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub)
-                            {
-                                Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
-                                Player.Nyr.currentFrame = 0;
-                                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                                Player.Nyr.fAttackCheck = 20;
-                                atkCooldown = 60;
-                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
-
-                            }
-                        }
-                        break;
-                    case Keys.E:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
-                            {
-                                Player.Nyr.mana -= 30;
-                                atkCooldown = 60;
-                                if (Player.Nyr.entityFacing == -1)
-                                {
-                                    new Projectile("IceShot", 30, 10, Player.Nyr.position - new Vector2(35, -50), new Vector2(-1, 0), 2400, false, new Rectangle(-10, -10, 25, 10), false, 0, 0, 0);
-                                }
-                                else
-                                {
-                                    new Projectile("IceShot", 30, 10, Player.Nyr.position + new Vector2(Player.Nyr.width, 40), new Vector2(1, 0), 2400, false, new Rectangle(-10, 0, 25, 10), false, 0, 0, 0);
-                                }
-                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
-                            }
-                        }
-                        break;
-                    case Keys.Q:
-                        if (!newPressedKeys.SequenceEqual(lastPressedKeys))
-                        {
-                            if (atkCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
-                            {
-                                Player.Nyr.mana -= 80;
-                                atkCooldown = 60;
-                                Player.Nyr.CastFireAOE();
-                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
-                                fireAoeTimer = 40;
-                                Player.Nyr.MakeInvulnerable(40);
-                            }
-                        }
-                        break;
-                    case Keys.LeftControl:
-                        if (Level.armorEnhanced[(int)BossElements.BOLT] && hasDashed == false && Player.Nyr.mana >= 30)
-                        {
-                            Player.Nyr.mana -= 30;
-                            Player.Nyr.MakeInvulnerable();
-                            dashtimer = 30;
-                            tempposition = Player.Nyr.position;
-                            hasDashed = true;
-                            SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
-                        }
-                        break;
-                    
-
-                }
-            }
-            if (dashtimer >= 0)
-            {
-                if (dashtimer >= 20)
-                {
-                    if (Player.Nyr.entityFacing == -1)
-                    {
-                        moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
-                    }
-                    if (Player.Nyr.entityFacing == 1)
-                    {
-                        moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds * 4, 0);
-                    }
-                }
-                if (dashtimer <= 1)
-                {
-                    hasDashed = false;
-                }
-                dashtimer--;
-            }
-            if (fireAoeTimer >= 0)
-            {
-                if (fireAoeTimer == 39)
-                {
-                    tempEffekt = new Projectile("NyrFireAoe", 300, 300, new Vector2(Player.Nyr.position.X + Player.Nyr.width / 2, Player.Nyr.position.Y + Player.Nyr.height / 4), new Vector2(0, 0), 800, true, new Rectangle(-150, -90, 300, 200), true, 25, 10, Player.Nyr.damage * 2);
-                }
-                if (fireAoeTimer <= 49 && fireAoeTimer >= 2 && !Player.Nyr.inFireAoe)
-                {
-                    for (int i = 0; i < Level.Current.enemyObjects.Count; i++)
-                    {
-                        
-                        Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
-                        if (tempEffekt != null)
-                        {
-                            if (Player.Nyr.CollisionAABB(hurtbox, tempEffekt.attackbox))
-                            {
-                                Level.Current.enemyObjects[i].enemyHit = true;
-                                Level.Current.enemyObjects[i].hitTimer = 20;
-                                Player.Nyr.inFireAoe = true;
-                                Level.currentLevel.enemyObjects[i].health -= tempEffekt.damage;
-                                if (Level.currentLevel.enemyObjects[i].health <= 0)
-                                {
-                                    Level.Current.enemyObjects[i].SpawnLoot();
-                                    Level.Current.enemyObjects.RemoveAt(i);
-                                    i--;
-                                    
-
-                                }
-                            }
-                            
-                        }
-                        
-
-                    }
-
-                }
-                if (fireAoeTimer == 2)
-                {
-                    Player.Nyr.inFireAoe = false;
-                }
-                if (fireAoeTimer <= 1 && tempEffekt != null)
-                {
-                    tempEffekt.Destroy();
-                    tempEffekt = null;
-                }
-                fireAoeTimer--;
-            }
-            if (Player.Nyr.slide > 0 && Player.Nyr.onIce)
-            {
-                moveValue.X += Player.Nyr.slideValue(gameTime) * Player.Nyr.entityFacing;
-            }
+            Player.Nyr.onIce = false;
 
             //Let all movingPlatforms move and if Nyr stands on it, then move her too
             for (int i = 0; i < gameObjects.Count; i++)
@@ -655,26 +384,34 @@ namespace Valkyrie_Nyr
             //let em move, after all collisions have manipulated the movement
             Vector2 newMoveValue = checkCollision(moveValue);
 
+            
+
             if (newMoveValue != Vector2.Zero)
             {
-                if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
-                {
-                    Player.Nyr.currentEntityState = (int)Playerstates.LAND;
-                    Player.Nyr.currentFrame = 0;
-                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                }
 
                 Camera.Main.move(newMoveValue);
+
             }
+
+            //trigger all triggers, that have been triggered
+            Player.Nyr.activateTrigger(gameTime);
+
+                if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
+                {
+                    Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce) ? Playerstates.SLIP : Playerstates.LAND);
+                    Player.Nyr.currentFrame = 0;
+                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                    if (Player.Nyr.onIce)
+                    {
+                        Player.Nyr.slide = 1000;
+                    }
+                }
 
 
             //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
 
 
-            Player.Nyr.onIce = false;
-            //trigger all triggers, that have been triggered
-            Player.Nyr.activateTrigger(gameTime);
 
             Player.Nyr.EntityUpdate(gameTime);
 
@@ -684,7 +421,7 @@ namespace Valkyrie_Nyr
             }
         
 
-            if (!anyKeyPressed || (Player.Nyr.currentEntityState == (int) Playerstates.CROUCH && Keyboard.GetState().IsKeyUp(Keys.S)))
+            if (!anyKeyPressed)
             {
                 if (Player.Nyr.isCrouching)
                 {
@@ -695,12 +432,17 @@ namespace Valkyrie_Nyr
                 }
 
                 Player.Nyr.inactivityTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
                 if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND))
                 {
                     if (Player.Nyr.currentEntityState == (int)Playerstates.WALK && Player.Nyr.onGround)
                     {
                         Player.Nyr.currentEntityState = (int)Playerstates.STOP;
                         Player.Nyr.currentFrame = 0;
+                        if (Player.Nyr.onIce)
+                        {
+                            Player.Nyr.slide = 1000;
+                        }
                     }
                     Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
@@ -804,7 +546,7 @@ namespace Valkyrie_Nyr
         }
 
         //Lässt alle Objekte fallen, wenn sie nicht schon auf dem Boden sind und überprüft, ob sie aus der Welt gefallen sind
-        private void useGrav(GameTime gameTime)
+        public void useGrav(GameTime gameTime)
         {
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -831,6 +573,14 @@ namespace Valkyrie_Nyr
                 else
                 {
                     i++;
+                }
+            }
+            for (int i = 0; i < projectileObjects.Count;i++)
+            {
+                if (projectileObjects[i].mass > 0)
+                {
+                    projectileObjects[i].aim.Y = (projectileObjects[i].Fall(gameTime, projectileObjects.ToArray()).Y - projectileObjects[i].position.Y ) / 10;
+                    //projectileObjects[i].aim.Y = projectileObjects[i].Fall(gameTime, projectileObjects.ToArray()).Y / 1000;
                 }
             }
         }
@@ -914,7 +664,11 @@ namespace Valkyrie_Nyr
                     element.enemyHit = false;
                 }
                 element.hitTimer--;
-                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X, element.hurtBox.Location.Y - 100), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X-2, element.hurtBox.Location.Y - 102), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X-2, element.hurtBox.Location.Y - 98), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X+2, element.hurtBox.Location.Y - 102), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X+2, element.hurtBox.Location.Y - 98), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X, element.hurtBox.Location.Y - 100), Color.White);
             }
             
             Player.Nyr.EntityRender(gameTime, spriteBatch);
@@ -927,13 +681,20 @@ namespace Valkyrie_Nyr
                 //spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
             }
 
+            //TODO:delete
+            textboxText = (1.0 / gameTime.ElapsedGameTime.TotalSeconds).ToString();
+
             if (textboxText.Length > 0)
             {
-                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 200), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(98, 202), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(98, 198), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(102, 202), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(102, 198), Color.Black);
+                spriteBatch.DrawString(Game1.Font, textboxText, new Vector2(100, 200), Color.White);
 
             }
             Interface.Draw(spriteBatch);
-            if (drawMap)
+            if (GameUI.Handeler.ShowMap)
             {
                 DrawMap(spriteBatch);
             }
