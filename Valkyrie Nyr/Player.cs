@@ -64,8 +64,8 @@ namespace Valkyrie_Nyr
             };
             slide = 0;
             onIce = false;
-            health = hp;
             maxHealth = hp;
+            health = maxHealth;
             damage = dmg;
 
             attackBox.X = 0;
@@ -80,9 +80,8 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 30, 300, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 30, 140, 20, false); } return nyr; } }
         
-
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger, GameTime gameTime)
         {
@@ -237,13 +236,13 @@ namespace Valkyrie_Nyr
                     }
                     break;
                 case "MPFlower":
-                    if (health + 100 <= maxHealth)
+                    if (mana + 250 <= maxMana)
                     {
-                        health += 100;
+                        mana += 250;
                     }
                     else
                     {
-                        health = maxHealth;
+                        mana = maxMana;
                     }
                     break;
             }

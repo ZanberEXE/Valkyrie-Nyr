@@ -29,9 +29,9 @@ namespace Valkyrie_Nyr
             graphics = new GraphicsDeviceManager(this);
 
             //set windowsize
-            graphics.PreferredBackBufferHeight = 1000;
+            graphics.PreferredBackBufferHeight = 1080;
             graphics.PreferredBackBufferWidth = 1920;
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
 
             WindowSize = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
@@ -91,7 +91,7 @@ namespace Valkyrie_Nyr
                     case Keys.D1:
                         //Release Start
                         LoadSaveGame();
-                        Level.Current.loadLevel("Overworld");
+                        Level.Current.loadLevel("Hub");
                         States.CurrentGameState = GameStates.PLAYING;
                         if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
                         {

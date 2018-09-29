@@ -208,11 +208,11 @@ namespace Valkyrie_Nyr
                                
                                 if (entityFacing == 1)
                                 {
-                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y), new Vector2(-1, 0), 1200, false, new Rectangle(-30, -15, 58, 10), false, 0, 0, damage * 2);
+                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y), new Vector2(-1, 0), 1200, false, new Rectangle(-30, -15, 58, 10), false, 0, 0, damage);
                                 }
                                 if (entityFacing == -1)
                                 {
-                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), 1200, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage * 2);
+                                    new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), 1200, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage);
                                 }
                                 
                                 startAttack = false;

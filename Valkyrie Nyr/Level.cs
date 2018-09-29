@@ -150,7 +150,7 @@ namespace Valkyrie_Nyr
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
                     //startPosition = new Point(-13000, -(height - Game1.WindowSize.Y));
-                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(-500, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                     //TODO: evtl lötschn
@@ -169,7 +169,7 @@ namespace Valkyrie_Nyr
                 case "EisLevel":
                     width = 3750 * Camera.Main.zoom;
                     height = 1250 * Camera.Main.zoom;
-                    startPosition = new Point(0 + Game1.WindowSize.X, -(height - Game1.WindowSize.Y));
+                    startPosition = new Point(0, -(height - Game1.WindowSize.Y));
                     Player.Nyr.position = new Vector2(Game1.WindowSize.X / 2, Game1.WindowSize.Y / 2);
                     break;
                 default:
@@ -914,7 +914,7 @@ namespace Valkyrie_Nyr
                     element.enemyHit = false;
                 }
                 element.hitTimer--;
-                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.position.X, element.position.Y - 100), Color.Black);
+                spriteBatch.DrawString(Game1.Font, element.health.ToString(), new Vector2(element.hurtBox.Location.X, element.hurtBox.Location.Y - 100), Color.Black);
             }
             
             Player.Nyr.EntityRender(gameTime, spriteBatch);
