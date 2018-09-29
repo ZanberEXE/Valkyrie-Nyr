@@ -5,7 +5,7 @@
     "mass": 8,
     "height": 30,
     "width": 50,
-    "position": "14800, 3000",
+    "position": "14800, 2500",
     "health": 600,
     "damage": 60,
     "entityFacing": -1,
