@@ -136,8 +136,14 @@ namespace Valkyrie_Nyr
 
             foreach (GameObject element in collidedObjects)
             {
-                if (element.name == "ground" || element.name == "platform" || element.name == "cloud" || element.name == "breakableGround")
+                //if (element.name == "ground" || element.name == "platform" || element.name == "cloud" || element.name == "breakableGround")
+                if (element.triggerType == null)
                 {
+                    if(element.position.Y < this.position.Y + this.height)
+                    {
+                        continue;
+                    }
+
                     thisIsInsideElementX = this.position.X + this.width > element.position.X && this.position.X < element.position.X + element.width;
                     elementIsInsideThisX = this.position.X + this.width > element.position.X + element.width && this.position.X < element.position.X;
                     thisIsOnTopOfElement = this.position.Y + this.height < element.position.Y + 1;

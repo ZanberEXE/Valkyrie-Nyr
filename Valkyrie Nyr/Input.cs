@@ -324,6 +324,8 @@ namespace Valkyrie_Nyr
                     case Keys.LeftControl:
                         if (Level.armorEnhanced[(int)BossElements.BOLT] && Level.Current.hasDashed == false && Player.Nyr.mana >= 30)
                         {
+                            Player.Nyr.currentEntityState = (int)Playerstates.EVASION;
+                            Player.Nyr.currentFrame = 0;
                             Player.Nyr.mana -= 30;
                             Player.Nyr.MakeInvulnerable();
                             Level.Current.dashtimer = 30;
@@ -550,6 +552,8 @@ namespace Valkyrie_Nyr
                     Level.Current.anyKeyPressed = true;
                     if (Level.armorEnhanced[(int)BossElements.BOLT] && Level.Current.hasDashed == false && Player.Nyr.mana >= 30)
                     {
+                        Player.Nyr.currentEntityState = (int) Playerstates.EVASION;
+                        Player.Nyr.currentFrame = 0;
                         Player.Nyr.mana -= 30;
                         Player.Nyr.MakeInvulnerable();
                         Level.Current.dashtimer = 30;

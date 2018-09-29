@@ -287,6 +287,11 @@ namespace Valkyrie_Nyr
 
         protected override void Draw(GameTime gameTime)
         {
+            if(Level.Current.timeStop > 0)
+            {
+                Level.Current.timeStop--;
+                return;
+            }
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
@@ -324,14 +329,15 @@ namespace Valkyrie_Nyr
                 {
                     if (collider.name == "ice")
                     {
-                        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightSkyBlue, 150));
+                        //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightSkyBlue, 150));
                     }
                     else
                     {
-                        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                        //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                     }
                 }
                 //spriteBatch.Draw(pxl, new Rectangle((int)Antagonist.Ryn.position.X, (int)Antagonist.Ryn.position.Y, Antagonist.Ryn.width, Antagonist.Ryn.height), new Color(Color.LightGreen, 150));
+                //spriteBatch.Draw(pxl, new Rectangle((int)Player.Nyr.position.X, (int)Player.Nyr.position.Y, Player.Nyr.width, Player.Nyr.height), new Color(Color.LightGreen, 150));
             }
 
 

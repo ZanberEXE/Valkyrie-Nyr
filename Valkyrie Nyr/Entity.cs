@@ -77,6 +77,8 @@ namespace Valkyrie_Nyr
         public int attackBoxWidth;
         public int attackBoxHeight;
 
+        public float hittedTimer;
+
         public bool isInvulnerable;
         public int invulnerableTimer;
         bool isDead = false;
@@ -151,6 +153,15 @@ namespace Valkyrie_Nyr
         /// <param name="gameTime"></param>
         public void EntityUpdate(GameTime gameTime)
         {
+            if(hittedTimer > 0)
+            {
+                hittedTimer -= (float) gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                hittedTimer = 0;
+            }
+
             if (isInvulnerable)
             {
                 invulnerableTimer--;
@@ -345,10 +356,12 @@ namespace Valkyrie_Nyr
                 if (entityFacing == -1)
                 {
                     spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White);
+                    spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.DarkRed * hittedTimer);
                 }
                 else
                 {
                     spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+                    spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.DarkRed * hittedTimer, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
                 }
             }
             else
@@ -356,10 +369,12 @@ namespace Valkyrie_Nyr
                 if (entityFacing == 1)
                 {
                     spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White);
+                    spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.DarkRed * hittedTimer);
                 }
                 else
                 {
                     spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
+                    spriteBatch.Draw(animTex[(int)currentEntityState].texture, destinationRectangle, sourceRectangle, Color.DarkRed * hittedTimer, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
                 }
             }
 
@@ -368,8 +383,8 @@ namespace Valkyrie_Nyr
            // spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
          
             
-            spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
-            spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
         }
 
       

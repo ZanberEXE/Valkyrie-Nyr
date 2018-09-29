@@ -62,8 +62,10 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Landing"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Stop"), 10, 4, 31),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25),
-                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Crouch"), 10, 3, 25)
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dying"), 10, 7, 62),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Slip"), 10, 10, 100),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Evasion"), 10, 4, 37),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/IsDead"), 10, 2, 12)
             };
             slide = 0;
             onIce = false;
@@ -184,7 +186,8 @@ namespace Valkyrie_Nyr
                 {
                     DamageEnemies(Level.Current.enemyObjects[i], gameTime);
                     Level.Current.enemyObjects[i].enemyHit = true;
-                    Level.Current.enemyObjects[i].hitTimer = 10;
+                    Level.Current.enemyObjects[i].hitTimer = 1;
+                    
                 }
             }
         }
@@ -214,6 +217,10 @@ namespace Valkyrie_Nyr
                     }
                     Level.Current.loadLevel("Hub");
                 }
+            }
+            else
+            {
+                victim.hittedTimer = 1;
             }
         }
         private void collect(string item)

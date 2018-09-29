@@ -59,6 +59,8 @@ namespace Valkyrie_Nyr
         public Keys[] lastPressedKeys;
         public Keys[] newPressedKeys;
 
+        public int timeStop;
+
         
 
         //loads the level
@@ -398,7 +400,7 @@ namespace Valkyrie_Nyr
 
                 if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
                 {
-                    Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce) ? Playerstates.SLIP : Playerstates.LAND);
+                    Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce && !armorEnhanced[(int)BossElements.FIRE]) ? Playerstates.SLIP : Playerstates.LAND);
                     Player.Nyr.currentFrame = 0;
                     Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                     if (Player.Nyr.onIce)
@@ -499,7 +501,7 @@ namespace Valkyrie_Nyr
                 {
                     collidedTop = true;
                 }
-                else if (element.position.Y <= newPos.Y + Player.Nyr.height && element.position.Y > newPos.Y)
+                else if ((int)element.position.Y == (int)(newPos.Y + Player.Nyr.height))
                 {
                     if (Player.Nyr.inStomp && element.name == "breakableGround")
                     {
