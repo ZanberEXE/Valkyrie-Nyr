@@ -71,11 +71,15 @@ namespace Valkyrie_Nyr
         public Rectangle attackBox = new Rectangle();
         public Rectangle hurtBox = new Rectangle();
 
+        public float patrolLeft;
+        public float patrolRight;
+
         public int attackBoxWidth;
         public int attackBoxHeight;
 
         public bool isInvulnerable;
         public int invulnerableTimer;
+        bool isDead = false;
 
         public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position)
         {
@@ -104,7 +108,9 @@ namespace Valkyrie_Nyr
             attackBox.Y = (int)position.Y;
             attackBox.Width = attackBoxWidth;
             attackBox.Height = attackBoxHeight;
-            
+
+            patrolLeft = position.X - 100 + Camera.Main.position.X;
+            patrolRight = position.X + 100 + Camera.Main.position.X;
         }
         //moves the Player
         public void Move(Vector2 moveValue)
@@ -190,7 +196,7 @@ namespace Valkyrie_Nyr
                 attackBox.Y = (int)position.Y;
             }
             
-
+            // Small Enemy Boxes
             if (name == "Banshee")
             {
                 attackBox.X = (int)position.X;
@@ -202,7 +208,25 @@ namespace Valkyrie_Nyr
                 hurtBox.Y -= height / 2;
                 hurtBox.Height = height + height / 2;
             }
+            if (name == "BeeShocking")
+            {
+                hurtBox.Y += height / 4;
+                if (entityFacing == -1)
+                {
+                    hurtBox.X = (int)position.X - 10;
+                }
+                if (entityFacing == 1)
+                {
+                    hurtBox.X = (int)position.X + 10;
+                }
+            }
+            if ( name == "FireRocky")
+            {
+                hurtBox.Height = 150;
+                hurtBox.Y -= hurtBox.Height;
+            }
 
+            // Boss Boxes
             if (name == "Yinyin")
             {
                 hurtBox.Y = (int)position.Y - 120;
@@ -271,6 +295,23 @@ namespace Valkyrie_Nyr
                 {
                     Player.Nyr.gameOver();
                 }
+                else
+                {
+                    if (isDead == false)
+                    {
+                        currentFrame = 0;
+                        currentEntityState = (int)Enemystates.DEAD;
+                        nextEntityState = (int)Enemystates.ISDEAD;
+                        isDead = true;
+                    }
+                    
+                    if (currentEntityState == (int)Enemystates.ISDEAD)
+                    {
+                        Level.Current.enemyObjects[Level.Current.enemyObjects.IndexOf(this as Enemy)].SpawnLoot();
+                        Level.Current.enemyObjects.Remove(this as Enemy);
+                    }
+                    
+                }
             }
             if (name == "Nyr")
             {
@@ -324,11 +365,11 @@ namespace Valkyrie_Nyr
 
             Texture2D pxl = Game1.Ressources.Load<Texture2D>("index");
             //draw hitbox
-            //spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
+           // spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
          
             
-            //spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
-            //spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
+            spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
+            spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
         }
 
       

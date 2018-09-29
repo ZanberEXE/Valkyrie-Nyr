@@ -211,11 +211,6 @@ namespace Valkyrie_Nyr
                     }
                     Level.Current.loadLevel("Hub");
                 }
-                else
-                {
-                    Level.Current.enemyObjects.Remove(victim);
-                    victim.SpawnLoot();
-                }
             }
         }
         private void collect(string item)

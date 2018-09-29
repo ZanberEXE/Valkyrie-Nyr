@@ -52,6 +52,8 @@ namespace Valkyrie_Nyr
 
         public bool enemyHit;
         public int hitTimer;
+        public int switchFacingCount = 0;
+        public int bugTimer = 1;
 
         Projectile[] tempEffekt = new Projectile[6]; 
 
@@ -101,6 +103,7 @@ namespace Valkyrie_Nyr
                         continue;
                     }
                     entityFacing *= -1;
+                    switchFacingCount++;
                     break;
                 }
 
@@ -128,12 +131,9 @@ namespace Valkyrie_Nyr
                 }
                 if (fightStarted)
                 {
-
                     if (currentEntityState == (int)Enemystates.IDLE)
                     {
-
                         nextEntityState = (int)Enemystates.AGGRO;
-
                     }
                     if (currentEntityState == (int)Enemystates.AGGRO)
                     {
@@ -142,25 +142,26 @@ namespace Valkyrie_Nyr
                     if (currentEntityState == (int)Enemystates.WALK)
                     {
                         enemyReady = true;
-                        if (Player.Nyr.position.X + 40 < position.X)
+                        //hasAttacked = false;
+                        if (name == "Banshee" || name == "BeeShocking")
                         {
-                            entityFacing = 1;
-                            if (name == "Banshee")
+                            // Run Right towards Nyr
+                            if (Player.Nyr.position.X + 40 < position.X)
                             {
+                                entityFacing = 1;
                                 position.X -= nextPosition.X * entityFacing;
                             }
-
-
-                        }
-                        if (Player.Nyr.position.X + 40 > position.X)
-                        {
-                            entityFacing = -1;
-                            if (name == "Banshee")
+                            // Run Left towards Nyr
+                            if (Player.Nyr.position.X + 40 > position.X)
                             {
-                                position.X -= nextPosition.X * entityFacing;
+                                entityFacing = -1;
+                                {
+                                    position.X -= nextPosition.X * entityFacing;
+                                }
                             }
                         }
-                        if (name == "Banshee")
+                        // Fly up and downwards toward Nyr
+                        if (name == "Banshee" || name == "BeeShocking")
                         {
 
                             if (Player.Nyr.position.Y + 20 > position.Y)
@@ -171,10 +172,30 @@ namespace Valkyrie_Nyr
                             {
                                 position.Y -= ((1 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
                             }
-
                         }
-
+                        // Patrol Left and Right
+                        if ( name == "FireRocky")
+                        {
+                            if (entityFacing == 1)
+                            {
+                                position.X += nextPosition.X * entityFacing;
+                                if (position.X >= patrolRight - Camera.Main.position.X)
+                                {
+                                    entityFacing = -1;
+                                }
+                            }
+                            if (entityFacing == -1)
+                            {
+                                position.X += nextPosition.X * entityFacing;
+                                if (position.X <= patrolLeft - Camera.Main.position.X)
+                                {
+                                    entityFacing = 1;
+                                }
+                            }
+                        }
                     }
+
+
                     if (NyrBy(attackRange) && enemyReady && startAttack != true)
                     {
                         startAttack = true;
@@ -188,6 +209,14 @@ namespace Valkyrie_Nyr
                         if (name == "Skeleton")
                         {
                             stateTimer = 60;
+                        }
+                        if ( name == "BeeShocking")
+                        {
+                            tempPosition = Player.Nyr.position;
+                            hasAttacked = false;
+                            stateTimer = 80;
+                            defaultAttackRange = attackRange;
+                            attackRange = 0;
                         }
                     }
                     if (currentEntityState == (int)Enemystates.ATTACK)
@@ -254,6 +283,61 @@ namespace Valkyrie_Nyr
                             }
                         }
 
+                    
+                        if (name == "BeeShocking" && hasAttacked == false)
+                        {
+                            
+                            nextEntityState = (int)Enemystates.ATTACK;
+
+                            if (stateTimer <= 70 && stateTimer >= 2)
+                            {
+                                if (entityFacing == -1)
+                                {
+                                    
+                                    if (tempPosition.Y + 20 > position.Y)
+                                    {
+                                        position.Y += ((2 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                                        position.X -= nextPosition.X * entityFacing * 2;
+                                    }
+                                    if (tempPosition.Y + 20 < position.Y)
+                                    {
+                                        position.Y -= ((2 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                                        position.X -= nextPosition.X * entityFacing * 2;
+                                    }
+                                    attackBox.X = (int)position.X + 50;
+                                }
+                                if (entityFacing == 1)
+                                {
+                                    
+                                    if (tempPosition.Y + 20 > position.Y)
+                                    {
+                                        position.Y += ((2 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                                        position.X -= nextPosition.X * entityFacing * 2;
+                                    }
+                                    if (tempPosition.Y + 20 < position.Y)
+                                    {
+                                        position.Y -= ((2 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                                        position.X -= nextPosition.X * entityFacing * 2;
+                                    }
+                                    attackBox.X = (int)position.X - 10;
+                                }
+                                attackBox.Y = (int)position.Y + height - 10;
+                                attackBox.Width = 20;
+                                attackBox.Height = 20;
+                                if (CollisionAABB(attackBox, Player.Nyr.hurtBox))
+                                {
+                                    HurtNyr(damage * 3);
+                                }
+                            }
+
+                            if (stateTimer <= 1)
+                            {
+                                nextEntityState = (int)Enemystates.WALK;
+                                hasAttacked = true;
+                                //fightStarted = false;
+                                startAttack = false;
+                            }
+                        }
                     }
                     if (hasAttacked == true)
                     {
@@ -610,7 +694,7 @@ namespace Valkyrie_Nyr
                                 }
                                 if (stateTimer == 40)
                                 {
-                                    tempPosition = position;
+                                    tempPosition = position + Camera.Main.position;
                                 }
                                 if (stateTimer <= 20)
                                 {
@@ -961,6 +1045,16 @@ namespace Valkyrie_Nyr
                     animationStart = false;
                 }
                 stateTimer--;
+                if (bugTimer == 1)
+                {
+                    if (switchFacingCount >= 15)
+                    {
+                        position.Y -= 1;
+                    }
+                    switchFacingCount = 0;
+                    bugTimer = 30;
+                }
+                bugTimer--;
             }
 
 
@@ -1040,72 +1134,72 @@ namespace Valkyrie_Nyr
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 200, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 200 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                    
                     if (entityFacing == -1)
                     {
-                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 100, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[0] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 100 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 135)
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 250, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 250 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
 
                     if (entityFacing == -1)
                     {
-                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 150, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[1] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 150 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 130)
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 300, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 300 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
 
                     if (entityFacing == -1)
                     {
-                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 200, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[2] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 200 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 125)
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 350, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 350 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
 
                     if (entityFacing == -1)
                     {
-                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 250, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[3] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 250 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 120)
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 400, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 400 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
 
                     if (entityFacing == -1)
                     {
-                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 300, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[4] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 300 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 115)
                 {
                     if (entityFacing == 1)
                     {
-                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 450, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X + 450 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
 
                     if (entityFacing == -1)
                     {
-                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 350, tempPosition.Y + 180), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
+                        tempEffekt[5] = new Projectile("EarthSpikeW200H200", 200, 200, new Vector2(tempPosition.X - 350 - Camera.Main.position.X, tempPosition.Y + 180 - Camera.Main.position.Y), new Vector2(0, 0), 800, true, new Rectangle(-10, -1000, 20, 50), true, 50, 10, damage * 3);
                     }
                 }
                 if (effektTimer == 100)
@@ -1221,11 +1315,6 @@ namespace Valkyrie_Nyr
                     aiyeProjektiles = false;
                 }
             }
-
-
-
-
-
             if (aiyeWallToRight)
             {
                 if (effektTimer == 599)
@@ -1275,8 +1364,7 @@ namespace Valkyrie_Nyr
                             omgItsABox.Width = Level.Current.gameObjects[i].width;
                             omgItsABox.Height = Level.Current.gameObjects[i].height;
                             Level.Current.gameObjects.RemoveAt(i);
-
-                            Level.Current.gameObjects.RemoveAt(i);
+                            
 
                             if (CollisionAABB(Player.Nyr.hurtBox, omgItsABox))
                             {
@@ -1292,7 +1380,6 @@ namespace Valkyrie_Nyr
                     aiyeWallToRight = false;
                 }
             }
-
             if (aiyeWallToLeft)
             {
                 if (effektTimer == 599)
@@ -1357,7 +1444,6 @@ namespace Valkyrie_Nyr
                     aiyeWallToLeft = false;
                 }
             }
-
             if (effektTimer >= 0)
             {
                 effektTimer--;

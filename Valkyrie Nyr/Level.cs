@@ -678,10 +678,14 @@ namespace Valkyrie_Nyr
 
             Player.Nyr.EntityUpdate(gameTime);
 
-            foreach (Enemy element in enemyObjects)
+            for (int i = 0; i < enemyObjects.Count; i++)
+            {
+                enemyObjects[i].Update(gameTime);
+            }
+            /*foreach (Enemy element in enemyObjects)
             {
                 element.Update(gameTime);
-            }
+            }*/
         
 
             if (!anyKeyPressed || (Player.Nyr.currentEntityState == (int) Playerstates.CROUCH && Keyboard.GetState().IsKeyUp(Keys.S)))
