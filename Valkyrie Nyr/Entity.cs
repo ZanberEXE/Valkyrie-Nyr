@@ -190,7 +190,7 @@ namespace Valkyrie_Nyr
 
             //hurtBox.Y = (int)position.Y;
 
-            if (name != "Nyr")
+            if (name != "Nyr" && name != "FireRocky")
             {
                 attackBox.X = (int)position.X;
                 attackBox.Y = (int)position.Y;

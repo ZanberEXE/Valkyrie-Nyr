@@ -796,11 +796,6 @@ namespace Valkyrie_Nyr
                 
                 gameObject.startPosition -= moveValue;
             }
-            foreach (Enemy element in enemyObjects)
-            {
-                element.heightReset -= moveValue.Y;
-                //element.tempPosition -= moveValue;
-            }
             foreach (Projectile element in projectileObjects)
             {
                 element.position -= moveValue;

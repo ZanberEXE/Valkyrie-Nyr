@@ -10,7 +10,7 @@
     "damage": 70,
     "entityFacing": 1,
     "aggroRange": 900,
-    "attackRange": 200,
+    "attackRange": 350,
     "speed": 200,
     "attackBoxHeight": 60,
     "attackBoxWidth": 60,

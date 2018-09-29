@@ -17,8 +17,6 @@ namespace Valkyrie_Nyr
         int defaultAttackRange;
         public int attackRange;
         public int speed;
-        //TODO: DEBUG Höhe resetten
-        public float heightReset;
 
         int stateTimer;
         int aiyeWalking = 56;
@@ -155,9 +153,8 @@ namespace Valkyrie_Nyr
                             if (Player.Nyr.position.X + 40 > position.X)
                             {
                                 entityFacing = -1;
-                                {
-                                    position.X -= nextPosition.X * entityFacing;
-                                }
+                                position.X -= nextPosition.X * entityFacing;
+                                
                             }
                         }
                         // Fly up and downwards toward Nyr
@@ -176,20 +173,37 @@ namespace Valkyrie_Nyr
                         // Patrol Left and Right
                         if ( name == "FireRocky")
                         {
-                            if (entityFacing == 1)
+                            if (hasAttacked == false || !NyrBy(1000))
                             {
-                                position.X += nextPosition.X * entityFacing;
-                                if (position.X >= patrolRight - Camera.Main.position.X)
+                                if (entityFacing == 1)
                                 {
-                                    entityFacing = -1;
+                                    position.X += nextPosition.X * entityFacing;
+                                    if (position.X >= patrolRight - Camera.Main.position.X)
+                                    {
+                                        entityFacing = -1;
+                                    }
+                                }
+                                if (entityFacing == -1)
+                                {
+                                    position.X += nextPosition.X * entityFacing;
+                                    if (position.X <= patrolLeft - Camera.Main.position.X)
+                                    {
+                                        entityFacing = 1;
+                                    }
                                 }
                             }
-                            if (entityFacing == -1)
+                            else
                             {
-                                position.X += nextPosition.X * entityFacing;
-                                if (position.X <= patrolLeft - Camera.Main.position.X)
+                                if (Player.Nyr.position.X + 40 < position.X)
+                                {
+                                    entityFacing = -1;
+                                    position.X += nextPosition.X * entityFacing;
+                                }
+                                if (Player.Nyr.position.X + 40 > position.X)
                                 {
                                     entityFacing = 1;
+                                    position.X += nextPosition.X * entityFacing;
+                                    
                                 }
                             }
                         }
@@ -218,6 +232,10 @@ namespace Valkyrie_Nyr
                             defaultAttackRange = attackRange;
                             attackRange = 0;
                         }
+                        if ( name == "FireRocky")
+                        {
+                            stateTimer = 60;
+                        }
                     }
                     if (currentEntityState == (int)Enemystates.ATTACK)
                     {
@@ -244,6 +262,78 @@ namespace Valkyrie_Nyr
                                     new Projectile("BowProjectile2", 58, 9 * 2, new Vector2(position.X, position.Y - 20), new Vector2(1, 0), 1200, false, new Rectangle(-10, 5, 58, 10), false, 0, 0, damage);
                                 }
                                 
+                                startAttack = false;
+                            }
+                        }
+                        if (name == "FireRocky")
+                        {
+                            if (Player.Nyr.position.X + 40 < position.X)
+                            {
+                                entityFacing = -1;
+                            }
+                            if (Player.Nyr.position.X + 40 > position.X)
+                            {
+                                entityFacing = 1;
+                            }
+                            if (stateTimer <= 30 && stateTimer > 21)
+                            {
+                                if (Player.Nyr.position.X + 40 < position.X - 100)
+                                {
+                                    entityFacing = -1;
+                                    position.X += nextPosition.X * entityFacing * 2;
+                                }
+
+                                if (Player.Nyr.position.X + 40 > position.X + 200)
+                                {
+                                    entityFacing = 1;
+                                    position.X += nextPosition.X * entityFacing * 2;
+                                }
+                                if (Player.Nyr.position.X + 40 > position.X - 100 && Player.Nyr.position.X < position.X + 200)
+                                {
+                                    entityFacing = 1;
+                                    position.X += nextPosition.X * entityFacing * 4;
+                                }
+                            }
+                            if (stateTimer == 21)
+                            {
+                                if (entityFacing == -1)
+                                {
+                                    attackBox.Y = (int)position.Y - 170;
+                                    attackBox.X = (int)position.X - 80;
+
+                                }
+                                if (entityFacing == 1)
+                                {
+                                    attackBox.Y = (int)position.Y - 150;
+                                    attackBox.X = (int)position.X + 160;
+                                }
+                            }
+                            if ( stateTimer <= 20 && stateTimer >= 5)
+                            {
+
+                                if (entityFacing == -1)
+                                {
+                                    attackBox.Y += 5;
+                                    attackBox.X -= 3;
+                                    
+                                }
+                                if ( entityFacing == 1)
+                                {
+                                    attackBox.Y += 5;
+                                    attackBox.X -= -3;
+                                }
+                                
+                                attackBox.Width = 20;
+                                attackBox.Height = 20;
+                                if (CollisionAABB(attackBox, Player.Nyr.hurtBox))
+                                {
+                                    HurtNyr(damage * 3);
+                                }
+                            }
+                            if (stateTimer == 0)
+                            {
+                                nextEntityState = (int)Enemystates.WALK;
+                                hasAttacked = true;
                                 startAttack = false;
                             }
                         }
@@ -334,12 +424,12 @@ namespace Valkyrie_Nyr
                             {
                                 nextEntityState = (int)Enemystates.WALK;
                                 hasAttacked = true;
-                                //fightStarted = false;
                                 startAttack = false;
                             }
                         }
                     }
-                    if (hasAttacked == true)
+
+                    if (hasAttacked == true && name != "FireRocky")
                     {
                         attackRange = defaultAttackRange;
                     }
@@ -371,8 +461,6 @@ namespace Valkyrie_Nyr
                     fightStarted = true;
 
                     States.CurrentBGMState = BGMStates.BOSS;
-                    // TODO: Höhe resetten
-                    //heightReset = position.Y + Camera.Main.position.Y;
                 }
 
 
@@ -385,8 +473,7 @@ namespace Valkyrie_Nyr
                     if (currentEntityState == (int)Bossstates.IDLE)
                     {
                         aiyeDoIt = false;
-
-                        // TODO: Höhe resetten //position.Y = heightReset - Camera.Main.position.Y;
+                        
 
                         hurtBox.Width = defaultHurtBox.Width;
                         hurtBox.Height = defaultHurtBox.Height;
@@ -1470,13 +1557,13 @@ namespace Valkyrie_Nyr
             {
                 case 0:
                 case 1:
-                    spawnedLoot = new GameObject("Coin", "collectable", 5, 25, 25, position - new Vector2(10, 0));
+                    spawnedLoot = new GameObject("Coin", "collectable", 5, 25, 25, hurtBox.Location.ToVector2() + new Vector2(width / 2, height / 2));
                     break;
                 case 2:
-                    spawnedLoot = new GameObject("HPFlower", "collectable", 5, 64, 64, position - new Vector2(10,0));
+                    spawnedLoot = new GameObject("HPFlower", "collectable", 5, 64, 64, hurtBox.Location.ToVector2() + new Vector2(width / 2, height / 2));
                     break;
                 case 3:
-                    spawnedLoot = new GameObject("MPFlower", "collectable", 5, 64, 64, position - new Vector2(10, 0));
+                    spawnedLoot = new GameObject("MPFlower", "collectable", 5, 64, 64, hurtBox.Location.ToVector2() + new Vector2(width / 2, height / 2));
                     break;
             }
             if(spawnedLoot != null)
