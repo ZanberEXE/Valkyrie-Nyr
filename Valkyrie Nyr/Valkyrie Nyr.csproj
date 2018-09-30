@@ -159,6 +159,9 @@
     <None Include="Ressources\json-files\EisLevel_nscObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Ressources\json-files\enemyTemplates.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Ressources\json-files\ErdLevel_enemyObjects.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

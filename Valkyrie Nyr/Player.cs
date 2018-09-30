@@ -48,7 +48,7 @@ namespace Valkyrie_Nyr
 
         public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
-            speed = 700;
+            speed = 3000;
             jumpHeight = 16;
             inHub = false;
             interact = false;
@@ -332,9 +332,8 @@ namespace Valkyrie_Nyr
                 nextEntityState = (int)Playerstates.ISDEAD;
             }
             
-            if (currentEntityState == (int)Playerstates.ISDEAD)
+            if (currentEntityState == (int)Playerstates.ISDEAD || this.position.Y > Game1.WindowSize.Y)
             {
-                
                 Level.Current.loadLevel("Hub");
                 health = maxHealth;
                 mana = maxMana;
