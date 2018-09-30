@@ -188,7 +188,7 @@ namespace Valkyrie_Nyr
         {
             if (Player.Nyr.isInvulnerable == false)
             {
-                Player.Nyr.health -= damage - Player.Nyr.armor;
+                Player.Nyr.health -= damage + ( speed / 50) - Player.Nyr.armor;
                 Player.Nyr.MakeInvulnerable();
             }
            

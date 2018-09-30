@@ -80,6 +80,7 @@ namespace Valkyrie_Nyr
             }
             Player.Nyr.money = System.Int32.Parse(saveData[12]);
             Player.Nyr.maxHealth = System.Int32.Parse(saveData[14]);
+            Player.Nyr.health = System.Int32.Parse(saveData[14]);
         }
 
         //TODO: proper content

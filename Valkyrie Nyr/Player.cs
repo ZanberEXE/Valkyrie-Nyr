@@ -248,6 +248,14 @@ namespace Valkyrie_Nyr
                         mana = maxMana;
                     }
                     break;
+                case "armorUpgrade":
+                    Level.armorEnhanced[(int)BossElements.ARMOR] = true;
+                    armor = 50;
+                    break;
+                case "weaponUpgrade":
+                    Level.armorEnhanced[(int)BossElements.WEAPON] = true;
+                    damage *= 5;
+                    break;
             }
         }
 

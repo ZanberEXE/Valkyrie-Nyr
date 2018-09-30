@@ -10,7 +10,7 @@ namespace Valkyrie_Nyr
     enum Enemystates { IDLE, WALK, ATTACK, AGGRO, DEAD, ISDEAD }
     enum Bossstates { IDLE, WALK, ATTACK1, ATTACK2, ATTACK3, ATTACK4, Special1, Special2 }
 
-    enum BossElements { FIRE, ICE, EARTH, BOLT}
+    enum BossElements { FIRE, ICE, EARTH, BOLT, WEAPON, ARMOR}
 
     enum GameStates { MAINMENU, PLAYING, EXIT, OPTIONS, CREDITS, PAUSE, LOSE, SPLASHSCREEN, CONVERSATION }
 
