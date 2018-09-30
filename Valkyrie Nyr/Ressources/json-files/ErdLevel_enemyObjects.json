@@ -1,5 +1,103 @@
 [
   {
+    "name": "Skeleton",
+    "triggerType": "",
+    "mass": 4,
+    "height": 80,
+    "width": 50,
+    "position": "11000, 3000",
+    "health": 100,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 700,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/Skeleton/SkeletonIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonMove",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonAttack",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonAggro",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "Skeleton",
+    "triggerType": "",
+    "mass": 4,
+    "height": 80,
+    "width": 50,
+    "position": "6900, 3600",
+    "health": 100,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 700,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/Skeleton/SkeletonIdle",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonMove",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonAttack",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonAggro",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/Skeleton/SkeletonDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
     "name": "Aiye",
     "triggerType": "",
     "mass": 20,

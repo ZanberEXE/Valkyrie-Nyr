@@ -5,6 +5,104 @@
     "mass": 0,
     "height": 60,
     "width": 60,
+    "position": "8500, 3350",
+    "health": 50,
+    "damage": 50,
+    "entityFacing": 1,
+    "aggroRange": 800,
+    "attackRange": 300,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/BeeShocking/BeeIdle",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeMove",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAttack",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "BeeShocking",
+    "triggerType": "",
+    "mass": 0,
+    "height": 60,
+    "width": 60,
+    "position": "4500, 4350",
+    "health": 50,
+    "damage": 50,
+    "entityFacing": 1,
+    "aggroRange": 800,
+    "attackRange": 300,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/BeeShocking/BeeIdle",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeMove",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAttack",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "BeeShocking",
+    "triggerType": "",
+    "mass": 0,
+    "height": 60,
+    "width": 60,
     "position": "1200, 3500",
     "health": 50,
     "damage": 50,

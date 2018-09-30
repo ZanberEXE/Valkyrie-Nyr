@@ -345,14 +345,14 @@ namespace Valkyrie_Nyr
                     {
                         if (Player.Nyr.entityFacing == -1)
                         {
-                            Level.Current.moveValue.X -= 20;
+                            Level.Current.moveValue.X -= 2;
                             attackBox.Location += new Point(width / 2 - attackBox.Width, height / 2);
                             attackBox.Width = 140;
                             attackBox.Height = 20;
                         }
                         else
                         {
-                            Level.Current.moveValue.X += 20;
+                            Level.Current.moveValue.X += 2;
                             attackBox.Location += new Point(width / 2, height / 2);
                             attackBox.Width = 140;
                             attackBox.Height = 20;
@@ -415,7 +415,7 @@ namespace Valkyrie_Nyr
                     {
                         if (Player.Nyr.entityFacing == -1)
                         {
-                            Level.Current.moveValue.X -= 4;
+                            Level.Current.moveValue.X += 4;
                             attackBox.X -= 5;
                             attackBox.Y += 10;
                             attackBox.Width = 20;
@@ -423,7 +423,7 @@ namespace Valkyrie_Nyr
                         }
                         else
                         {
-                            Level.Current.moveValue.X += 4;
+                            Level.Current.moveValue.X -= 4;
                             attackBox.X += 5;
                             attackBox.Y += 10;
                             attackBox.Width = 20;
@@ -437,12 +437,23 @@ namespace Valkyrie_Nyr
                 }
 
 
-                
-                if (Player.Nyr.fAttackCheck == 13)
+                if (currentEntityState == (int)Playerstates.ATTACK3)
                 {
-                    Player.Nyr.Attack(gameTime);
+                    if (Player.Nyr.fAttackCheck <= 15 && Player.Nyr.fAttackCheck >= 14 )
+                    {
+                        Player.Nyr.Attack(gameTime);
+                    }
+                    Player.Nyr.fAttackCheck--;
                 }
-                Player.Nyr.fAttackCheck--;
+                else
+                {
+                    if (Player.Nyr.fAttackCheck == 13)
+                    {
+                        Player.Nyr.Attack(gameTime);
+                    }
+                    Player.Nyr.fAttackCheck--;
+                }
+                
                 
             }
         }

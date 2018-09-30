@@ -1,5 +1,250 @@
 [
-   {
+  {
+    "name": "IceColossus",
+    "triggerType": "",
+    "mass": 15,
+    "height": 30,
+    "width": 90,
+    "position": "7000, 8800",
+    "health": 310,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 500,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 100,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusIdle",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusMove",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusAttack",
+        "Columns": 10,
+        "Rows": 8,
+        "maxFrames": 75
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusAggro",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "FireRocky",
+    "triggerType": "",
+    "mass": 15,
+    "height": 0,
+    "width": 100,
+    "position": "9000, 5400",
+    "health": 220,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 350,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/FireRocky/FireRockyIdle",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyMove",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAttack",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "FireRocky",
+    "triggerType": "",
+    "mass": 15,
+    "height": 0,
+    "width": 100,
+    "position": "8000, 4250",
+    "health": 220,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 350,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/FireRocky/FireRockyIdle",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyMove",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAttack",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "BeeShocking",
+    "triggerType": "",
+    "mass": 0,
+    "height": 60,
+    "width": 60,
+    "position": "4900, 3600",
+    "health": 50,
+    "damage": 50,
+    "entityFacing": 1,
+    "aggroRange": 800,
+    "attackRange": 300,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/BeeShocking/BeeIdle",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeMove",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAttack",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
+    "name": "BeeShocking",
+    "triggerType": "",
+    "mass": 0,
+    "height": 60,
+    "width": 60,
+    "position": "11500, 1000",
+    "health": 50,
+    "damage": 50,
+    "entityFacing": 1,
+    "aggroRange": 800,
+    "attackRange": 300,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": false,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/BeeShocking/BeeIdle",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeMove",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAttack",
+        "Columns": 10,
+        "Rows": 2,
+        "maxFrames": 12
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/BeeShocking/BeeDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
     "name": "Skeleton",
     "triggerType": "",
     "mass": 4,
@@ -231,5 +476,5 @@
         "maxFrames": 43
       }
     ]
-  },
+  }
 ]

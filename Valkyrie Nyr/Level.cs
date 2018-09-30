@@ -193,28 +193,105 @@ namespace Valkyrie_Nyr
                     new Projectile("Earthspike", 200, 200, new Vector2(1500, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(2500, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(4000, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(6800, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(5600, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(5700, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(5800, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(5900, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6000, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6100, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6200, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6300, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 150, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6400, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6500, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(6600, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6700, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6800, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(6900, 4600 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(5050, 3050 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(9500, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(10000, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9100, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9200, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 178, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9300, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 165, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9400, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 155, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9500, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 160, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9600, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 185, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9700, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 170, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9800, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 152, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(9900, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 156, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10000, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 171, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10100, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10200, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 176, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10300, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 156, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10400, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 175, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10500, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 153, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10600, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 185, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10700, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 164, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10800, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 168, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(10900, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 160, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11000, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 170, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11100, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 177, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(11200, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11300, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 159, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11400, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 166, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11500, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 172, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11600, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 163, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11700, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 155, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11800, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 172, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11900, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 164, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12000, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 150, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(10600, 4200 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     break;
                 case "FeuerLevel":
-                    new Projectile("Earthspike", 200, 200, new Vector2(1500, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(2500, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(2121, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(2720, 4650 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(6600, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(7700, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(8800, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    new Projectile("Earthspike", 200, 200, new Vector2(9900, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
-                    gameObjects.Add(new GameObject("armorUpgrade", "collectable", 1, 42, 35, new Vector2(7500, 10000) + startPosition.ToVector2()));
+                    new Projectile("FirePillar", 1000, 200, new Vector2(4600, 3000 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 125, 10, 250);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(6070, 3000 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 125, 10, 250);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(8500, 3300 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 125, 10, 250);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(9000, 3300 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 111, 10, 250);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(9500, 3300 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 100, 10, 250);
+                    gameObjects.Add(new GameObject("armorUpgrade", "collectable", 1, 42, 35, new Vector2(10000, 8500) + startPosition.ToVector2()));
                     break;
                 case "BlitzLevel":
-                    new Projectile("Lightning", 800, 200, new Vector2(500, 3500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 50, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(7750, 1800 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 100, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(3000, 4500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 100, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(3400, 4500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 48, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(4000, 4500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 100, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(3700, 4500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 72, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(4500, 4500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 90, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(7250, 3500 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 50, 10, 200);
+                    gameObjects.Add(new GameObject("HPFlower", "collectable", 5, 64, 64, new Vector2(8000, 1500) + startPosition.ToVector2()));
                     gameObjects.Add(new GameObject("weaponUpgrade", "collectable", 1, 21, 96, new Vector2(1000, 5000) + startPosition.ToVector2()));
+                    break;
+                case "Overworld":
+                    break;
+                case "Bossstage":
+                    new Projectile("Lightning", 800, 200, new Vector2(8200, 1000 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 50, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(8700, 1000 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 72, 10, 200);
+                    new Projectile("Lightning", 800, 200, new Vector2(9200, 1000 - 300) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 100, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11700, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 176, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11800, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 156, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(11900, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 175, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12000, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 153, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12100, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 164, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12200, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 185, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12300, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 168, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12400, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 160, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12500, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 155, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12600, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 159, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12700, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 166, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12800, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 150, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(12900, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 177, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13000, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 163, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13100, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 155, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13200, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 156, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13300, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 160, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13400, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 159, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13500, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 182, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13600, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13700, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 178, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13800, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 165, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(13900, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 155, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(14000, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 160, 10, 200);
+                    new Projectile("Earthspike", 200, 200, new Vector2(14100, 8500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 185, 10, 200);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(16360, 6900 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 125, 10, 250);
+                    new Projectile("FirePillar", 1000, 200, new Vector2(17350, 6900 - 500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 111, 10, 250);
                     break;
             }
 
@@ -314,14 +391,27 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case "Lightning":
-                        if (projectileObjects[i].currentFrame > 0 && projectileObjects[i].currentFrame <= 20)
+                        if (projectileObjects[i].currentFrame > 0 && projectileObjects[i].currentFrame <= 12)
                         {
-                            projectileObjects[i].attackbox.Height = (int)(projectileObjects[i].currentFrame * (750 / 20f)) + 50;
+                            projectileObjects[i].attackbox.Height = (int)(projectileObjects[i].currentFrame * (750 / 12)) + 50;
                         }
-                        else if(projectileObjects[i].currentFrame > 25)
+                        else if(projectileObjects[i].currentFrame > 12)
                         {
                             projectileObjects[i].attackbox.Height = 0;
                         }
+                        break;
+                    case "FirePillar":
+                       if (projectileObjects[i].currentFrame > 0 && projectileObjects[i].currentFrame <= 30)
+                        {
+                            projectileObjects[i].attackbox.Height = (int)(projectileObjects[i].currentFrame * (1000 / 30));
+                            projectileObjects[i].attackBoxOffset.Y = (30 - projectileObjects[i].currentFrame) * (1000 / 30) - 500;
+                        }
+                        else if (projectileObjects[i].currentFrame > 90)
+                        {
+                            projectileObjects[i].attackbox.Height = 1000 - ((int)(projectileObjects[i].currentFrame - 90) * (1000 / 35));
+                            projectileObjects[i].attackBoxOffset.Y = (projectileObjects[i].currentFrame - 90) * (1000 / 35) - 500;
+                        }
+                      
                         break;
                 }
             }
@@ -396,7 +486,11 @@ namespace Valkyrie_Nyr
 
             #region updatePlayer
             //get input from keyboard or controller
-            Input.Handeler.Update(gameTime);
+            if ( Player.Nyr.currentEntityState != (int)Playerstates.DYING)
+            {
+                Input.Handeler.Update(gameTime);
+            }
+            
 
             Player.Nyr.onIce = false;
 
@@ -410,6 +504,9 @@ namespace Valkyrie_Nyr
                 }
                 moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
             }
+
+            //AnimationUpdate
+            Player.Nyr.EntityUpdate(gameTime);
 
             //let em move, after all collisions have manipulated the movement
             moveValue = Movement.Update(moveValue);
@@ -440,8 +537,7 @@ namespace Valkyrie_Nyr
                 }
             }
 
-            //AnimationUpdate
-            Player.Nyr.EntityUpdate(gameTime);
+            
 
 
             //set right state

@@ -290,9 +290,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.fAttackCheck = 20;
                                 Player.Nyr.attackCooldown = 30;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
-
                             }
-                            // CONTROLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                             if (Player.Nyr.attackCooldown <= 15 && Player.Nyr.attackCooldown >= 5 && Player.Nyr.currentEntityState == (int)Playerstates.ATTACK)
                             {
                                 Player.Nyr.currentEntityState = (int)Playerstates.ATTACK2;
@@ -307,7 +305,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentEntityState = (int)Playerstates.ATTACK3;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                                Player.Nyr.fAttackCheck = 50;
+                                Player.Nyr.fAttackCheck = 40;
                                 Player.Nyr.attackCooldown = 50;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                             }
@@ -539,6 +537,24 @@ namespace Valkyrie_Nyr
                         Player.Nyr.attackCooldown = 30;
                         SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
+                    }
+                    if (Player.Nyr.attackCooldown <= 15 && Player.Nyr.attackCooldown >= 5 && Player.Nyr.currentEntityState == (int)Playerstates.ATTACK)
+                    {
+                        Player.Nyr.currentEntityState = (int)Playerstates.ATTACK2;
+                        Player.Nyr.currentFrame = 0;
+                        Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                        Player.Nyr.fAttackCheck = 20;
+                        Player.Nyr.attackCooldown = 30;
+                        SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+                    }
+                    if (Player.Nyr.attackCooldown <= 15 && Player.Nyr.attackCooldown >= 5 && Player.Nyr.currentEntityState == (int)Playerstates.ATTACK2)
+                    {
+                        Player.Nyr.currentEntityState = (int)Playerstates.ATTACK3;
+                        Player.Nyr.currentFrame = 0;
+                        Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                        Player.Nyr.fAttackCheck = 50;
+                        Player.Nyr.attackCooldown = 50;
+                        SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                     }
                 }
                 if (state.IsButtonDown(Buttons.RightShoulder) && !lastPressedGamePadButtons[15])

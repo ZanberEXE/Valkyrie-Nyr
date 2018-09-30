@@ -1268,18 +1268,6 @@
 /processorParam:TextureFormat=Color
 /build:Projectiles/Blitzball2.png
 
-#begin Projectiles/LightningW200H800v2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Projectiles/LightningW200H800v2.png
-
 #begin Projectiles/AiyeEarthProjectile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1772,18 +1760,6 @@
 /processorParam:TextureFormat=Color
 /build:Bosses/Ryn/RynStandCry.png
 
-#begin Projectiles/FirePillarW200H500.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Projectiles/FirePillarW200H500.png
-
 #begin newPlayer/Attack2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1808,6 +1784,18 @@
 /processorParam:TextureFormat=Color
 /build:newPlayer/Attack3.png
 
+#begin Projectiles/Lightning2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Projectiles/Lightning2.png
+
 #begin Projectiles/Lightning.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1820,7 +1808,7 @@
 /processorParam:TextureFormat=Color
 /build:Projectiles/Lightning.png
 
-#begin armorUpgrade.png
+#begin Projectiles/FirePillarSmall.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1830,9 +1818,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:armorUpgrade.png
+/build:Projectiles/FirePillarSmall.png
 
-#begin weaponUpgrade.png
+#begin Projectiles/FirePillar.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1842,5 +1830,17 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:weaponUpgrade.png
+/build:Projectiles/FirePillar.png
+
+#begin Projectiles/GoddessSpearW1200H800.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Projectiles/GoddessSpearW1200H800.png
 

@@ -1,923 +1,931 @@
 [
   {
-      "name": "platform",
-      "height": 50,
-      "width": 600,
-      "position": "14350, 9300",
+    "name": "platform",
+    "height": 50,
+    "width": 600,
+    "position": "14350, 9300"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 750,
-      "position": "29500, 7500",
+    "name": "platform",
+    "height": 50,
+    "width": 750,
+    "position": "29500, 7500"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "5800, 9050",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "5800, 9050"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "5800, 9050",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "5800, 9050"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 650,
-      "position": "21400, 6450",
+    "name": "platform",
+    "height": 50,
+    "width": 650,
+    "position": "21400, 6450"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "28200, 6550",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "28200, 6550"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 300,
-      "position": "28200, 6550",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 300,
+    "position": "28200, 6550"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "6050, 9200",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "6050, 9200"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 300,
-      "position": "6050, 9200",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 300,
+    "position": "6050, 9200"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "10940, 6000",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "10940, 6000"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 100,
-      "position": "28200, 7000",
+    "name": "platform",
+    "height": 50,
+    "width": 100,
+    "position": "28200, 7000"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 100,
-      "position": "28200, 7000",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 100,
+    "position": "28200, 7000"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "6400, 9435",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "6400, 9435"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "6400, 9435",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "6400, 9435"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "10940, 6050",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "10940, 6050"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 100,
-      "position": "28000, 6800",
+    "name": "platform",
+    "height": 50,
+    "width": 100,
+    "position": "28000, 6800"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 100,
-      "position": "28000, 6800",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 100,
+    "position": "28000, 6800"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "6375, 9750",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "6375, 9750"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "6375, 9750",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "6375, 9750"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 500,
-      "position": "10940, 6750",
+    "name": "platform",
+    "height": 50,
+    "width": 500,
+    "position": "10940, 6750"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 100,
-      "position": "28000, 7250",
+    "name": "platform",
+    "height": 50,
+    "width": 100,
+    "position": "28000, 7250"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 100,
-      "position": "28000, 7250",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 100,
+    "position": "28000, 7250"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "6095, 9630",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "6095, 9630"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "6095, 9630",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "6095, 9630"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 100,
-      "position": "28200, 7500",
+    "name": "platform",
+    "height": 50,
+    "width": 100,
+    "position": "28200, 7500"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 100,
-      "position": "28200, 7500",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 100,
+    "position": "28200, 7500"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "4350, 8925",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "4350, 8925"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "4350, 8925",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "4350, 8925"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "28500, 7750",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "28500, 7750"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "4130, 9195",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "4130, 9195"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "4130, 9195",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "4130, 9195"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "29000, 8000",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "29000, 8000"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "4155, 9530",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "4155, 9530"
   },
   {
-      "name": "ice",
-      "triggerType": "area",
-      "height": 50,
-      "width": 150,
-      "position": "4155, 9530",
+    "name": "ice",
+    "triggerType": "area",
+    "height": 50,
+    "width": 150,
+    "position": "4155, 9530"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "29350, 8200",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "29350, 8200"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 150,
-      "position": "3975, 9580",
+    "name": "platform",
+    "height": 50,
+    "width": 150,
+    "position": "3975, 9580"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "29850, 8400",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "29850, 8400"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "3800, 9715",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "3800, 9715"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 300,
-      "position": "3595, 9625",
+    "name": "platform",
+    "height": 50,
+    "width": 300,
+    "position": "3595, 9625"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "12500, 2200",
+    "name": "platform",
+    "height": 100,
+    "width": 300,
+    "position": "12500, 2200"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "12750, 1800",
+    "name": "platform",
+    "height": 100,
+    "width": 300,
+    "position": "12750, 1800"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "12200, 1700",
+    "name": "platform",
+    "height": 100,
+    "width": 300,
+    "position": "12200, 1700"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 300,
-      "position": "11750, 1500",
+    "name": "platform",
+    "height": 100,
+    "width": 300,
+    "position": "11750, 1500"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "12500, 750",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "12500, 750"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "12000, 1000",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "12000, 1000"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "11250, 1200",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "11250, 1200"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "9500, 3000",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "9500, 3000"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "10500, 1450",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "10500, 1450"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 500,
-      "position": "10500, 950",
+    "name": "platform",
+    "height": 100,
+    "width": 500,
+    "position": "10500, 950"
   },
   {
-      "name": "platform",
-      "height": 50,
-      "width": 500,
-      "position": "10000, 450",
+    "name": "platform",
+    "height": 50,
+    "width": 500,
+    "position": "10000, 450"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 1000,
-      "position": "6400, 1100",
+    "name": "platform",
+    "height": 100,
+    "width": 1000,
+    "position": "6400, 1100"
   },
   {
-      "name": "platform",
-      "height": 100,
-      "width": 1000,
-      "position": "4900, 1000",
-  },{
-      "name": "ground",
-      "height": 100,
-      "width": 800,
-      "position": "12900, 2500",
+    "name": "platform",
+    "height": 100,
+    "width": 1000,
+    "position": "4900, 1000"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1400,
-      "position": "12800, 2600",
+    "name": "ground",
+    "height": 100,
+    "width": 800,
+    "position": "12900, 2500"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1700,
-      "position": "12900, 2800",
+    "name": "ground",
+    "height": 200,
+    "width": 1400,
+    "position": "12800, 2600"
   },
   {
-      "name": "ground",
-      "height": 100,
-      "width": 500,
-      "position": "13000, 2400",
+    "name": "ground",
+    "height": 200,
+    "width": 1700,
+    "position": "12900, 2800"
   },
   {
-      "name": "ground",
-      "height": 325,
-      "width": 550,
-      "position": "14675, 9600",
+    "name": "ground",
+    "height": 100,
+    "width": 500,
+    "position": "13000, 2400"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 8500,
-      "position": "21800, 8650",
+    "name": "ground",
+    "height": 325,
+    "width": 550,
+    "position": "14675, 9600"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 200,
-      "position": "9050, 9750",
+    "name": "ground",
+    "height": 250,
+    "width": 8500,
+    "position": "21800, 8650"
   },
   {
-      "name": "ground",
-      "height": 280,
-      "width": 250,
-      "position": "14425, 9645",
+    "name": "ground",
+    "height": 250,
+    "width": 200,
+    "position": "9050, 9750"
   },
   {
-      "name": "ground",
-      "height": 100,
-      "width": 3000,
-      "position": "21650, 8900",
+    "name": "ground",
+    "height": 280,
+    "width": 250,
+    "position": "14425, 9645"
   },
   {
-      "name": "ground",
-      "height": 500,
-      "width": 200,
-      "position": "8850, 9500",
+    "name": "ground",
+    "height": 100,
+    "width": 3000,
+    "position": "21650, 8900"
   },
   {
-      "name": "ground",
-      "height": 100,
-      "width": 100,
-      "position": "15125, 9500",
+    "name": "ground",
+    "height": 500,
+    "width": 200,
+    "position": "8850, 9500"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 3000,
-      "position": "21500, 9000",
+    "name": "ground",
+    "height": 100,
+    "width": 100,
+    "position": "15125, 9500"
   },
   {
-      "name": "ground",
-      "height": 750,
-      "width": 200,
-      "position": "8650, 9250",
+    "name": "ground",
+    "height": 250,
+    "width": 3000,
+    "position": "21500, 9000"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 400,
-      "position": "14350, 9050",
+    "name": "ground",
+    "height": 750,
+    "width": 200,
+    "position": "8650, 9250"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 3000,
-      "position": "21000, 9250",
+    "name": "ground",
+    "height": 250,
+    "width": 400,
+    "position": "14350, 9050"
   },
   {
-      "name": "ground",
-      "height": 1000,
-      "width": 1700,
-      "position": "6950, 9000",
+    "name": "ground",
+    "height": 250,
+    "width": 3000,
+    "position": "21000, 9250"
   },
   {
-      "name": "ground",
-      "height": 155,
-      "width": 400,
-      "position": "14200, 8895",
+    "name": "ground",
+    "height": 1000,
+    "width": 1700,
+    "position": "6950, 9000"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 3000,
-      "position": "20500, 9500",
+    "name": "ground",
+    "height": 155,
+    "width": 400,
+    "position": "14200, 8895"
   },
   {
-      "name": "ground",
-      "height": 500,
-      "width": 400,
-      "position": "6550, 9000",
+    "name": "ground",
+    "height": 200,
+    "width": 3000,
+    "position": "20500, 9500"
   },
   {
-      "name": "ground",
-      "height": 115,
-      "width": 400,
-      "position": "14025, 8780",
+    "name": "ground",
+    "height": 500,
+    "width": 400,
+    "position": "6550, 9000"
   },
   {
-      "name": "ground",
-      "height": 300,
-      "width": 3000,
-      "position": "18800, 9700",
+    "name": "ground",
+    "height": 115,
+    "width": 400,
+    "position": "14025, 8780"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 275,
-      "position": "6675, 9750",
+    "name": "ground",
+    "height": 300,
+    "width": 3000,
+    "position": "18800, 9700"
   },
   {
-      "name": "ground",
-      "height": 115,
-      "width": 400,
-      "position": "14025, 9810",
+    "name": "ground",
+    "height": 250,
+    "width": 275,
+    "position": "6675, 9750"
   },
   {
-      "name": "ground",
-      "height": 425,
-      "width": 120,
-      "position": "5895, 9575",
+    "name": "ground",
+    "height": 115,
+    "width": 400,
+    "position": "14025, 9810"
   },
   {
-      "name": "ground",
-      "height": 550,
-      "width": 4000,
-      "position": "11555, 7450",
+    "name": "ground",
+    "height": 425,
+    "width": 120,
+    "position": "5895, 9575"
   },
   {
-      "name": "ground",
-      "height": 425,
-      "width": 170,
-      "position": "5600, 9575",
+    "name": "ground",
+    "height": 550,
+    "width": 4000,
+    "position": "11555, 7450"
   },
   {
-      "name": "ground",
-      "height": 1300,
-      "width": 500,
-      "position": "17500, 6500",
+    "name": "ground",
+    "height": 425,
+    "width": 170,
+    "position": "5600, 9575"
   },
   {
-      "name": "ground",
-      "height": 500,
-      "width": 200,
-      "position": "5275, 9500",
+    "name": "ground",
+    "height": 1300,
+    "width": 500,
+    "position": "17500, 6500"
   },
   {
-      "name": "ground",
-      "height": 2000,
-      "width": 200,
-      "position": "22050, 4500",
+    "name": "ground",
+    "height": 500,
+    "width": 200,
+    "position": "5275, 9500"
   },
   {
-      "name": "ground",
-      "height": 565,
-      "width": 200,
-      "position": "5075, 9250",
+    "name": "ground",
+    "height": 2000,
+    "width": 200,
+    "position": "22050, 4500"
   },
   {
-      "name": "ground",
-      "height": 170,
-      "width": 350,
-      "position": "19165, 2800",
+    "name": "ground",
+    "height": 565,
+    "width": 200,
+    "position": "5075, 9250"
   },
   {
-      "name": "ground",
-      "height": 565,
-      "width": 325,
-      "position": "4750, 9000",
+    "name": "ground",
+    "height": 170,
+    "width": 350,
+    "position": "19165, 2800"
   },
   {
-      "name": "ground",
-      "height": 400,
-      "width": 1200,
-      "position": "21050, 2800",
+    "name": "ground",
+    "height": 565,
+    "width": 325,
+    "position": "4750, 9000"
   },
   {
-      "name": "ground",
-      "height": 565,
-      "width": 200,
-      "position": "4550, 9235",
+    "name": "ground",
+    "height": 400,
+    "width": 1200,
+    "position": "21050, 2800"
   },
   {
-      "name": "ground",
-      "height": 400,
-      "width": 500,
-      "position": "20250, 2800",
+    "name": "ground",
+    "height": 565,
+    "width": 200,
+    "position": "4550, 9235"
   },
   {
-      "name": "ground",
-      "height": 565,
-      "width": 200,
-      "position": "4350, 9435",
+    "name": "ground",
+    "height": 400,
+    "width": 500,
+    "position": "20250, 2800"
   },
   {
-      "name": "ground",
-      "height": 300,
-      "width": 3525,
-      "position": "0, 9700",
+    "name": "ground",
+    "height": 565,
+    "width": 200,
+    "position": "4350, 9435"
   },
   {
-      "name": "ground",
-      "height": 400,
-      "width": 500,
-      "position": "19515, 2800",
+    "name": "ground",
+    "height": 300,
+    "width": 3525,
+    "position": "0, 9700"
   },
   {
-      "name": "ground",
-      "height": 1300,
-      "width": 1500,
-      "position": "20750, 3200",
+    "name": "ground",
+    "height": 400,
+    "width": 500,
+    "position": "19515, 2800"
   },
   {
-      "name": "ground",
-      "height": 5800,
-      "width": 1900,
-      "position": "18850, 3200",
+    "name": "ground",
+    "height": 1300,
+    "width": 1500,
+    "position": "20750, 3200"
   },
   {
-      "name": "ground",
-      "height": 2200,
-      "width": 2800,
-      "position": "16050, 7800",
+    "name": "ground",
+    "height": 5800,
+    "width": 1900,
+    "position": "18850, 3200"
   },
   {
-      "name": "ground",
-      "height": 1300,
-      "width": 750,
-      "position": "16500, 6500",
+    "name": "ground",
+    "height": 2200,
+    "width": 2800,
+    "position": "16050, 7800"
   },
   {
-      "name": "ground",
-      "height": 400,
-      "width": 750,
-      "position": "15500, 6500",
+    "name": "ground",
+    "height": 1300,
+    "width": 750,
+    "position": "16500, 6500"
   },
   {
-      "name": "ground",
-      "height": 550,
-      "width": 4220,
-      "position": "12035, 6900",
+    "name": "ground",
+    "height": 400,
+    "width": 750,
+    "position": "15500, 6500"
   },
   {
-      "name": "ground",
-      "height": 2500,
-      "width": 1600,
-      "position": "12425, 4400",
+    "name": "ground",
+    "height": 550,
+    "width": 4220,
+    "position": "12035, 6900"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 8045,
-      "position": "5880, 4200",
+    "name": "ground",
+    "height": 2500,
+    "width": 1600,
+    "position": "12425, 4400"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 520,
-      "position": "6300, 3950",
+    "name": "ground",
+    "height": 200,
+    "width": 8045,
+    "position": "5880, 4200"
   },
   {
-      "name": "ground",
-      "height": 250,
-      "width": 320,
-      "position": "6500, 3700",
+    "name": "ground",
+    "height": 250,
+    "width": 520,
+    "position": "6300, 3950"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1050,
-      "position": "5040, 3700",
+    "name": "ground",
+    "height": 250,
+    "width": 320,
+    "position": "6500, 3700"
   },
   {
-      "name": "ground",
-      "height": 700,
-      "width": 600,
-      "position": "5040, 3900",
+    "name": "ground",
+    "height": 200,
+    "width": 1050,
+    "position": "5040, 3700"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1050,
-      "position": "5040, 4600",
+    "name": "ground",
+    "height": 700,
+    "width": 600,
+    "position": "5040, 3900"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1300,
-      "position": "5040, 4800",
+    "name": "ground",
+    "height": 200,
+    "width": 1050,
+    "position": "5040, 4600"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1600,
-      "position": "5040, 5000",
+    "name": "ground",
+    "height": 200,
+    "width": 1300,
+    "position": "5040, 4800"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 2175,
-      "position": "5040, 5200",
+    "name": "ground",
+    "height": 200,
+    "width": 1600,
+    "position": "5040, 5000"
   },
   {
-      "name": "ground",
-      "height": 1000,
-      "width": 2500,
-      "position": "5040, 5400",
+    "name": "ground",
+    "height": 200,
+    "width": 2175,
+    "position": "5040, 5200"
   },
   {
-      "name": "ground",
-      "height": 2400,
-      "width": 2400,
-      "position": "7540, 5620",
+    "name": "ground",
+    "height": 1000,
+    "width": 2500,
+    "position": "5040, 5400"
   },
   {
-      "name": "ground",
-      "height": 2800,
-      "width": 1000,
-      "position": "9940, 5770",
+    "name": "ground",
+    "height": 2400,
+    "width": 2400,
+    "position": "7540, 5620"
   },
   {
-      "name": "ground",
-      "height": 100,
-      "width": 150,
-      "position": "11405, 7700",
+    "name": "ground",
+    "height": 2800,
+    "width": 1000,
+    "position": "9940, 5770"
   },
   {
-      "name": "ground",
-      "height": 80,
-      "width": 290,
-      "position": "11265, 7800",
+    "name": "ground",
+    "height": 100,
+    "width": 150,
+    "position": "11405, 7700"
   },
   {
-      "name": "ground",
-      "height": 100,
-      "width": 150,
-      "position": "10940, 8020",
+    "name": "ground",
+    "height": 80,
+    "width": 290,
+    "position": "11265, 7800"
   },
   {
-      "name": "ground",
-      "height": 220,
-      "width": 200,
-      "position": "11835, 7230",
+    "name": "ground",
+    "height": 100,
+    "width": 150,
+    "position": "10940, 8020"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 1085,
-      "position": "11340, 6300",
+    "name": "ground",
+    "height": 220,
+    "width": 200,
+    "position": "11835, 7230"
   },
   {
-      "name": "ground",
-      "height": 200,
-      "width": 250,
-      "position": "10940, 6550",
+    "name": "ground",
+    "height": 200,
+    "width": 1085,
+    "position": "11340, 6300"
   },
   {
-      "name": "ground",
-      "height": 150,
-      "width": 100,
-      "position": "5640, 4450",
+    "name": "ground",
+    "height": 200,
+    "width": 250,
+    "position": "10940, 6550"
   },
   {
-      "name": "platform",
-      "height": 170,
-      "width": 500,
-      "position": "11230, 7000",
+    "name": "ground",
+    "height": 150,
+    "width": 100,
+    "position": "5640, 4450"
   },
   {
-      "name": "ground",
-      "height": 80,
-      "width": 290,
-      "position": "10940, 7370",
+    "name": "platform",
+    "height": 170,
+    "width": 500,
+    "position": "11230, 7000"
   },
   {
-      "name": "ground",
-      "height": 80,
-      "width": 290,
-      "position": "10940, 8120",
+    "name": "ground",
+    "height": 80,
+    "width": 290,
+    "position": "10940, 7370"
   },
   {
-      "name": "ground",
-      "height": 210,
-      "width": 400,
-      "position": "11260, 8360",
+    "name": "ground",
+    "height": 80,
+    "width": 290,
+    "position": "10940, 8120"
   },
   {
-      "name": "ground",
-      "height": 210,
-      "width": 4050,
-      "position": "10110, 8570",
+    "name": "ground",
+    "height": 210,
+    "width": 400,
+    "position": "11260, 8360"
   },
   {
-      "name": "ground",
-      "height": 430,
-      "width": 530,
-      "position": "10200, 8780",
+    "name": "ground",
+    "height": 210,
+    "width": 4050,
+    "position": "10110, 8570"
   },
   {
-      "name": "ground",
-      "height": 235,
-      "width": 270,
-      "position": "10460, 9210",
+    "name": "ground",
+    "height": 430,
+    "width": 530,
+    "position": "10200, 8780"
   },
   {
-      "name": "ground",
-      "height": 235,
-      "width": 475,
-      "position": "10255, 9445",
+    "name": "ground",
+    "height": 235,
+    "width": 270,
+    "position": "10460, 9210"
   },
   {
-      "name": "ground",
-      "height": 85,
-      "width": 345,
-      "position": "10855, 9840",
+    "name": "ground",
+    "height": 235,
+    "width": 475,
+    "position": "10255, 9445"
   },
   {
-      "name": "ground",
-      "height": 80,
-      "width": 4800,
-      "position": "9500, 9920",
+    "name": "ground",
+    "height": 85,
+    "width": 345,
+    "position": "10855, 9840"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "4400, 3700",
-	  "moving": "0, -2700"
+    "name": "ground",
+    "height": 80,
+    "width": 4800,
+    "position": "9500, 9920"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "7700, 1400",
-	  "moving": "0, -700"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "4400, 3700",
+    "moving": "0, -2700"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "9800, 700",
-	  "moving": "-1500, 0"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "7700, 700",
+    "moving": "0, 700"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "10000, 1500",
-	  "moving": "0, 1500"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "9300, 700",
+    "moving": "0, 500"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "14850, 2800",
-	  "moving": "0, 3600"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "8400, 700",
+    "moving": "0, 1500"
   },
   {
-      "name": "cloud",
-      "height": 50,
-      "width": 350,
-      "position": "18200, 6500",
-	  "moving": "0, -4500"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "10000, 1500",
+    "moving": "0, 1500"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 375,
-      "width": 7200,
-      "position": "6820, 3825"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "14850, 2800",
+    "moving": "0, 3600"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 2700,
-      "width": 575,
-      "position": "14025, 4200"
+    "name": "cloud",
+    "height": 50,
+    "width": 350,
+    "position": "18200, 6500",
+    "moving": "0, -4500"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 350,
-      "width": 900,
-      "position": "14600, 6550"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 375,
+    "width": 7200,
+    "position": "6820, 3825"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 500,
-      "width": 825,
-      "position": "15225, 9600"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 2700,
+    "width": 575,
+    "position": "14025, 4200"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 1500,
-      "width": 550,
-      "position": "15500, 8000"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 350,
+    "width": 900,
+    "position": "14600, 6550"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 350,
-      "width": 245,
-      "position": "16225, 6800"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 500,
+    "width": 825,
+    "position": "15225, 9600"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 350,
-      "width": 245,
-      "position": "17250, 7235"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 1500,
+    "width": 550,
+    "position": "15500, 8000"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 350,
-      "width": 600,
-      "position": "18000, 7235"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 350,
+    "width": 245,
+    "position": "16225, 6800"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 4250,
-      "width": 140,
-      "position": "18710, 3345"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 350,
+    "width": 245,
+    "position": "17250, 7235"
   },
   {
-      "name": "lava",
-      "triggerType": "area",
-      "height": 230,
-      "width": 2050,
-      "position": "19000, 2950"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 350,
+    "width": 600,
+    "position": "18000, 7235"
   },
   {
-      "name": "breakableGround",
-      "height": 50,
-      "width": 900,
-      "position": "20750, 8925"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 4250,
+    "width": 140,
+    "position": "18710, 3345"
   },
   {
-      "name": "OverworldLoader",
-	  "triggerType": "loader",
-      "height": 300,
-      "width": 100,
-      "position": "450, 9300"
+    "name": "lava",
+    "triggerType": "area",
+    "height": 230,
+    "width": 2050,
+    "position": "19000, 2950"
   },
   {
-      "name": "Totem Feuer",
-	  "triggerType": "totem",
-      "height": 203,
-      "width": 97,
-      "position": "28300, 6340"
+    "name": "breakableGround",
+    "height": 50,
+    "width": 900,
+    "position": "20750, 8925"
   },
   {
-      "name": "Totem Eis",
-	  "triggerType": "totem",
-      "height": 203,
-      "width": 97,
-      "position": "21940, 6250"
+    "name": "OverworldLoader",
+    "triggerType": "loader",
+    "height": 300,
+    "width": 100,
+    "position": "450, 9300"
   },
   {
-      "name": "Totem Erde",
-	  "triggerType": "totem",
-      "height": 203,
-      "width": 97,
-      "position": "19000, 9500"
+    "name": "Totem Feuer",
+    "triggerType": "totem",
+    "height": 203,
+    "width": 97,
+    "position": "28300, 6340"
   },
   {
-      "name": "Totem Blitz",
-	  "triggerType": "totem",
-      "height": 203,
-      "width": 97,
-      "position": "29800, 7280"
+    "name": "Totem Eis",
+    "triggerType": "totem",
+    "height": 203,
+    "width": 97,
+    "position": "21940, 6250"
+  },
+  {
+    "name": "Totem Erde",
+    "triggerType": "totem",
+    "height": 203,
+    "width": 97,
+    "position": "19000, 9500"
+  },
+  {
+    "name": "Totem Blitz",
+    "triggerType": "totem",
+    "height": 203,
+    "width": 97,
+    "position": "29800, 7280"
   }
 ]
