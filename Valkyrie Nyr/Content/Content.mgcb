@@ -1244,18 +1244,6 @@
 /processorParam:TextureFormat=Color
 /build:Bosses/Monomono/MonoTurnToBall.png
 
-#begin Projectiles/LightningW200H800.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Projectiles/LightningW200H800.png
-
 #begin Projectiles/Blitzball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1783,4 +1771,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:newPlayer/Evasion.png
+
+#begin Projectiles/Lightning.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Projectiles/Lightning.png
 

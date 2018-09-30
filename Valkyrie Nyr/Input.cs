@@ -48,17 +48,7 @@ namespace Valkyrie_Nyr
         {
             //reset VAriables
             currentPressedGamePadButtons = new bool[allGamepadButtons.Length];
-
-            //Let PLayer fall and save the moveValue in overall Movement
-            if (!Player.Nyr.inHub)
-            {
-                if (Player.Nyr.inStomp)
-                {
-                    Level.Current.moveValue += Player.Nyr.Fall(gameTime, Level.Current.gameObjects.ToArray()) - Player.Nyr.position;
-                    Level.Current.moveValue += Player.Nyr.Fall(gameTime, Level.Current.gameObjects.ToArray()) - Player.Nyr.position;
-                }
-                Level.Current.moveValue += Player.Nyr.Fall(gameTime, Level.Current.gameObjects.ToArray()) - Player.Nyr.position;
-            }
+            
 
             if (Player.Nyr.inJump)
             {
@@ -128,7 +118,7 @@ namespace Valkyrie_Nyr
                         Rectangle hurtbox = Level.Current.enemyObjects[i].hurtBox;
                         if (Level.Current.tempEffekt != null)
                         {
-                            if (Player.Nyr.CollisionAABB(hurtbox, Level.Current.tempEffekt.attackbox))
+                            if (Entity.CollisionAABB(hurtbox, Level.Current.tempEffekt.attackbox))
                             {
                                 Level.Current.enemyObjects[i].enemyHit = true;
                                 Level.Current.enemyObjects[i].hitTimer = 20;
@@ -270,7 +260,7 @@ namespace Valkyrie_Nyr
                     case Keys.M:
                         if (!Level.Current.newPressedKeys.SequenceEqual(Level.Current.lastPressedKeys))
                         {
-                            GameUI.Handeler.ShowMap = !GameUI.Handeler.ShowMap;
+                            Interface.ShowMap = !Interface.ShowMap;
                         }
                         break;
                     case Keys.LeftShift:
@@ -282,7 +272,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.fAttackCheck = 20;
-                                Player.Nyr.attackCooldown = 60;
+                                Player.Nyr.attackCooldown = 30;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
                             }
@@ -500,7 +490,7 @@ namespace Valkyrie_Nyr
                 if (state.IsButtonDown(Buttons.Back) && !lastPressedGamePadButtons[2])
                 {
                     Level.Current.anyKeyPressed = true;
-                    GameUI.Handeler.ShowMap = !GameUI.Handeler.ShowMap;
+                    Interface.ShowMap = !Interface.ShowMap;
                 }
                 if (state.IsButtonDown(Buttons.X) && !lastPressedGamePadButtons[23])
                 {
@@ -511,7 +501,7 @@ namespace Valkyrie_Nyr
                         Player.Nyr.currentFrame = 0;
                         Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                         Player.Nyr.fAttackCheck = 20;
-                        Player.Nyr.attackCooldown = 60;
+                        Player.Nyr.attackCooldown = 30;
                         SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
                     }

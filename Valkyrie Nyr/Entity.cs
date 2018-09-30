@@ -122,7 +122,7 @@ namespace Valkyrie_Nyr
             position = newPos;
         }
        
-        public bool CollisionAABB(Rectangle recA, Rectangle recB)
+        public static bool CollisionAABB(Rectangle recA, Rectangle recB)
         {
             if (
                 recA.X + recA.Width >= recB.X &&
