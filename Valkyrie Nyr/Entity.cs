@@ -79,6 +79,7 @@ namespace Valkyrie_Nyr
 
         public float hittedTimer;
 
+        public bool finallyDead = false;
         public bool isInvulnerable;
         public int invulnerableTimer;
         public bool isDead = false;
@@ -312,9 +313,11 @@ namespace Valkyrie_Nyr
                 if (name == "Nyr")
                 {
                    
-                    Player.Nyr.gameOver();
+                   Player.Nyr.gameOver();
+                  
+                    
                 }
-                else
+                else if ( name != "Ryn")
                 {
                     if (isDead == false)
                     {

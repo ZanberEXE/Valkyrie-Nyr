@@ -63,9 +63,7 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(string levelName)
         {
-            //TODO:delete
-            levelName = "Bossstage";
-
+            
             map = Game1.Ressources.Load<Texture2D>("Map");
             Interface.Start();
             name = levelName;
@@ -440,7 +438,11 @@ namespace Valkyrie_Nyr
             #region updateEnemies
             for (int i = 0; i < enemyObjects.Count; i++)
             {
-                enemyObjects[i].Update(gameTime);
+                if (enemyObjects[i].name != "Ryn")
+                {
+                    enemyObjects[i].Update(gameTime);
+                }
+                
             }
             #endregion updateEnemies
 
@@ -491,7 +493,7 @@ namespace Valkyrie_Nyr
 
             #region updatePlayer
             //get input from keyboard or controller
-            if ( Player.Nyr.currentEntityState != (int)Playerstates.DYING)
+            if ( Player.Nyr.currentEntityState != (int)Playerstates.DYING && !Antagonist.Ryn.falseEnding)
             {
                 Input.Handeler.Update(gameTime);
             }
@@ -507,7 +509,7 @@ namespace Valkyrie_Nyr
                     //fall faster in Stomp
                     moveValue.Y += Movement.PlayerFall(gameTime) * 2;
                 }
-                //moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
+                moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
             }
 
             //AnimationUpdate

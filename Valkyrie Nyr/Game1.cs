@@ -120,11 +120,11 @@ namespace Valkyrie_Nyr
         {
             //Release Start
             LoadSaveGame();
-            Level.Current.loadLevel("Overworld");
+            Level.Current.loadLevel("Hub");
             States.CurrentGameState = GameStates.PLAYING;
             if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
             {
-                //Level.Current.nscObjects[0].startConversation(gameTime);
+                Level.Current.nscObjects[0].startConversation();
             }
         }
         private void ControlsButton_Click(object sender, System.EventArgs e)

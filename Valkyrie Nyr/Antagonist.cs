@@ -29,6 +29,10 @@ namespace Valkyrie_Nyr
         
         private double timeOfLastEnemySpawn;
 
+        bool gameFinisched = false;
+        public bool falseEnding = false;
+        public int endingTimer = 0;
+
         public Antagonist() : base("Ryn", "ryn", 7, 150, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
         {
             animTex = new animation[]
@@ -101,17 +105,47 @@ namespace Valkyrie_Nyr
 
         new public void Update(GameTime gameTime)
         {
+            
+            int tmp = currentEntityState;
+
             base.EntityUpdate(gameTime);
 
             //position = Fall(gameTime, Level.Current.gameObjects.ToArray());
+            if ( currentEntityState <= 5)
+            {
+                currentEntityState = tmp;
+            }
             
             if (NyrBy(aggroRange))
             {
                 SetNewPosition();
             }
+           
+            if (health <= 0 && currentEntityState < 4)
+            {
+                GameObject escape = new GameObject("FeuerLevelLoader", "loader", 0, 300, 300, Antagonist.Ryn.position + new Vector2(1000, -150));
+                escape.init();
+                escape.name = "escape";
+                Level.Current.gameObjects.Add(escape);
 
+                currentEntityState = 4;
+                nextEntityState = 4;
+                for (int i = 0; i < Level.Current.enemyObjects.Count();)
+                {
+                    if ( Level.Current.enemyObjects[i].name != "Ryn")
+                    {
+                        Level.Current.gameObjects.Remove(Level.Current.enemyObjects[i]);
+                        Level.Current.enemyObjects.RemoveAt(i);
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            else
             //EndFight
-            if(currentLocation == locations.Length - 1 && Level.Current.enemyObjects.Count() - stageEnemiesAtBeginning < 10)
+            if (currentLocation == locations.Length - 1 && Level.Current.enemyObjects.Count() - stageEnemiesAtBeginning < 10 && currentEntityState < 4)
             {
                 if (timeOfLastEnemySpawn >= 25)
                 {
@@ -126,6 +160,30 @@ namespace Valkyrie_Nyr
                     timeOfLastEnemySpawn += gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+
+            if (gameFinisched == true)
+            {
+                States.CurrentGameState = GameStates.MAINMENU;
+            }
+            if (currentEntityState == 6 && gameFinisched == false)
+            {
+                Dialogues.dialogueState = Dialogues.dialogues.Length - 1;
+                Dialogues.startConversation();
+                gameFinisched = true;
+
+            }
+
+            if (endingTimer == 1)
+            {
+                Player.Nyr.health -= 100000;
+                Player.Nyr.finallyDead = true;
+            }
+            if ( endingTimer != 0)
+            {
+                endingTimer--;
+            }
+            
+
         }
 
         public void SpawnEnemy()
@@ -142,8 +200,12 @@ namespace Valkyrie_Nyr
             timeOfLastEnemySpawn = 0;
         }
 
-        public void Kill()
+       public void Kill()
         {
+            if ( nextEntityState == 6)
+            {
+                return;
+            }
             currentEntityState = 5;
             nextEntityState = 6;
         }
@@ -167,13 +229,15 @@ namespace Valkyrie_Nyr
             
             if(currentLocation == locations.Length - 1)
             {
+                currentEntityState = 3;
+                nextEntityState = 3;
                 stageEnemiesAtBeginning = Level.Current.enemyObjects.Count();
                 SpawnEnemy();
             }
             
         }
 
-        private void setNewAnim()
+       /* private void setNewAnim()
         {
             if (currentLocation < 4)
             {
@@ -185,6 +249,6 @@ namespace Valkyrie_Nyr
                 currentEntityState = 4;
                 nextEntityState = 4;
             }
-        }
+        }*/
     }
 }

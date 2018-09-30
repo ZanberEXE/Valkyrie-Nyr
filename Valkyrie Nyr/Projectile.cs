@@ -161,7 +161,7 @@ namespace Valkyrie_Nyr
             GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", null, 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", null, 0, 85, 150, position - new Vector2(180, 40));
             Level.Current.gameObjects.Add(bakedCrystal);
             bakedCrystal.init();
-            bakedCrystal.name = "ground";
+            bakedCrystal.name = "platform";
         }
         private void CreateCrystal(float moving)
         {

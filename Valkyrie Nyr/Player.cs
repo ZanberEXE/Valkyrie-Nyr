@@ -48,7 +48,7 @@ namespace Valkyrie_Nyr
 
         public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
-            speed = 3000;
+            speed = 700;
             jumpHeight = 16;
             inHub = false;
             interact = false;
@@ -140,7 +140,7 @@ namespace Valkyrie_Nyr
                     {
                         if (interact)
                         {
-                            Antagonist.Ryn.Kill();
+                            //Antagonist.Ryn.Kill();
                         }
                         else
                         {
@@ -214,6 +214,10 @@ namespace Valkyrie_Nyr
                             break;
                     }
                     Level.Current.loadLevel("Hub");
+                }
+                if (victim.name == "Ryn" && Antagonist.Ryn.currentEntityState == 4)
+                {
+                    Antagonist.Ryn.Kill();
                 }
             }
             else
@@ -311,6 +315,11 @@ namespace Valkyrie_Nyr
                     Level.Current.loadLevel("Hub");
                     States.CurrentBGMState = BGMStates.HUB;
                     break;
+                case "escape":
+                    Antagonist.Ryn.falseEnding = true;
+                    Antagonist.Ryn.endingTimer = 130;
+                    new Projectile("GoddessSpearW1200H800", 800, 1200, Player.Nyr.position - new Vector2(-50, 400 - Player.Nyr.height), Vector2.Zero, 0, true, Rectangle.Empty, true, 100, 10, 0);
+                    break;
             }
         }
         private void totem(GameObject activatedTrigger)
@@ -334,9 +343,16 @@ namespace Valkyrie_Nyr
             
             if (currentEntityState == (int)Playerstates.ISDEAD || this.position.Y > Game1.WindowSize.Y)
             {
-                Level.Current.loadLevel("Hub");
-                health = maxHealth;
-                mana = maxMana;
+                if (Player.nyr.finallyDead == false)
+                {
+                    Level.Current.loadLevel("Hub");
+                    health = maxHealth;
+                    mana = maxMana;
+                }
+                else
+                {
+                    States.CurrentGameState = GameStates.LOSE;
+                }
                 //nextEntityState = (int)Playerstates.IDLE;
             }
             

@@ -225,7 +225,7 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.W:
-                        //if (Player.Nyr.inHub)
+                        if (Player.Nyr.inHub)
                         {
                             Level.Current.moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                             if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)
@@ -237,8 +237,7 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.S:
-                        //if (Player.Nyr.inHub)
-                        if (true)
+                        if (Player.Nyr.inHub)
                         {
                             Level.Current.moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                             if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)
