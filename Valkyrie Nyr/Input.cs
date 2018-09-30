@@ -183,7 +183,7 @@ namespace Valkyrie_Nyr
                 switch (element)
                 {
                     case Keys.A:
-                        if (!Player.Nyr.isCrouching)
+                        if (!Player.Nyr.isCrouching && Player.Nyr.currentEntityState != (int)Playerstates.SLIP)
                         {
                             Level.Current.moveValue += new Vector2(-1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                             Player.Nyr.entityFacing = -1;
@@ -196,7 +196,7 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.D:
-                        if (!Player.Nyr.isCrouching)
+                        if (!Player.Nyr.isCrouching && Player.Nyr.currentEntityState != (int)Playerstates.SLIP)
                         {
                             Level.Current.moveValue += new Vector2(1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
                             Player.Nyr.entityFacing = 1;
@@ -225,7 +225,7 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.W:
-                        if (Player.Nyr.inHub)
+                        //if (Player.Nyr.inHub)
                         {
                             Level.Current.moveValue += new Vector2(0, -1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                             if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)
@@ -237,7 +237,8 @@ namespace Valkyrie_Nyr
                         }
                         break;
                     case Keys.S:
-                        if (Player.Nyr.inHub)
+                        //if (Player.Nyr.inHub)
+                        if (true)
                         {
                             Level.Current.moveValue += new Vector2(0, 1 * Player.Nyr.speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                             if (Player.Nyr.currentEntityState != (int)Playerstates.WALK)

@@ -9,62 +9,88 @@
     "health":1000,
 	"dialogues": 
 		[
-			{	
-				"spokesman":
-					[
-						"",
-						"",
-						"",
-						"",
-						"",
-						"",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Statue",
-            "Nyr",
-            "Statue",
-						"Nyr",
-						"Nyr",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Statue"
-					],
-				"speeches":
-					[	
-						"In the year disputes between warring nations led to the outbreak of war, many were caught in the crossfire.",
-						"Nyr had already lost her father just a few years after her little sister Ryn had been born. After uprisings broke out across the city, one day her mother never returned either.", 
-						"Searching for safety amidst the now war-torn city, Nyr did what she had to do to protect her sister and keep her safe."  ,
-						"Even if it meant joining the fighting too. ",
-						"During the fighting, the courageous girl fell in battle, in her last moments, she still wondered, 'Was her sister safe?'",
-						"...",
-						"Courageous one, you showed great valour before your life perished and I have thus judged thee worthy to stand in front of me now.", 
-						"Where...am I?" ,
-						"This is the Underworld. A place where the restless souls reside. I have called you before me to ask of you this. Would you serve me as a Valkyrie?",
-						"A Valkyrie...?",
-						"A divine being that leads the dead and fights against the twisted monsters that spring from the miasma of human emotions.",
-						"They keep order in this world alongside an army of dead souls, who have risen to join their cause.",
-						"..." ,
-						"As a Valkyrie you will also decide the fate of the souls that have fallen in battle. Whether their souls shall rest eternally or continue their fate in the Underworld.",
-						"...!",
-						"How can I become a Valkyrie?",
-						"I seem to have awoken your interest. To become a Valkyrie, I would have you forge your own army and pass a trial.",
-						"What kind of trial is it?",
-						"You shall see, one that will make you worthy of becoming my Valkyrie.",
-						"Now I ask of you again. Do you want to become a Valkyrie?"
-					]
-			}
+      {
+        "spokesman": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Statue"
+        ],
+        "speeches": [
+          "In the year disputes between warring nations led to the outbreak of war, many were caught in the crossfire.",
+          "Nyr had already lost her father just a few years after her little sister Ryn had been born. After uprisings broke out across the city, one day her mother never returned either.",
+          "Searching for safety amidst the now war-torn city, Nyr did what she had to do to protect her sister and keep her safe.",
+          "Even if it meant joining the fighting too. ",
+          "During the fighting, the courageous girl fell in battle, in her last moments, she still wondered, 'Was her sister safe?'",
+          "...",
+          "Courageous one, you showed great valour before your life perished and I have thus judged thee worthy to stand in front of me now.",
+          "Where...am I?",
+          "This is the Underworld. A place where the restless souls reside. I have called you before me to ask of you this. Would you serve me as a Valkyrie?",
+          "A Valkyrie...?",
+          "A divine being that leads the dead and fights against the twisted monsters that spring from the miasma of human emotions.",
+          "They keep order in this world alongside an army of dead souls, who have risen to join their cause.",
+          "...",
+          "As a Valkyrie you will also decide the fate of the souls that have fallen in battle. Whether their souls shall rest eternally or continue their fate in the Underworld.",
+          "...!",
+          "How can I become a Valkyrie?",
+          "I seem to have awoken your interest. To become a Valkyrie, I would have you forge your own army and pass a trial.",
+          "What kind of trial is it?",
+          "You shall see, one that will make you worthy of becoming my Valkyrie.",
+          "Now I ask of you again. Do you want to become a Valkyrie?"
+        ]
+      },
+      {
+        "spokesman": [
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr"
+        ],
+        "speeches": [
+          "Where can I find the trial you spoke of?",
+          "The trial can be found inside the rift found farthest from here.",
+          "Rift?",
+          "The rift marking the edge of this world. By overcoming the obstacles that will stand in your way and travelling past the tower that radiates malice, you shall find what you seek.",
+          "...What do I need to do once I'm there?",
+          "Simply enter, and the rest shall become clear to you.",
+          "So I'll have to figure it out myself, I assume. Then I'll just have to fulfill my duty, the same as always."
+        ]
+      },
+      {
+        "spokesman": [
+          "Statue"
+        ],
+        "speeches": [
+          "Courageous one, your deeds have been recorded."
+        ]
+      },
 		]
   },
   {
 	"name": "drWhich",
     "triggerType": "nsc",
     "mass": 0,
-    "height": 200,
-    "width": 220,
+    "height": 152,
+    "width": 93,
     "position": "3700, 1000",
     "health":1000,
 	"dialogues": 
@@ -103,7 +129,7 @@
             "...But I never asked f-",
             "Haah, now if only I had something to remember you by, so I wouldn't feel so anxious whenever you left...",
             "I already gave you something the last time...",
-            "These gil coins? You shouldn't have... just for me? I'll be sure to treasure them. Yes. Now let go of those coins dear...",
+            "These Gil coins? You shouldn't have... just for me? I'll be sure to treasure them. Yes. Now let go of those coins dear...",
             "-Gil given to Dr Which... maybe-"
 
 					]

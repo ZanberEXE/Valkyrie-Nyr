@@ -506,8 +506,8 @@ namespace Valkyrie_Nyr
            // spriteBatch.Draw(pxl, new Rectangle((int)hitbox.position.X + (int)this.position.X, (int)hitbox.position.Y + (int)this.position.Y, hitbox.width, hitbox.height), Color.BlueViolet * 0.5f);
          
             
-            spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
-            spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(hurtBox.X, hurtBox.Y, hurtBox.Width, hurtBox.Height), Color.Red * 0.5f);
+            //spriteBatch.Draw(pxl, new Rectangle(attackBox.X, attackBox.Y, attackBox.Width, attackBox.Height), Color.BlueViolet * 0.5f);
         }
 
       

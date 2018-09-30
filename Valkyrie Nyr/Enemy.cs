@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Valkyrie_Nyr
 {
-    class Enemy : Entity
+    class Enemy : Entity, ICloneable
     {
 
         public int aggroRange;
@@ -48,8 +48,8 @@ namespace Valkyrie_Nyr
 
         int nextAttack;
         int bufferValue;
-
         
+        Random rnd = new Random();
 
         public bool enemyHit;
         public int hitTimer;
@@ -416,7 +416,9 @@ namespace Valkyrie_Nyr
                                 hasAttacked = true;
 
                                 //Banshee stuff
-                                position = new Vector2(20000, 20000);
+                                //position = new Vector2(20000, 20000);
+                                Level.Current.gameObjects.Remove(this);
+                                Level.Current.enemyObjects.Remove(this);
                                 fightStarted = false;
                                 startAttack = false;
                             }
@@ -1625,19 +1627,17 @@ namespace Valkyrie_Nyr
             }
         }
 
-        private int GenerateNumber(int maxNumber)
+        protected int GenerateNumber(int maxNumber)
         {
-            Random rnd = new Random();
             int randomNumber = rnd.Next(0, maxNumber);
             return randomNumber;    
         }
-        private int GenerateNumber(int minNumber, int maxNumber)
+        protected int GenerateNumber(int minNumber, int maxNumber)
         {
-            Random rnd = new Random();
             int randomNumber = rnd.Next(minNumber, maxNumber);
             return randomNumber;
         }
-        private int GenerateNumber(int minNumber, int maxNumber, int seed)
+        protected int GenerateNumber(int minNumber, int maxNumber, int seed)
         {
             Random rnd = new Random(seed);
             int randomNumber = rnd.Next(minNumber, maxNumber);
@@ -1654,6 +1654,11 @@ namespace Valkyrie_Nyr
             {
                 return false;
             }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }
