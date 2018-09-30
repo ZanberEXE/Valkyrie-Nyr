@@ -442,7 +442,7 @@ namespace Valkyrie_Nyr
                     }
                     else
                     {
-                        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                        //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                     }
                 }
                 //spriteBatch.Draw(pxl, new Rectangle((int)Antagonist.Ryn.position.X, (int)Antagonist.Ryn.position.Y, Antagonist.Ryn.width, Antagonist.Ryn.height), new Color(Color.LightGreen, 150));

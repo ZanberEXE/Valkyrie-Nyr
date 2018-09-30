@@ -158,14 +158,14 @@ namespace Valkyrie_Nyr
 
         private void CreateCrystal()
         {
-            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", "", 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", "", 0, 85, 150, position - new Vector2(180, 40));
+            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", null, 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", null, 0, 85, 150, position - new Vector2(180, 40));
             Level.Current.gameObjects.Add(bakedCrystal);
             bakedCrystal.init();
             bakedCrystal.name = "ground";
         }
         private void CreateCrystal(float moving)
         {
-            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", "", 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", "", 0, 85, 150, position - new Vector2(180, 40));
+            GameObject bakedCrystal = (aim.X < 0) ? new GameObject("IceCrystal", null, 0, 85, 150, position - new Vector2(-40, 40)) : new GameObject("IceCrystalFlip", null, 0, 85, 150, position - new Vector2(180, 40));
             Level.Current.gameObjects.Add(bakedCrystal);
             bakedCrystal.init();
             bakedCrystal.name = "AiyeWall";

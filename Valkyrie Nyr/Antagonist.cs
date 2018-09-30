@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Valkyrie_Nyr
 {
@@ -21,6 +23,12 @@ namespace Valkyrie_Nyr
 
         NSC Dialogues;
 
+        Enemy[] enemyTemplates;
+
+        int stageEnemiesAtBeginning = 0;
+        
+        private double timeOfLastEnemySpawn;
+
         public Antagonist() : base("Ryn", "ryn", 7, 150, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
         {
             animTex = new animation[]
@@ -34,6 +42,9 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynIsDead"), 10, 2, 12)
             };
 
+            currentEntityState = 2;
+            nextEntityState = 2;
+
             sizeInAnim = new Vector2[]
              {
                 new Vector2(800, 2375) * 4,
@@ -44,6 +55,9 @@ namespace Valkyrie_Nyr
                 new Vector2(6250, 2100) * 4,
                 new Vector2(6250, 2100) * 4
              };
+
+            //Banshee, BeeShocking, FireRocky, IceCollossus, Skeleton
+            enemyTemplates = JsonConvert.DeserializeObject<List<Enemy>>(File.ReadAllText("Ressources\\json-files\\enemyTemplates.json")).ToArray();
 
             Dialogues = new NSC(name, "none", mass, height, width, position, health, damage);
             Dialogues.dialogues = new Conversation[]
@@ -60,16 +74,16 @@ namespace Valkyrie_Nyr
 
             locations = new Vector2[]
             {
-                new Vector2(800, 2325) * 4,
-                new Vector2(3000, 2200) * 4,
-                new Vector2(2400, 1300) * 4,
-                new Vector2(3580, 620) * 4,
-                new Vector2(5450, 620) * 4,
-                new Vector2(6250, 2050) * 4,
-                new Vector2(6250, 2050) * 4
+                new Vector2(800, 2385) * 4,
+                new Vector2(3000, 2445) * 4,
+                new Vector2(2400, 1370) * 4,
+                new Vector2(3580, 660) * 4,
+                new Vector2(5450, 665) * 4,
+                new Vector2(6250, 2120) * 4,
+                new Vector2(6250, 2123) * 4
             };
 
-            currentLocation = 0;
+            currentLocation = 5;
             position = locations[currentLocation] - Camera.Main.position;
 
             hurtBox.X = (int)position.X;
@@ -89,12 +103,43 @@ namespace Valkyrie_Nyr
         {
             base.EntityUpdate(gameTime);
 
-            position = Fall(gameTime, Level.Current.gameObjects.ToArray());
+            //position = Fall(gameTime, Level.Current.gameObjects.ToArray());
             
             if (NyrBy(aggroRange))
             {
                 SetNewPosition();
             }
+
+            //EndFight
+            if(currentLocation == locations.Length - 1 && Level.Current.enemyObjects.Count() - stageEnemiesAtBeginning < 10)
+            {
+                if (timeOfLastEnemySpawn >= 25)
+                {
+                    SpawnEnemy();
+                }
+                else if (GenerateNumber(0, 300) == 0)
+                {
+                    SpawnEnemy();
+                }
+                else
+                {
+                    timeOfLastEnemySpawn += gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+        }
+
+        public void SpawnEnemy()
+        {
+            Enemy newEnemy = enemyTemplates[GenerateNumber(0, 5)].Clone() as Enemy;
+
+            newEnemy.Initialize();
+
+            newEnemy.position = this.position - new Vector2(GenerateNumber(-3000, 3000), newEnemy.height);
+
+            Level.Current.enemyObjects.Add(newEnemy);
+            Level.Current.gameObjects.Add(newEnemy);
+
+            timeOfLastEnemySpawn = 0;
         }
 
         public void Kill()
@@ -105,10 +150,7 @@ namespace Valkyrie_Nyr
 
         public void HurtRyn()
         {
-
             return;
-            Dialogues.dialogueState = new Random().Next(Dialogues.dialogues.Length - 1);
-            Dialogues.startConversation();
         }
 
         public void SetNewPosition()
@@ -123,7 +165,12 @@ namespace Valkyrie_Nyr
             Dialogues.startConversation();
             position = locations[currentLocation] - Camera.Main.position;
             
-            setNewAnim();
+            if(currentLocation == locations.Length - 1)
+            {
+                stageEnemiesAtBeginning = Level.Current.enemyObjects.Count();
+                SpawnEnemy();
+            }
+            
         }
 
         private void setNewAnim()

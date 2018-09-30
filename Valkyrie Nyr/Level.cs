@@ -63,6 +63,9 @@ namespace Valkyrie_Nyr
         //loads the level
         public void loadLevel(string levelName)
         {
+            //TODO:delete
+            levelName = "Bossstage";
+
             map = Game1.Ressources.Load<Texture2D>("Map");
             Interface.Start();
             name = levelName;
@@ -390,8 +393,10 @@ namespace Valkyrie_Nyr
 
             //Let all other gameObjects fall to gravitation
             useGrav(gameTime);
-
-            Antagonist.Ryn.Update(gameTime);
+            if(name == "Bossstage")
+            {
+                Antagonist.Ryn.Update(gameTime);
+            }
             #endregion updateOther
 
             #region updatePlayer
@@ -408,7 +413,7 @@ namespace Valkyrie_Nyr
                     //fall faster in Stomp
                     moveValue.Y += Movement.PlayerFall(gameTime) * 2;
                 }
-                moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
+                //moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
             }
 
             //let em move, after all collisions have manipulated the movement
@@ -423,7 +428,7 @@ namespace Valkyrie_Nyr
             Player.Nyr.activateTrigger(gameTime);
 
             //some configuration stuff
-            if(moveValue.Y > 0)
+            if(moveValue.Y > 0 && !Player.Nyr.inHub)
             {
                 Player.Nyr.currentEntityState = (int)Playerstates.FALL;
                 Player.Nyr.currentFrame = 0;

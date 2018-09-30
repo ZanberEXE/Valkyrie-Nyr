@@ -89,8 +89,8 @@
 	"name": "drWhich",
     "triggerType": "nsc",
     "mass": 0,
-    "height": 200,
-    "width": 220,
+    "height": 152,
+    "width": 93,
     "position": "3700, 1000",
     "health":1000,
 	"dialogues": 
