@@ -18,6 +18,7 @@ namespace Valkyrie_Nyr
         public float inactivityTime = 0;
         public int slide;
         public int attackCooldown;
+        public int skillCooldown;
         public bool inHub;
         public bool interact;
         public bool inJump;
@@ -85,7 +86,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 30, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 300, 140, 20, false); } return nyr; } }
         
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger, GameTime gameTime)
@@ -185,8 +186,12 @@ namespace Valkyrie_Nyr
                 if (CollisionAABB(attackBox, hurtbox))
                 {
                     DamageEnemies(Level.Current.enemyObjects[i], gameTime);
-                    Level.Current.enemyObjects[i].enemyHit = true;
-                    Level.Current.enemyObjects[i].hitTimer = 1;
+                    if ( Level.Current.enemyObjects.Count > i)
+                    {
+                        Level.Current.enemyObjects[i].enemyHit = true;
+                        Level.Current.enemyObjects[i].hitTimer = 1;
+                    }
+                    
                     
                 }
             }

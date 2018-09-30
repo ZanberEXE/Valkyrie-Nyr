@@ -74,10 +74,25 @@ namespace Valkyrie_Nyr
                     //Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
             }
-
+            if (Player.Nyr.attackCooldown <= 29 && Player.Nyr.attackCooldown >= 15)
+            {
+                if (Player.Nyr.entityFacing == -1)
+                {
+                    Camera.Main.move(new Vector2(-2, 0));
+                    
+                }
+                else
+                {
+                    Camera.Main.move(new Vector2(2, 0));
+                }
+            }
             if (Player.Nyr.attackCooldown > 0)
             {
                 Player.Nyr.attackCooldown--;
+            }
+            if (Player.Nyr.skillCooldown > 0)
+            {
+                Player.Nyr.skillCooldown--;
             }
 
 
@@ -282,7 +297,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.fAttackCheck = 20;
-                                Player.Nyr.attackCooldown = 60;
+                                Player.Nyr.attackCooldown = 30;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
                             }
@@ -291,10 +306,10 @@ namespace Valkyrie_Nyr
                     case Keys.E:
                         if (!Level.Current.newPressedKeys.SequenceEqual(Level.Current.lastPressedKeys))
                         {
-                            if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
+                            if (Player.Nyr.skillCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
                             {
                                 Player.Nyr.mana -= 30;
-                                Player.Nyr.attackCooldown = 60;
+                                Player.Nyr.skillCooldown = 60;
                                 if (Player.Nyr.entityFacing == -1)
                                 {
                                     new Projectile("IceShot", 30, 10, Player.Nyr.position - new Vector2(35, -50), new Vector2(-1, 0), 2400, false, new Rectangle(-10, -10, 25, 10), false, 0, 0, 0);
@@ -310,10 +325,10 @@ namespace Valkyrie_Nyr
                     case Keys.Q:
                         if (!Level.Current.newPressedKeys.SequenceEqual(Level.Current.lastPressedKeys))
                         {
-                            if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
+                            if (Player.Nyr.skillCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
                             {
                                 Player.Nyr.mana -= 80;
-                                Player.Nyr.attackCooldown = 60;
+                                Player.Nyr.skillCooldown = 60;
                                 Player.Nyr.CastFireAOE();
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                                 Level.Current.fireAoeTimer = 40;
@@ -511,7 +526,7 @@ namespace Valkyrie_Nyr
                         Player.Nyr.currentFrame = 0;
                         Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                         Player.Nyr.fAttackCheck = 20;
-                        Player.Nyr.attackCooldown = 60;
+                        Player.Nyr.attackCooldown = 30;
                         SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
                     }
@@ -519,10 +534,10 @@ namespace Valkyrie_Nyr
                 if (state.IsButtonDown(Buttons.RightShoulder) && !lastPressedGamePadButtons[15])
                 {
                     Level.Current.anyKeyPressed = true;
-                    if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
+                    if (Player.Nyr.skillCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.ICE] && Player.Nyr.mana >= 30)
                     {
                         Player.Nyr.mana -= 30;
-                        Player.Nyr.attackCooldown = 60;
+                        Player.Nyr.skillCooldown = 60;
                         if (Player.Nyr.entityFacing == -1)
                         {
                             new Projectile("IceShot", 30, 10, Player.Nyr.position - new Vector2(35, -50), new Vector2(-1, 0), 2400, false, new Rectangle(-10, -10, 25, 10), false, 0, 0, 0);
@@ -537,10 +552,10 @@ namespace Valkyrie_Nyr
                 if (state.IsButtonDown(Buttons.LeftShoulder) && !lastPressedGamePadButtons[8])
                 {
                     Level.Current.anyKeyPressed = true;
-                    if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
+                    if (Player.Nyr.skillCooldown == 0 && !Player.Nyr.inHub && Level.armorEnhanced[(int)BossElements.FIRE] && Player.Nyr.mana >= 80)
                     {
                         Player.Nyr.mana -= 80;
-                        Player.Nyr.attackCooldown = 60;
+                        Player.Nyr.skillCooldown = 60;
                         Player.Nyr.CastFireAOE();
                         SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                         Level.Current.fireAoeTimer = 40;

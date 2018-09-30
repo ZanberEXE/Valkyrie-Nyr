@@ -92,11 +92,11 @@ namespace Valkyrie_Nyr
                     case Keys.D1:
                         //Release Start
                         LoadSaveGame();
-                        Level.Current.loadLevel("Hub");
+                        Level.Current.loadLevel("Overworld");
                         States.CurrentGameState = GameStates.PLAYING;
                         if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
                         {
-                            Level.Current.nscObjects[0].startConversation(gameTime);
+                            //Level.Current.nscObjects[0].startConversation(gameTime);
                         }
                         break;
                     case Keys.D2:
@@ -333,7 +333,7 @@ namespace Valkyrie_Nyr
                     }
                     else
                     {
-                        //spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
+                        spriteBatch.Draw(pxl, new Rectangle((int)collider.position.X, (int)collider.position.Y, collider.width, collider.height), new Color(Color.LightGreen, 150));
                     }
                 }
                 //spriteBatch.Draw(pxl, new Rectangle((int)Antagonist.Ryn.position.X, (int)Antagonist.Ryn.position.Y, Antagonist.Ryn.width, Antagonist.Ryn.height), new Color(Color.LightGreen, 150));

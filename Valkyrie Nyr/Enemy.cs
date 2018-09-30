@@ -43,10 +43,13 @@ namespace Valkyrie_Nyr
         bool hasAttacked = false;
         bool waitAttack = false;
         bool startAttack = false;
+        bool dashLeft = false;
+        bool dashRight = false;
 
         int nextAttack;
         int bufferValue;
 
+        
 
         public bool enemyHit;
         public int hitTimer;
@@ -89,8 +92,7 @@ namespace Valkyrie_Nyr
             Vector2 nextPosition = new Vector2((1 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds), 0);
 
             GameObject[] collideObjekts = this.Collision<GameObject>(Level.Current.gameObjects.ToArray(), nextPosition + position);
-
-
+            
 
             if (collideObjekts.Length > 0)
             {
@@ -108,14 +110,11 @@ namespace Valkyrie_Nyr
             }
 
             base.EntityUpdate(gameTime);
-
-
-
-
-
+            
             // SMALL ENEMIES
             if (name != "Ina" && name != "Yinyin" && name != "Aiye" && name != "Monomono")
             {
+                this.Fall(gameTime, Level.Current.gameObjects.ToArray());
                 if (NyrBy(aggroRange))
                 {
                     beginFight = true;
@@ -171,7 +170,7 @@ namespace Valkyrie_Nyr
                             }
                         }
                         // Patrol Left and Right
-                        if ( name == "FireRocky")
+                        if ( name == "FireRocky" || name == "IceColossus")
                         {
                             if (hasAttacked == false || !NyrBy(1000))
                             {
@@ -220,7 +219,7 @@ namespace Valkyrie_Nyr
                         {
                             stateTimer = 80;
                         }
-                        if (name == "Skeleton")
+                        if (name == "Skeleton" || name == "FireRocky")
                         {
                             stateTimer = 60;
                         }
@@ -232,9 +231,9 @@ namespace Valkyrie_Nyr
                             defaultAttackRange = attackRange;
                             attackRange = 0;
                         }
-                        if ( name == "FireRocky")
+                        if ( name == "IceColossus")
                         {
-                            stateTimer = 60;
+                            stateTimer = 70;
                         }
                     }
                     if (currentEntityState == (int)Enemystates.ATTACK)
@@ -338,6 +337,51 @@ namespace Valkyrie_Nyr
                                 startAttack = false;
                             }
                         }
+                        if (name == "IceColossus")
+                        {
+                            if (Player.Nyr.position.X + 40 < position.X && dashLeft == false)
+                            {
+                                entityFacing = -1;
+                            }
+                            if (Player.Nyr.position.X + 40 > position.X && dashRight == false)
+                            {
+                                entityFacing = 1;
+                            }
+                          
+                            
+                            if (stateTimer <= 35 && stateTimer >= 5)
+                            {
+                                if (entityFacing == -1 && dashLeft == false)
+                                {
+                                    attackBox.Y = (int)position.Y - height - 20;
+                                    attackBox.X = (int)position.X - 110;
+                                    position.X += nextPosition.X * entityFacing * 4;
+                                    dashRight = true;
+                                }
+                                if (entityFacing == 1 && dashRight == false)
+                                {
+                                    attackBox.Y = (int)position.Y - height - 20;
+                                    attackBox.X = (int)position.X + 100;
+                                    position.X += nextPosition.X * entityFacing * 4;
+                                    dashLeft = true;
+                                }
+                                
+                                
+                                
+                                if (CollisionAABB(attackBox, Player.Nyr.hurtBox))
+                                {
+                                    HurtNyr(damage);
+                                }
+                            }
+                            if (stateTimer == 0)
+                            {
+                                nextEntityState = (int)Enemystates.WALK;
+                                hasAttacked = true;
+                                startAttack = false;
+                                dashLeft = false;
+                                dashRight = false;
+                            }
+                        }
                         if (name == "Banshee")
                         {
                             defaultAttackRange = attackRange;
@@ -430,7 +474,7 @@ namespace Valkyrie_Nyr
                         }
                     }
 
-                    if (hasAttacked == true && name != "FireRocky")
+                    if (hasAttacked == true && name != "FireRocky" && name != "IceColossus")
                     {
                         attackRange = defaultAttackRange;
                     }
@@ -444,9 +488,10 @@ namespace Valkyrie_Nyr
 
 
             //BOSS ENEMIES
+            #region Bosses
             if (name == "Ina" || name == "Yinyin" || name == "Aiye" || name == "Monomono")
             {
-                
+                #region Init Fight
                 if (NyrBy(aggroRange))
                 {
                     beginFight = true;
@@ -463,14 +508,10 @@ namespace Valkyrie_Nyr
 
                     States.CurrentBGMState = BGMStates.BOSS;
                 }
-
-
-
-
-
+                #endregion
                 if (fightStarted)
                 {
-
+                    #region Idle
                     if (currentEntityState == (int)Bossstates.IDLE)
                     {
                         aiyeDoIt = false;
@@ -500,6 +541,8 @@ namespace Valkyrie_Nyr
                             
                         }
                     }
+                    #endregion
+                    #region Walk
                     if (currentEntityState == (int)Bossstates.WALK && waitAttack == false)
                     {
                         if (name == "Aiye")
@@ -516,7 +559,7 @@ namespace Valkyrie_Nyr
                         }
 
                         position.X += nextPosition.X * entityFacing;
-
+                        #region GenerateAttack
                         if (stateTimer <= 1)
                         {
 
@@ -578,31 +621,31 @@ namespace Valkyrie_Nyr
                             }
                             if (name == "Monomono")
                             {
-                                {
-                                    nextAttack =  GenerateNumber(4);
+                                nextAttack =  GenerateNumber(4);
 
-                                    if (nextAttack == 0)
-                                    {
-                                        nextEntityState = (int)Bossstates.ATTACK1;
-                                    }
-                                    if (nextAttack == 1)
-                                    {
-                                        nextEntityState = (int)Bossstates.ATTACK2;
-                                    }
-                                    if (nextAttack == 2)
-                                    {
-                                        nextEntityState = (int)Bossstates.ATTACK3;
-                                    }
-                                    if (nextAttack == 3)
-                                    {
-                                        nextEntityState = (int)Bossstates.ATTACK1;
-                                        stateTimer = 50;
-                                    }
+                                if (nextAttack == 0)
+                                {
+                                    nextEntityState = (int)Bossstates.ATTACK1;
+                                }
+                                if (nextAttack == 1)
+                                {
+                                    nextEntityState = (int)Bossstates.ATTACK2;
+                                }
+                                if (nextAttack == 2)
+                                {
+                                    nextEntityState = (int)Bossstates.ATTACK3;
+                                }
+                                if (nextAttack == 3)
+                                {
+                                    nextEntityState = (int)Bossstates.ATTACK1;
+                                    stateTimer = 50;
                                 }
                             }
 
                             bossWalked = true;
                         }
+                        #endregion
+                        #region AttackTimer
                         if (bossWalked == true)
                         {
                             if (name == "Ina")
@@ -668,10 +711,11 @@ namespace Valkyrie_Nyr
                             }
                             
                         }
-
+                        #endregion
                         
-                    
                     }
+                    #endregion
+
                     if (currentEntityState == (int)Bossstates.ATTACK1)
                     {
                         if (name != "Aiye")
@@ -1144,10 +1188,10 @@ namespace Valkyrie_Nyr
                 }
                 bugTimer--;
             }
-
+            #endregion
 
             // ANIMATIONSEFFEKTE
-
+            #region Effekts
             if (yinyinSpikes)
             {
                 if (effektTimer == 99)
@@ -1532,6 +1576,9 @@ namespace Valkyrie_Nyr
                     aiyeWallToLeft = false;
                 }
             }
+            #endregion
+
+
             if (effektTimer >= 0)
             {
                 effektTimer--;

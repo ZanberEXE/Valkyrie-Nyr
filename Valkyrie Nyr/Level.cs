@@ -501,7 +501,7 @@ namespace Valkyrie_Nyr
                 {
                     collidedTop = true;
                 }
-                else if ((int)element.position.Y == (int)(newPos.Y + Player.Nyr.height))
+                else if ((int)element.position.Y <= (int)(newPos.Y + Player.Nyr.height))
                 {
                     if (Player.Nyr.inStomp && element.name == "breakableGround")
                     {

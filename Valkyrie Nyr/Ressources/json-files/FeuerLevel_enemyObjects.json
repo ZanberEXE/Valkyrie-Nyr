@@ -1,5 +1,54 @@
 [
   {
+    "name": "FireRocky",
+    "triggerType": "",
+    "mass": 15,
+    "height": 0,
+    "width": 100,
+    "position": "1200, 3500",
+    "health": 220,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 350,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 60,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/FireRocky/FireRockyIdle",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyMove",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAttack",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyAggro",
+        "Columns": 10,
+        "Rows": 3,
+        "maxFrames": 25
+      },
+      {
+        "path": "smallEnemies/FireRocky/FireRockyDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
     "name": "Ina",
     "triggerType": "",
     "mass": 4,

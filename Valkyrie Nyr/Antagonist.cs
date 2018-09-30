@@ -21,16 +21,16 @@ namespace Valkyrie_Nyr
 
         NSC Dialogues;
 
-        public Antagonist() : base("Ryn", "ryn", 7, 200, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
+        public Antagonist() : base("Ryn", "ryn", 7, 150, 200, new Vector2(0, 0), 20000, 0, 200, 0, 0, 0, 0, false)
         {
             animTex = new animation[]
             {
                 new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynIdle"), 10, 5, 50),
-                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynMove"), 10, 5, 50),
-                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynMoveCry"), 10, 5, 50),
-                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynCry"), 10, 4, 37),
-                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynIdleAura"), 10, 4, 37),
-                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynDying"), 10, 7, 62),
+                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynMove"), 10, 4, 31),
+                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynCry"), 10, 7, 62),
+                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynCryAura"), 10, 7, 62),
+                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynStandCry"), 3, 1, 3),
+                new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynDying"), 10, 8, 75),
                 new animation(Game1.Ressources.Load<Texture2D>("Bosses/Ryn/RynIsDead"), 10, 2, 12)
             };
 

@@ -1,5 +1,54 @@
 [
   {
+    "name": "IceColossus",
+    "triggerType": "",
+    "mass": 15,
+    "height": 30,
+    "width": 90,
+    "position": "1200, 3500",
+    "health": 310,
+    "damage": 70,
+    "entityFacing": 1,
+    "aggroRange": 900,
+    "attackRange": 500,
+    "speed": 200,
+    "attackBoxHeight": 60,
+    "attackBoxWidth": 100,
+    "animationFlip": true,
+    "animationPrefabs": [
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusIdle",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusMove",
+        "Columns": 10,
+        "Rows": 5,
+        "maxFrames": 50
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusAttack",
+        "Columns": 10,
+        "Rows": 8,
+        "maxFrames": 75
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusAggro",
+        "Columns": 10,
+        "Rows": 4,
+        "maxFrames": 37
+      },
+      {
+        "path": "smallEnemies/IceCollosus/IceCollosusDead",
+        "Columns": 10,
+        "Rows": 7,
+        "maxFrames": 62
+      }
+    ]
+  },
+  {
     "name": "Yinyin",
     "triggerType": "",
     "mass": 8,
@@ -47,7 +96,7 @@
         "maxFrames": 250
       }
     ]
-},
+  },
   {
     "name": "Skeleton",
     "triggerType": "",
