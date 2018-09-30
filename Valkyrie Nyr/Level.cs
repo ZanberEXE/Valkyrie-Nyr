@@ -20,8 +20,8 @@ namespace Valkyrie_Nyr
 
         //all beaten bosses in this order: Ina (Fire), Yinyin (Ice), Aiye(Earth), Monomono (Blitz)
         public static bool[] soulsRescued = new bool[] { false, false, false, false };
-        //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz)
-        public static bool[] armorEnhanced = new bool[] { false, false, false, false };
+        //all enhanced Armor in this order: Torso (Fire), Guntlet (Ice), Shoes(Earth), Headband (Blitz), WeaponUpgrade, ArmorUpgrade
+        public static bool[] armorEnhanced = new bool[] { false, false, false, false, false, false };
 
 
         public string name;
@@ -210,9 +210,11 @@ namespace Valkyrie_Nyr
                     new Projectile("Earthspike", 200, 200, new Vector2(7700, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(8800, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(9900, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    gameObjects.Add(new GameObject("armorUpgrade", "collectable", 1, 42, 35, new Vector2(7500, 10000) + startPosition.ToVector2()));
                     break;
                 case "BlitzLevel":
                     new Projectile("Lightning", 800, 200, new Vector2(500, 3500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 50, 10, 200);
+                    gameObjects.Add(new GameObject("weaponUpgrade", "collectable", 1, 21, 96, new Vector2(1000, 5000) + startPosition.ToVector2()));
                     break;
             }
 
@@ -364,17 +366,17 @@ namespace Valkyrie_Nyr
                             float plattFormMovement = element.move(gameTime).X;
                             if ((plattFormMovement < 0 && moveValue.X > 0) || (plattFormMovement > 0 && moveValue.X < 0))
                             {
-                                moveValue.X = plattFormMovement;
+                                Camera.Main.move(new Vector2(plattFormMovement, moveValue.Y));
                             }
                             else
                             {
-                                moveValue.X += plattFormMovement;
+                                Camera.Main.move(new Vector2(moveValue.X + plattFormMovement, moveValue.Y));
                             }
 
                         }
                         else
                         {
-                            moveValue += element.move(gameTime);
+                            Camera.Main.move(moveValue + element.move(gameTime));
                         }
 
                     }
@@ -421,6 +423,12 @@ namespace Valkyrie_Nyr
             Player.Nyr.activateTrigger(gameTime);
 
             //some configuration stuff
+            if(moveValue.Y > 0)
+            {
+                Player.Nyr.currentEntityState = (int)Playerstates.FALL;
+                Player.Nyr.currentFrame = 0;
+                Player.Nyr.nextEntityState = (int)Playerstates.FALL;
+            }
             if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
             {
                 Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce && !armorEnhanced[(int)BossElements.FIRE]) ? Playerstates.SLIP : Playerstates.LAND);

@@ -114,7 +114,11 @@ namespace Valkyrie_Nyr
             // SMALL ENEMIES
             if (name != "Ina" && name != "Yinyin" && name != "Aiye" && name != "Monomono")
             {
-                this.Fall(gameTime, Level.Current.gameObjects.ToArray());
+                if (this.Collision<GameObject>(Level.Current.gameObjects.ToArray(), position).Length == 0)
+                {
+                    onGround = false;
+                }
+
                 if (NyrBy(aggroRange))
                 {
                     beginFight = true;

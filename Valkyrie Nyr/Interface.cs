@@ -29,10 +29,11 @@ namespace Valkyrie_Nyr
         {
             spriteBatch.Draw(statsTexture, new Rectangle(0, 0, statsTexture.Width, statsTexture.Height), Color.White);
 
-            spriteBatch.Draw(hpBarTexture, new Vector2(21, 21), new Rectangle(0, 0, hpBarTexture.Width, hpBarTexture.Height), Color.White, 0f, Vector2.Zero, new Vector2(Player.Nyr.health / (float)Player.Nyr.maxHealth, 1), SpriteEffects.None, 0f);
-            spriteBatch.DrawString(Game1.Font, Player.Nyr.health.ToString() + " / " + Player.Nyr.maxHealth.ToString(), new Vector2(25, 15), Color.GhostWhite);
+            spriteBatch.Draw(hpBarTexture, new Vector2(21, 24), new Rectangle(0, 0, hpBarTexture.Width, hpBarTexture.Height), Color.White, 0f, Vector2.Zero, new Vector2(Player.Nyr.health / (float)Player.Nyr.maxHealth, 1), SpriteEffects.None, 0f);
+            spriteBatch.DrawString(Game1.Font, Player.Nyr.health.ToString() + " / " + Player.Nyr.maxHealth.ToString(), new Vector2(25, 21), Color.GhostWhite);
 
-            spriteBatch.Draw(mpBarTexture, new Vector2(82, 82), new Rectangle(0, 0, mpBarTexture.Width, mpBarTexture.Height), Color.White, 0f, Vector2.Zero, new Vector2(Player.Nyr.mana / (float)Player.Nyr.maxMana, 1), SpriteEffects.None, 0f);
+            spriteBatch.Draw(mpBarTexture, new Vector2(21, 88), new Rectangle(0, 0, mpBarTexture.Width, mpBarTexture.Height), Color.White, 0f, Vector2.Zero, new Vector2(Player.Nyr.mana / (float)Player.Nyr.maxMana, 1), SpriteEffects.None, 0f);
+            spriteBatch.DrawString(Game1.Font, Player.Nyr.mana.ToString() + " / " + Player.Nyr.maxMana.ToString(), new Vector2(25, 85), Color.GhostWhite);
 
 
             spriteBatch.Draw(moneyTexture, new Rectangle(50, Game1.WindowSize.Y - moneyTexture.Height - 20, moneyTexture.Width, moneyTexture.Height), Color.White);
