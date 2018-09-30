@@ -66,9 +66,23 @@
           "Nyr"
         ],
         "speeches": [
-
+          "Where can I find the trial you spoke of?",
+          "The trial can be found inside the rift found farthest from here.",
+          "Rift?",
+          "The rift marking the edge of this world. By overcoming the obstacles that will stand in your way and travelling past the tower that radiates malice, you shall find what you seek.",
+          "...What do I need to do once I'm there?",
+          "Simply enter, and the rest shall become clear to you.",
+          "So I'll have to figure it out myself, I assume. Then I'll just have to fulfill my duty, the same as always."
         ]
-      }
+      },
+      {
+        "spokesman": [
+          "Statue"
+        ],
+        "speeches": [
+          "Courageous one, your deeds have been recorded."
+        ]
+      },
 		]
   },
   {
@@ -115,7 +129,7 @@
             "...But I never asked f-",
             "Haah, now if only I had something to remember you by, so I wouldn't feel so anxious whenever you left...",
             "I already gave you something the last time...",
-            "These gil coins? You shouldn't have... just for me? I'll be sure to treasure them. Yes. Now let go of those coins dear...",
+            "These Gil coins? You shouldn't have... just for me? I'll be sure to treasure them. Yes. Now let go of those coins dear...",
             "-Gil given to Dr Which... maybe-"
 
 					]

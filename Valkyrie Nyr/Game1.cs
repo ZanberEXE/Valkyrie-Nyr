@@ -66,28 +66,24 @@ namespace Valkyrie_Nyr
             //Music.CurrentSong.loadSong("music/bgm_menuV2");
 
             //Button Stuff
-            var playButton = new Button(Game1.Ressources.Load<Texture2D>("Button/playButton2"), Font)
+            var playButton = new Button(Game1.Ressources.Load<Texture2D>("Button/playButton2"))
             {
                 Position = new Vector2(97, 242),
-                Text = "",
             };
             playButton.Click += PlayButton_Click;
-            var controlsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/controlsButton"), Font)
+            var controlsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/controlsButton"))
             {
                 Position = new Vector2(97, 481),
-                Text = "",
             };
             controlsButton.Click += ControlsButton_Click;
-            var creditsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/creditsButton"), Font)
+            var creditsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/creditsButton"))
             {
                 Position = new Vector2(97, 607),
-                Text = "",
             };
             creditsButton.Click += CreditsButton_Click;
-            var exitButton = new Button(Game1.Ressources.Load<Texture2D>("Button/exitButton"), Font)
+            var exitButton = new Button(Game1.Ressources.Load<Texture2D>("Button/exitButton"))
             {
                 Position = new Vector2(97, 728),
-                Text = "",
             };
             exitButton.Click += ExitButton_Click;
 
@@ -101,16 +97,14 @@ namespace Valkyrie_Nyr
             };
 
             //pause button stuff
-            var returnButton = new Button(Game1.Ressources.Load<Texture2D>("Button/returnButton"), Font)
+            var returnButton = new Button(Game1.Ressources.Load<Texture2D>("Button/returnButton"))
             {
                 Position = new Vector2(264, 683),
-                Text = "",
             };
             returnButton.Click += ReturnButton_Click;
-            var mainMenuButton = new Button(Game1.Ressources.Load<Texture2D>("Button/mainMenuButton"), Font)
+            var mainMenuButton = new Button(Game1.Ressources.Load<Texture2D>("Button/mainMenuButton"))
             {
                 Position = new Vector2(1095, 685),
-                Text = "",
             };
             mainMenuButton.Click += MainMenuButton_Click;
             _pauseButtons = new List<Button>()
