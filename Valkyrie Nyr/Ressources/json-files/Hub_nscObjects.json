@@ -9,54 +9,66 @@
     "health":1000,
 	"dialogues": 
 		[
-			{	
-				"spokesman":
-					[
-						"",
-						"",
-						"",
-						"",
-						"",
-						"",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Statue",
-            "Nyr",
-            "Statue",
-						"Nyr",
-						"Nyr",
-						"Statue",
-						"Nyr",
-						"Statue",
-						"Statue"
-					],
-				"speeches":
-					[	
-						"In the year disputes between warring nations led to the outbreak of war, many were caught in the crossfire.",
-						"Nyr had already lost her father just a few years after her little sister Ryn had been born. After uprisings broke out across the city, one day her mother never returned either.", 
-						"Searching for safety amidst the now war-torn city, Nyr did what she had to do to protect her sister and keep her safe."  ,
-						"Even if it meant joining the fighting too. ",
-						"During the fighting, the courageous girl fell in battle, in her last moments, she still wondered, 'Was her sister safe?'",
-						"...",
-						"Courageous one, you showed great valour before your life perished and I have thus judged thee worthy to stand in front of me now.", 
-						"Where...am I?" ,
-						"This is the Underworld. A place where the restless souls reside. I have called you before me to ask of you this. Would you serve me as a Valkyrie?",
-						"A Valkyrie...?",
-						"A divine being that leads the dead and fights against the twisted monsters that spring from the miasma of human emotions.",
-						"They keep order in this world alongside an army of dead souls, who have risen to join their cause.",
-						"..." ,
-						"As a Valkyrie you will also decide the fate of the souls that have fallen in battle. Whether their souls shall rest eternally or continue their fate in the Underworld.",
-						"...!",
-						"How can I become a Valkyrie?",
-						"I seem to have awoken your interest. To become a Valkyrie, I would have you forge your own army and pass a trial.",
-						"What kind of trial is it?",
-						"You shall see, one that will make you worthy of becoming my Valkyrie.",
-						"Now I ask of you again. Do you want to become a Valkyrie?"
-					]
-			}
+      {
+        "spokesman": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Statue"
+        ],
+        "speeches": [
+          "In the year disputes between warring nations led to the outbreak of war, many were caught in the crossfire.",
+          "Nyr had already lost her father just a few years after her little sister Ryn had been born. After uprisings broke out across the city, one day her mother never returned either.",
+          "Searching for safety amidst the now war-torn city, Nyr did what she had to do to protect her sister and keep her safe.",
+          "Even if it meant joining the fighting too. ",
+          "During the fighting, the courageous girl fell in battle, in her last moments, she still wondered, 'Was her sister safe?'",
+          "...",
+          "Courageous one, you showed great valour before your life perished and I have thus judged thee worthy to stand in front of me now.",
+          "Where...am I?",
+          "This is the Underworld. A place where the restless souls reside. I have called you before me to ask of you this. Would you serve me as a Valkyrie?",
+          "A Valkyrie...?",
+          "A divine being that leads the dead and fights against the twisted monsters that spring from the miasma of human emotions.",
+          "They keep order in this world alongside an army of dead souls, who have risen to join their cause.",
+          "...",
+          "As a Valkyrie you will also decide the fate of the souls that have fallen in battle. Whether their souls shall rest eternally or continue their fate in the Underworld.",
+          "...!",
+          "How can I become a Valkyrie?",
+          "I seem to have awoken your interest. To become a Valkyrie, I would have you forge your own army and pass a trial.",
+          "What kind of trial is it?",
+          "You shall see, one that will make you worthy of becoming my Valkyrie.",
+          "Now I ask of you again. Do you want to become a Valkyrie?"
+        ]
+      },
+      {
+        "spokesman": [
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr",
+          "Statue",
+          "Nyr"
+        ],
+        "speeches": [
+
+        ]
+      }
 		]
   },
   {

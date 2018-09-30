@@ -23,6 +23,9 @@ namespace Valkyrie_Nyr
         //white 1x1 texture
         public static Texture2D pxl;
 
+        //bnutton stuff
+        private List<Button> _mainMenuButtons;
+        private List<Button> _pauseButtons;
 
         public Game1()
         {
@@ -58,13 +61,99 @@ namespace Valkyrie_Nyr
             Renderer = spriteBatch;
 
 
-            States.CurrentGameState = GameStates.MAINMENU;
+            States.CurrentGameState = GameStates.SPLASHSCREEN;
 
             //Music.CurrentSong.loadSong("music/bgm_menuV2");
 
+            //Button Stuff
+            var playButton = new Button(Game1.Ressources.Load<Texture2D>("Button/playButton2"), Font)
+            {
+                Position = new Vector2(97, 242),
+                Text = "",
+            };
+            playButton.Click += PlayButton_Click;
+            var controlsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/controlsButton"), Font)
+            {
+                Position = new Vector2(97, 481),
+                Text = "",
+            };
+            controlsButton.Click += ControlsButton_Click;
+            var creditsButton = new Button(Game1.Ressources.Load<Texture2D>("Button/creditsButton"), Font)
+            {
+                Position = new Vector2(97, 607),
+                Text = "",
+            };
+            creditsButton.Click += CreditsButton_Click;
+            var exitButton = new Button(Game1.Ressources.Load<Texture2D>("Button/exitButton"), Font)
+            {
+                Position = new Vector2(97, 728),
+                Text = "",
+            };
+            exitButton.Click += ExitButton_Click;
+
+            _mainMenuButtons = new List<Button>()
+            {
+                playButton,
+                controlsButton,
+                creditsButton,
+                exitButton,
+
+            };
+
+            //pause button stuff
+            var returnButton = new Button(Game1.Ressources.Load<Texture2D>("Button/returnButton"), Font)
+            {
+                Position = new Vector2(264, 683),
+                Text = "",
+            };
+            returnButton.Click += ReturnButton_Click;
+            var mainMenuButton = new Button(Game1.Ressources.Load<Texture2D>("Button/mainMenuButton"), Font)
+            {
+                Position = new Vector2(1095, 685),
+                Text = "",
+            };
+            mainMenuButton.Click += MainMenuButton_Click;
+            _pauseButtons = new List<Button>()
+            {
+                returnButton,
+                mainMenuButton,
+            };
+
             base.Initialize();
         }
-
+        //button stuff
+        private void PlayButton_Click(object sender, System.EventArgs e)
+        {
+            //Release Start
+            LoadSaveGame();
+            Level.Current.loadLevel("Overworld");
+            States.CurrentGameState = GameStates.PLAYING;
+            if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
+            {
+                //Level.Current.nscObjects[0].startConversation(gameTime);
+            }
+        }
+        private void ControlsButton_Click(object sender, System.EventArgs e)
+        {
+            States.CurrentGameState = GameStates.OPTIONS;
+        }
+        private void CreditsButton_Click(object sender, System.EventArgs e)
+        {
+            States.CurrentGameState = GameStates.CREDITS;
+        }
+        private void ExitButton_Click(object sender, System.EventArgs e)
+        {
+            Exit();
+        }
+            //pause button stuff
+        private void ReturnButton_Click(object sender, System.EventArgs e)
+        {
+            States.CurrentGameState = GameStates.PLAYING;
+        }
+        private void MainMenuButton_Click(object sender, System.EventArgs e)
+        {
+            States.CurrentGameState = GameStates.MAINMENU;
+        }
 
         void LoadSaveGame()
         {
@@ -86,40 +175,48 @@ namespace Valkyrie_Nyr
         //TODO: proper content
         void mMainMenu(GameTime gameTime)
         {
+            //button test
+            foreach (var element in _mainMenuButtons)
+                element.Update(gameTime);
+
+            //foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            //{ 
+            //    switch (element)
+            //    {
+            //        case Keys.D1:
+            //            //Release Start
+            //            LoadSaveGame();
+            //            Level.Current.loadLevel("Overworld");
+            //            States.CurrentGameState = GameStates.PLAYING;
+            //            if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
+            //            {
+            //                //Level.Current.nscObjects[0].startConversation(gameTime);
+            //            }
+            //            break;
+            //        case Keys.D2:
+            //            States.CurrentGameState = GameStates.OPTIONS;
+            //            break;
+            //        case Keys.D3:
+            //            //States.CurrentGameState = GameStates.CREDITS;
+            //            break;
+            //        case Keys.D4:
+            //            States.CurrentGameState = GameStates.EXIT;
+            //            break;
+            //    }
+            //}
+        }
+
+        void mSplashScreen()
+        {
             foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-            { 
+            {
                 switch (element)
                 {
-                    case Keys.D1:
-                        //Release Start
-                        LoadSaveGame();
-                        Level.Current.loadLevel("Overworld");
-                        States.CurrentGameState = GameStates.PLAYING;
-                        if (!(Level.soulsRescued[0] || Level.soulsRescued[1] || Level.soulsRescued[2] || Level.soulsRescued[3]))
-                        {
-                            //Level.Current.nscObjects[0].startConversation(gameTime);
-                        }
-                        break;
-                    case Keys.D2:
-                        States.CurrentGameState = GameStates.OPTIONS;
-                        break;
-                    case Keys.D3:
-                        //States.CurrentGameState = GameStates.CREDITS;
-                        break;
-                    case Keys.D4:
-                        States.CurrentGameState = GameStates.EXIT;
+                    default:
+                        States.CurrentGameState = GameStates.MAINMENU;
                         break;
                 }
             }
-            //annoying credit stuff
-            //if (Keyboard.GetState().IsKeyUp(Keys.D3))
-            //{
-            //    if(Keyboard.GetState().IsKeyDown(Keys.D3))
-            //    {
-            //        States.CurrentGameState = GameStates.CREDITS;
-            //    }
-            //}
-
         }
 
         void mOptions()
@@ -143,42 +240,46 @@ namespace Valkyrie_Nyr
             }
         }
 
-        void mPause()
+        void mPause(GameTime gameTime)
         {
             MediaPlayer.Pause();
-            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-            {
-                switch (element)
-                {
-                    case Keys.D1:
-                        //States.CurrentGameState = GameStates.OPTIONS;
-                        break;
-                    case Keys.D2:
-                        States.CurrentGameState = GameStates.PLAYING;
-                        MediaPlayer.Resume();
-                        break;
-                    case Keys.D3:
-                        States.CurrentGameState = GameStates.MAINMENU;
-                        break;
-                }
-            }
 
+            //button stuff
+            foreach (var element in _pauseButtons)
+                element.Update(gameTime);
+
+            //foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            //{
+            //    switch (element)
+            //    {
+            //        case Keys.D1:
+            //            //States.CurrentGameState = GameStates.OPTIONS;
+            //            break;
+            //        case Keys.D2:
+            //            States.CurrentGameState = GameStates.PLAYING;
+            //            MediaPlayer.Resume();
+            //            break;
+            //        case Keys.D3:
+            //            States.CurrentGameState = GameStates.MAINMENU;
+            //            break;
+            //    }
+            //}
         }
 
         void mLose()
         {
-            foreach (Keys element in Keyboard.GetState().GetPressedKeys())
-            {
-                switch (element)
-                {
-                    case Keys.D1:
-                        States.CurrentGameState = GameStates.PLAYING;
-                        break;
-                    case Keys.D2:
-                        States.CurrentGameState = GameStates.MAINMENU;
-                        break;
-                }
-            }
+            //foreach (Keys element in Keyboard.GetState().GetPressedKeys())
+            //{
+            //    switch (element)
+            //    {
+            //        case Keys.D1:
+            //            States.CurrentGameState = GameStates.PLAYING;
+            //            break;
+            //        case Keys.D2:
+            //            States.CurrentGameState = GameStates.MAINMENU;
+            //            break;
+            //    }
+            //}
         }
 
 
@@ -250,6 +351,10 @@ namespace Valkyrie_Nyr
 
             switch (States.CurrentGameState)
             {
+                case GameStates.SPLASHSCREEN:
+                    mSplashScreen();
+                    break;
+
                 case GameStates.MAINMENU:
                     mMainMenu(gameTime);
                     break;
@@ -267,7 +372,7 @@ namespace Valkyrie_Nyr
                     break;
 
                 case GameStates.PAUSE:
-                    mPause();
+                    mPause(gameTime);
                     break;
 
                 case GameStates.LOSE:
@@ -306,7 +411,10 @@ namespace Valkyrie_Nyr
                     Player.Nyr.conversationPartner.renderConversation(spriteBatch);
                     break;
                 case GameStates.MAINMENU:
-                    spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenu"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("MainMenuBG"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    //buttoon stuff
+                    foreach (var element in _mainMenuButtons)
+                        element.Draw(gameTime, spriteBatch);
                     break;
                 case GameStates.OPTIONS:
                     spriteBatch.Draw(Ressources.Load<Texture2D>("Options"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
@@ -315,10 +423,16 @@ namespace Valkyrie_Nyr
                     spriteBatch.Draw(Ressources.Load<Texture2D>("Credits"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
                     break;
                 case GameStates.PAUSE:
-                    spriteBatch.Draw(Ressources.Load<Texture2D>("Pause"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("Pause2"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    //button stuff
+                    foreach (var element in _pauseButtons)
+                        element.Draw(gameTime, spriteBatch);
                     break;
                 case GameStates.LOSE:
                     spriteBatch.Draw(Ressources.Load<Texture2D>("Lose"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
+                    break;
+                case GameStates.SPLASHSCREEN:
+                    spriteBatch.Draw(Ressources.Load<Texture2D>("SplashScreenV2"), new Rectangle(Point.Zero, new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight)), Color.White);
                     break;
             }
 
