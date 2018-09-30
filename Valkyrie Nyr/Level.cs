@@ -43,7 +43,6 @@ namespace Valkyrie_Nyr
 
         public bool hasDashed = false;
         public bool anyKeyPressed = false;
-        bool drawMap = false;
         public Vector2 tempposition;
 
         public Vector2 positionBGSprite;
@@ -60,9 +59,7 @@ namespace Valkyrie_Nyr
         public Keys[] newPressedKeys;
 
         public int timeStop;
-
         
-
         //loads the level
         public void loadLevel(string levelName)
         {
@@ -143,7 +140,6 @@ namespace Valkyrie_Nyr
                         } 
                     }
                     Player.Nyr.inJump = false;
-                    Player.Nyr.health = Player.Nyr.maxHealth;
                     break;
                 case "Overworld":
                     width = 3000 * Camera.Main.zoom;
@@ -214,6 +210,9 @@ namespace Valkyrie_Nyr
                     new Projectile("Earthspike", 200, 200, new Vector2(7700, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(8800, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
                     new Projectile("Earthspike", 200, 200, new Vector2(9900, 4670 + 130) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, 200, 100, 0), true, 187, 10, 200);
+                    break;
+                case "BlitzLevel":
+                    new Projectile("Lightning", 800, 200, new Vector2(500, 3500) + startPosition.ToVector2(), Vector2.Zero, 0, true, new Rectangle(-50, -400, 100, 0), true, 50, 10, 200);
                     break;
             }
 
@@ -293,6 +292,7 @@ namespace Valkyrie_Nyr
             
         }
 
+        //Update LevelTraps
         private void UpdateTraps(GameTime gameTime)
         {
             for (int i = 0; i < projectileObjects.Count; i++)
@@ -310,15 +310,16 @@ namespace Valkyrie_Nyr
                             projectileObjects[i].attackBoxOffset.Y = 110;
                             projectileObjects[i].attackbox.Height = 0;
                         }
-                        //else if (projectileObjects[i].currentFrame > 170 && projectileObjects[i].currentFrame <= 187)
-                        //{
-                        //    projectileObjects[i].attackBoxOffset.Y = (projectileObjects[i].currentFrame - 170) * (150 / 17f) - 40;
-                        //    projectileObjects[i].attackbox.Height = (int)((187 - projectileObjects[i].currentFrame) * (150 / 17f));
-                        //}
-                        //else if (projectileObjects[i].currentFrame == 0)
-                        //{
-                        //    projectileObjects[i].attackbox.Height = 0;
-                        //}
+                        break;
+                    case "Lightning":
+                        if (projectileObjects[i].currentFrame > 0 && projectileObjects[i].currentFrame <= 20)
+                        {
+                            projectileObjects[i].attackbox.Height = (int)(projectileObjects[i].currentFrame * (750 / 20f)) + 50;
+                        }
+                        else if(projectileObjects[i].currentFrame > 25)
+                        {
+                            projectileObjects[i].attackbox.Height = 0;
+                        }
                         break;
                 }
             }
@@ -327,28 +328,33 @@ namespace Valkyrie_Nyr
         //get input and update the elements inside the level
         public void update(GameTime gameTime)
         {
+            //Resetting Values
+            moveValue = Vector2.Zero;
+            textboxText = "";
+            anyKeyPressed = false;
+
+            #region updateTraps
             for (int i = 0; i < projectileObjects.Count; i++)
             {
                 projectileObjects[i].Update(gameTime);
             }
 
             UpdateTraps(gameTime);
+            #endregion updateTraps
 
-            //Resetting Values
-            moveValue = Vector2.Zero;
-            textboxText = "";
-            anyKeyPressed = false;
+            #region updateEnemies
+            for (int i = 0; i < enemyObjects.Count; i++)
+            {
+                enemyObjects[i].Update(gameTime);
+            }
+            #endregion updateEnemies
 
-            //get input from keyboard or controller
-            Input.Handeler.Update(gameTime);
-
-            Player.Nyr.onIce = false;
-
+            #region updateOther
             //Let all movingPlatforms move and if Nyr stands on it, then move her too
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 GameObject element = gameObjects[i];
-            
+
                 if (element.moving != Vector2.Zero)
                 {
                     if (Player.Nyr.Collision<GameObject>(new GameObject[] { element }, Player.Nyr.position + moveValue).Length > 0)
@@ -364,13 +370,13 @@ namespace Valkyrie_Nyr
                             {
                                 moveValue.X += plattFormMovement;
                             }
-                            
+
                         }
                         else
                         {
                             moveValue += element.move(gameTime);
                         }
-                       
+
                     }
                     else
                     {
@@ -379,54 +385,58 @@ namespace Valkyrie_Nyr
 
                 }
             }
-       
+
+            //Let all other gameObjects fall to gravitation
+            useGrav(gameTime);
 
             Antagonist.Ryn.Update(gameTime);
+            #endregion updateOther
+
+            #region updatePlayer
+            //get input from keyboard or controller
+            Input.Handeler.Update(gameTime);
+
+            Player.Nyr.onIce = false;
+
+            //Let PLayer fall and save the moveValue in overall Movement
+            if (!Player.Nyr.inHub)
+            {
+                if (Player.Nyr.inStomp)
+                {
+                    //fall faster in Stomp
+                    moveValue.Y += Movement.PlayerFall(gameTime) * 2;
+                }
+                moveValue.Y += moveValue.Y += Movement.PlayerFall(gameTime);
+            }
 
             //let em move, after all collisions have manipulated the movement
-            Vector2 newMoveValue = checkCollision(moveValue);
-
+            moveValue = Movement.Update(moveValue);
             
-
-            if (newMoveValue != Vector2.Zero)
+            if (moveValue != Vector2.Zero)
             {
-
-                Camera.Main.move(newMoveValue);
-
+                Camera.Main.move(moveValue);
             }
 
             //trigger all triggers, that have been triggered
             Player.Nyr.activateTrigger(gameTime);
 
-                if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
+            //some configuration stuff
+            if (Player.Nyr.currentEntityState == (int)Playerstates.FALL && Player.Nyr.onGround)
+            {
+                Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce && !armorEnhanced[(int)BossElements.FIRE]) ? Playerstates.SLIP : Playerstates.LAND);
+                Player.Nyr.currentFrame = 0;
+                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                if (Player.Nyr.onIce)
                 {
-                    Player.Nyr.currentEntityState = (int)((Player.Nyr.onIce && !armorEnhanced[(int)BossElements.FIRE]) ? Playerstates.SLIP : Playerstates.LAND);
-                    Player.Nyr.currentFrame = 0;
-                    Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
-                    if (Player.Nyr.onIce)
-                    {
-                        Player.Nyr.slide = 1000;
-                    }
+                    Player.Nyr.slide = 1000;
                 }
+            }
 
-
-            //Let all other gameObjects fall to gravitation
-            useGrav(gameTime);
-
-
-
+            //AnimationUpdate
             Player.Nyr.EntityUpdate(gameTime);
 
-            for (int i = 0; i < enemyObjects.Count; i++)
-            {
-                enemyObjects[i].Update(gameTime);
-            }
-            /*foreach (Enemy element in enemyObjects)
-            {
-                element.Update(gameTime);
-            }*/
-        
 
+            //set right state
             if (!anyKeyPressed)
             {
                 if (Player.Nyr.isCrouching)
@@ -452,7 +462,7 @@ namespace Valkyrie_Nyr
                     }
                     Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
-                if(Player.Nyr.inactivityTime > 30f && Player.Nyr.currentEntityState != (int)Playerstates.DANCE)
+                if (Player.Nyr.inactivityTime > 30f && Player.Nyr.currentEntityState != (int)Playerstates.DANCE)
                 {
                     Player.Nyr.currentEntityState = (int)Playerstates.DANCE;
                     Player.Nyr.nextEntityState = (int)Playerstates.DANCE;
@@ -465,8 +475,8 @@ namespace Valkyrie_Nyr
             }
 
             lastPressedKeys = newPressedKeys;
-
-
+            #endregion updatePlayer
+            
         }
 
         //theoretical move and seeing what happens
@@ -520,6 +530,14 @@ namespace Valkyrie_Nyr
             if ((collidedTop && moveValue.Y < 0) || (collidedBottom && moveValue.Y > 0))
             {
                 moveValue.Y = 0;
+            }
+
+            //fall, if you fall
+            if ((int) moveValue.Y > 0 && !Player.Nyr.inJump && !Player.Nyr.inHub && !collidedBottom && Player.Nyr.currentEntityState != (int)Playerstates.FALL)
+            {
+                Player.Nyr.currentEntityState = (int)Playerstates.FALL;
+                Player.Nyr.currentFrame = 0;
+                Player.Nyr.nextEntityState = (int)Playerstates.FALL;
             }
             return moveValue;
         }
@@ -602,8 +620,13 @@ namespace Valkyrie_Nyr
             output.WriteLine(Player.Nyr.maxHealth.ToString());
 
             output.Close();
+
+
+            Player.Nyr.health = Player.Nyr.maxHealth;
+            Player.Nyr.mana = Player.Nyr.maxMana;
         }
 
+        //draws the map
         private void DrawMap(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(map, new Rectangle(0, 0, map.Width, map.Height), Color.White * 0.8f);
@@ -679,11 +702,8 @@ namespace Valkyrie_Nyr
             {
                 projectileObjects[i].Draw(gameTime, spriteBatch);
                 //spriteBatch.Draw(Game1.pxl, new Rectangle((int)projectileObjects[i].position.X, (int)projectileObjects[i].position.Y, projectileObjects[i].width, projectileObjects[i].height), Color.LightGreen * 0.5f);
-                //spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
+                spriteBatch.Draw(Game1.pxl, new Rectangle(projectileObjects[i].attackbox.X, projectileObjects[i].attackbox.Y, projectileObjects[i].attackbox.Width, projectileObjects[i].attackbox.Height), Color.BlueViolet * 0.5f);
             }
-
-            //TODO:delete
-            textboxText = (1.0 / gameTime.ElapsedGameTime.TotalSeconds).ToString();
 
             if (textboxText.Length > 0)
             {
@@ -695,7 +715,7 @@ namespace Valkyrie_Nyr
 
             }
             Interface.Draw(spriteBatch);
-            if (GameUI.Handeler.ShowMap)
+            if (Interface.ShowMap)
             {
                 DrawMap(spriteBatch);
             }

@@ -330,7 +330,7 @@ namespace Valkyrie_Nyr
 
         public void activateTrigger(GameTime gameTime)
         {
-            GameObject[] collidedObjects = Collision<GameObject>(Level.Current.gameObjects.ToArray(), position);
+            GameObject[] collidedObjects = Movement.allCollidedGameObjects.ToArray();
             NSC[] collidedNSCs = Collision<NSC>(Level.Current.gameObjects.ToArray(), position);
 
             //add all collided NSCs to GameObjects
@@ -347,8 +347,6 @@ namespace Valkyrie_Nyr
             trigger(Antagonist.Ryn, gameTime);
 
             interact = false;
-        }
-
-        
+        }        
     }
 }

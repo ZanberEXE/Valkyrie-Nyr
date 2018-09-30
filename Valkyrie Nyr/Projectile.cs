@@ -98,7 +98,7 @@ namespace Valkyrie_Nyr
             }
 
             //check if Nyr is hitted
-            if(Player.Nyr.CollisionAABB(Player.Nyr.hurtBox, attackbox))
+            if(Entity.CollisionAABB(Player.Nyr.hurtBox, attackbox))
             {
                 if (name != "IceShot")
                 {

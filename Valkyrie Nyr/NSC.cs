@@ -112,7 +112,7 @@ namespace Valkyrie_Nyr
                     break;
                 case "drWhich":
                     //TODO:Anpassen
-                    if(Player.Nyr.money > 500)
+                    if(Player.Nyr.money >= 500)
                     {
                         Player.Nyr.money -= 500;
                         Player.Nyr.health += 1000;
@@ -142,17 +142,30 @@ namespace Valkyrie_Nyr
                     spriteBatch.Draw(spokemanTexture, new Rectangle((currentSpokesman == "Nyr") ? 200 : Game1.WindowSize.X - spokemanTexture.Width, 0, spokemanTexture.Width, spokemanTexture.Height), Color.White);
                 }
             }
-            spriteBatch.Draw(Game1.pxl, new Rectangle(0, 600, Game1.WindowSize.X, Game1.WindowSize.Y - 600), Color.Black * 0.7f);
+            spriteBatch.Draw(Game1.pxl, new Rectangle(10, 700, 400, 80), new Color(0.05f, 0.05f, 0.1f, 0.8f));
+            spriteBatch.Draw(Game1.pxl, new Rectangle(10, 800, Game1.WindowSize.X - 20, Game1.WindowSize.Y - 810), new Color(0.05f, 0.05f, 0.1f, 0.8f));
+
             //Draw Text
-            spriteBatch.DrawString(Game1.Font, dialogues[dialogueState].spokesman[currentSpeech], new Vector2(60, 610), Color.LightBlue);
-            for (int i = 0; i <= (int)(dialogues[dialogueState].speeches[currentSpeech].Length / 100f); i++)
+            spriteBatch.DrawString(Game1.Font, dialogues[dialogueState].spokesman[currentSpeech], new Vector2(30, 720), Color.GhostWhite);
+            int lineCounter = 0;
+            for (int i = 0; i < dialogues[dialogueState].speeches[currentSpeech].Length;)
             {
-                string line = dialogues[dialogueState].speeches[currentSpeech].Remove(0, 100 * i);
-                if (line.Length > 100)
+                string line = dialogues[dialogueState].speeches[currentSpeech].Remove(0, i);
+
+                if(line.Length > 100)
                 {
                     line = line.Remove(100);
+
+                    int lineLenght = line.LastIndexOf(' ') + 1;
+
+                    if (line.Length > lineLenght && lineLenght > 0)
+                    {
+                        line = line.Remove(lineLenght);
+                    }
                 }
-                spriteBatch.DrawString(Game1.Font, line, new Vector2(60, 700 + 50 * i), Color.LightBlue);
+                spriteBatch.DrawString(Game1.Font, line, new Vector2(30, 820 + 50 * lineCounter), Color.GhostWhite);
+                i += line.Length;
+                lineCounter++;
             }
 
         }

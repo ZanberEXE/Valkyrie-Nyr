@@ -46,10 +46,10 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="GameUI.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Movement.cs" />
     <Compile Include="Music.cs" />
     <Compile Include="NSC.cs" />
     <Compile Include="Player.cs" />
