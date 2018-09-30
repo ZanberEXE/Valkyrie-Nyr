@@ -449,7 +449,7 @@ namespace Valkyrie_Nyr
 
                 Player.Nyr.inactivityTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND))
+                if (!(Player.Nyr.currentEntityState == (int)Playerstates.JUMP || Player.Nyr.currentEntityState == (int)Playerstates.FALL || Player.Nyr.currentEntityState == (int)Playerstates.LAND || Player.Nyr.currentEntityState == (int)Playerstates.DYING || Player.Nyr.currentEntityState == (int)Playerstates.ISDEAD))
                 {
                     if (Player.Nyr.currentEntityState == (int)Playerstates.WALK && Player.Nyr.onGround)
                     {

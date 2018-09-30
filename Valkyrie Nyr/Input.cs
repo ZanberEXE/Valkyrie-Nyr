@@ -64,22 +64,22 @@ namespace Valkyrie_Nyr
                     //Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                 }
             }
-            if (Player.Nyr.attackCooldown <= 29 && Player.Nyr.attackCooldown >= 15)
+            if (Player.Nyr.jumpTimer <= 10 && Player.Nyr.jumpTimer > 0)
             {
-                if (Player.Nyr.entityFacing == -1)
+                if (Keyboard.GetState().IsKeyDown(Keys.D) || GamePad.GetState(0).IsButtonDown(Buttons.DPadRight))
                 {
-                    Camera.Main.move(new Vector2(-2, 0));
-                    
+                    Level.Current.moveValue.X += 10;
                 }
-                else
+                if (Keyboard.GetState().IsKeyDown(Keys.A) || GamePad.GetState(0).IsButtonDown(Buttons.DPadLeft))
                 {
-                    Camera.Main.move(new Vector2(2, 0));
+                    Level.Current.moveValue.X -= 10;
                 }
             }
-            if (Player.Nyr.attackCooldown > 0)
+            if (Player.Nyr.jumpTimer >= 0)
             {
-                Player.Nyr.attackCooldown--;
+                Player.Nyr.jumpTimer--;
             }
+            
             if (Player.Nyr.skillCooldown > 0)
             {
                 Player.Nyr.skillCooldown--;
@@ -217,6 +217,7 @@ namespace Valkyrie_Nyr
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.FALL;
                                 Player.Nyr.inJump = true;
+                                Player.Nyr.jumpTimer = 10;
                                 Player.Nyr.onGround = false;
                                 Level.Current.moveValue.Y -= Player.Nyr.jumpHeight;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_jump");
@@ -283,13 +284,32 @@ namespace Valkyrie_Nyr
                         {
                             if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub)
                             {
-                                Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
+                                Player.Nyr.currentEntityState = (int)Playerstates.ATTACK;
                                 Player.Nyr.currentFrame = 0;
                                 Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                                 Player.Nyr.fAttackCheck = 20;
                                 Player.Nyr.attackCooldown = 30;
                                 SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
 
+                            }
+                            // CONTROLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLEEEEEEEEEEEEEEEEERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            if (Player.Nyr.attackCooldown <= 15 && Player.Nyr.attackCooldown >= 5 && Player.Nyr.currentEntityState == (int)Playerstates.ATTACK)
+                            {
+                                Player.Nyr.currentEntityState = (int)Playerstates.ATTACK2;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                                Player.Nyr.fAttackCheck = 20;
+                                Player.Nyr.attackCooldown = 30;
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
+                            }
+                            if (Player.Nyr.attackCooldown <= 15 && Player.Nyr.attackCooldown >= 5 && Player.Nyr.currentEntityState == (int)Playerstates.ATTACK2)
+                            {
+                                Player.Nyr.currentEntityState = (int)Playerstates.ATTACK3;
+                                Player.Nyr.currentFrame = 0;
+                                Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
+                                Player.Nyr.fAttackCheck = 50;
+                                Player.Nyr.attackCooldown = 50;
+                                SFX.CurrentSFX.loadSFX("sfx/sfx_attack");
                             }
                         }
                         break;
@@ -512,7 +532,7 @@ namespace Valkyrie_Nyr
                     Level.Current.anyKeyPressed = true;
                     if (Player.Nyr.attackCooldown == 0 && !Player.Nyr.inHub)
                     {
-                        Player.Nyr.currentEntityState = (int)Playerstates.FIGHT;
+                        Player.Nyr.currentEntityState = (int)Playerstates.ATTACK;
                         Player.Nyr.currentFrame = 0;
                         Player.Nyr.nextEntityState = (int)Playerstates.IDLE;
                         Player.Nyr.fAttackCheck = 20;

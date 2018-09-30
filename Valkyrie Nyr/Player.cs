@@ -16,9 +16,12 @@ namespace Valkyrie_Nyr
         public float speed;
         public float jumpHeight;
         public float inactivityTime = 0;
+        public float jumpTimer = 0;
+        
         public int slide;
         public int attackCooldown;
         public int skillCooldown;
+        
         public bool inHub;
         public bool interact;
         public bool inJump;
@@ -46,7 +49,7 @@ namespace Valkyrie_Nyr
         public Player(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position, hp, dmg, _attackBoxWidth, _attackBoxHeight, _animationFlip)
         {
             speed = 700;
-            jumpHeight = 15;
+            jumpHeight = 16;
             inHub = false;
             interact = false;
             inJump = false;
@@ -57,6 +60,8 @@ namespace Valkyrie_Nyr
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Running"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Jump"), 10, 3, 25),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack"), 10, 3, 25),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack2"), 10, 4, 37),
+                new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Attack3"), 10, 8, 75),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Hurt"), 10, 2, 18),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Dance"), 10, 50, 500),
                 new animation(Game1.Ressources.Load<Texture2D>("newPlayer/Falling"), 10, 2, 12),
@@ -86,7 +91,7 @@ namespace Valkyrie_Nyr
     }
 
         //get Nyr from everywhere
-        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 10, 180, 120, Vector2.Zero, 1000, 300, 140, 20, false); } return nyr; } }
+        public static Player Nyr { get { if (nyr == null) { nyr = new Player("Nyr", null, 40, 180, 120, Vector2.Zero, 1000, 3, 140, 20, false); } return nyr; } }
         
         //put here stuff that happens if you collect something
         public void trigger(GameObject activatedTrigger, GameTime gameTime)
@@ -166,18 +171,6 @@ namespace Valkyrie_Nyr
         public void Attack(GameTime gameTime)
         {
            
-            attackBox.X = (int)position.X;
-            attackBox.Y = (int)position.Y;
-            if (entityFacing == 1)
-            {
-                attackBox.Location += new Point(width / 2, height / 2);
-            }
-            else
-            {
-                attackBox.Location += new Point(width / 2 - attackBox.Width, height / 2);
-            }
-
-            
             
             for (int i = 0; i < Level.Current.enemyObjects.Count; i++)
             {
@@ -324,8 +317,22 @@ namespace Valkyrie_Nyr
         //this method is called, if the Player dies/falls out of the world
         public void gameOver()
         {
-            Level.Current.loadLevel("Hub");
-            health = maxHealth;
+            if (currentEntityState != (int)Playerstates.DYING && currentEntityState != (int)Playerstates.ISDEAD)
+            {
+                currentEntityState = (int)Playerstates.DYING;
+                currentFrame = 0;
+                nextEntityState = (int)Playerstates.ISDEAD;
+            }
+            
+            if (currentEntityState == (int)Playerstates.ISDEAD)
+            {
+                
+                Level.Current.loadLevel("Hub");
+                health = maxHealth;
+                mana = maxMana;
+                //nextEntityState = (int)Playerstates.IDLE;
+            }
+            
         }
 
         public void activateTrigger(GameTime gameTime)

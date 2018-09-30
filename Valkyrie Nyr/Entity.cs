@@ -81,7 +81,7 @@ namespace Valkyrie_Nyr
 
         public bool isInvulnerable;
         public int invulnerableTimer;
-        bool isDead = false;
+        public bool isDead = false;
 
         public Entity(string name, string triggerType, int mass, int height, int width, Vector2 position, int hp, int dmg, int _attackBoxWidth, int _attackBoxHeight, bool _animationFlip) : base(name, triggerType, mass, height, width, position)
         {
@@ -311,6 +311,7 @@ namespace Valkyrie_Nyr
 
                 if (name == "Nyr")
                 {
+                   
                     Player.Nyr.gameOver();
                 }
                 else
@@ -331,15 +332,119 @@ namespace Valkyrie_Nyr
                     
                 }
             }
+
             if (name == "Nyr")
             {
+
+                
+                if (Player.Nyr.currentEntityState == (int)Playerstates.ATTACK)
+                {
+                    attackBox.X = (int)position.X;
+                    attackBox.Y = (int)position.Y;
+                    if (Player.Nyr.attackCooldown <= 29 && Player.Nyr.attackCooldown >= 15)
+                    {
+                        if (Player.Nyr.entityFacing == -1)
+                        {
+                            Level.Current.moveValue.X -= 20;
+                            attackBox.Location += new Point(width / 2 - attackBox.Width, height / 2);
+                            attackBox.Width = 140;
+                            attackBox.Height = 20;
+                        }
+                        else
+                        {
+                            Level.Current.moveValue.X += 20;
+                            attackBox.Location += new Point(width / 2, height / 2);
+                            attackBox.Width = 140;
+                            attackBox.Height = 20;
+                        }
+                    }
+                }
+                if (Player.Nyr.currentEntityState == (int)Playerstates.ATTACK2)
+                {
+                    if (Player.Nyr.attackCooldown == 26)
+                    {
+                        if (Player.Nyr.entityFacing == -1)
+                        {
+                            attackBox.X = (int)Player.Nyr.position.X - 80;
+                            attackBox.Y = (int)Player.Nyr.position.Y + 160;
+                            
+                        }
+                        else
+                        {
+                            attackBox.X = (int)Player.Nyr.position.X + 170;
+                            attackBox.Y = (int)Player.Nyr.position.Y + 160;
+                        }
+                    }
+                    if (Player.Nyr.attackCooldown <= 25 && Player.Nyr.attackCooldown >= 10)
+                    {
+                        if (Player.Nyr.entityFacing == -1)
+                        {
+                            Level.Current.moveValue.X -= 2;
+                            
+                            attackBox.Y -= 10;
+                            attackBox.Width = 20;
+                            attackBox.Height = 20;
+                        }
+                        else
+                        {
+                            Level.Current.moveValue.X += 2;
+
+                            attackBox.Y -= 10;
+                            attackBox.Width = 20;
+                            attackBox.Height = 20;
+                        }
+                    }
+                }
+                if (Player.Nyr.currentEntityState == (int)Playerstates.ATTACK3)
+                {
+                    if (Player.Nyr.attackCooldown == 26)
+                    {
+                        if (Player.Nyr.entityFacing == -1)
+                        {
+                            attackBox.X = (int)Player.Nyr.position.X - 20;
+                            attackBox.Y = (int)Player.Nyr.position.Y;
+
+                        }
+                        else
+                        {
+                            attackBox.X = (int)Player.Nyr.position.X + 100;
+                            attackBox.Y = (int)Player.Nyr.position.Y;
+                        }
+                    }
+                    if (Player.Nyr.attackCooldown <= 25 && Player.Nyr.attackCooldown >= 10)
+                    {
+                        if (Player.Nyr.entityFacing == -1)
+                        {
+                            Level.Current.moveValue.X -= 4;
+                            attackBox.X -= 5;
+                            attackBox.Y += 10;
+                            attackBox.Width = 20;
+                            attackBox.Height = 20;
+                        }
+                        else
+                        {
+                            Level.Current.moveValue.X += 4;
+                            attackBox.X += 5;
+                            attackBox.Y += 10;
+                            attackBox.Width = 20;
+                            attackBox.Height = 20;
+                        }
+                    }
+                }
+                if (Player.Nyr.attackCooldown > 0)
+                {
+                    Player.Nyr.attackCooldown--;
+                }
+
+
+                
                 if (Player.Nyr.fAttackCheck == 13)
                 {
                     Player.Nyr.Attack(gameTime);
                 }
                 Player.Nyr.fAttackCheck--;
-            }
                 
+            }
         }
 
         public void EntityRender(GameTime gametime, SpriteBatch spriteBatch)
